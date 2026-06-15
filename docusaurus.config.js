@@ -13,8 +13,8 @@ const showGitHistory =
   gitHistoryOverride === "true"
     ? true
     : gitHistoryOverride === "false"
-    ? false
-    : (() => {
+      ? false
+      : (() => {
         try {
           if (!fs.existsSync(path.join(__dirname, ".git"))) {
             return false;
@@ -27,25 +27,6 @@ const showGitHistory =
         }
       })();
 
-// const configuredApiBaseUrl = (
-//   process.env.ALGO_API_URL || process.env.DOCUSAURUS_API_BASE_URL || ""
-// ).trim();
-
-// if (configuredApiBaseUrl && !/^https?:\/\//i.test(configuredApiBaseUrl)) {
-//   throw new Error(
-//     `Invalid API base URL: "${configuredApiBaseUrl}". The URL must start with http:// or https://`
-//   );
-// }
-
-// Production API integrations must be configured explicitly. Falling back to an
-// empty string would turn API calls into relative site requests and fail at runtime.
-
-// if (process.env.NODE_ENV === "production" && !configuredApiBaseUrl) {
-//   throw new Error(
-//     "Missing required environment variable: ALGO_API_URL or DOCUSAURUS_API_BASE_URL"
-//   );
-// }
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Algo",
@@ -56,14 +37,18 @@ const config = {
   baseUrl: "/algo/",
   organizationName: "codeharborhub",
   projectName: "algo",
-  // customFields: {
-  //   apiBaseUrl:
-  //     configuredApiBaseUrl ||
-  //     (process.env.NODE_ENV === "development" ? "http://localhost:5000" : undefined),
-  // },
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
+
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "hi"], // Add 'hi' here
+    localeConfigs: {
+      en: { label: "English" },
+      hi: { label: "हिन्दी" }, // Label for the dropdown
+    },
+  },
 
   presets: [
     [
@@ -85,8 +70,12 @@ const config = {
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
         },
+        pages: {
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [rehypeKatex],
+        },
         theme: {
-          customCss: "./src/css/custom.css",
+          customCss: './src/css/custom.css',
         },
       }),
     ],
@@ -132,21 +121,21 @@ const config = {
             type: "docSidebar",
             sidebarId: "tutorialSidebar",
             position: "left",
-            label: "📖 Tutorials",
+            label: "Tutorials",
           },
           {
             to: "blog",
-            label: "✍️ Blogs",
+            label: "Blogs",
             position: "left",
           },
           {
             to: "dsa-roadmap",
-            label: "🎯 Contribution Tracker",
+            label: "Contribution Tracker",
             position: "left",
           },
           {
             type: "dropdown",
-            label: "🧠 Interview Engine",
+            label: "Interview Engine",
             position: "left",
             className: "navbar-interview-dropdown",
             items: [
@@ -157,15 +146,15 @@ const config = {
               },
               {
                 to: "roadmap",
-                label: "🗺️ Verification Roadmap",
+                label: "Verification Roadmap",
               },
               {
                 to: "dsa-interview",
-                label: "🔥 Core Matrix Questions",
+                label: "Core Matrix Questions",
               },
               {
                 to: "applications",
-                label: "🚀 Real-World Implementation",
+                label: "Real-World Implementation",
               },
               {
                 type: "html",
@@ -179,30 +168,30 @@ const config = {
               },
               {
                 to: "challenges",
-                label: "⚔️ Code Challenges",
+                label: "Code Challenges",
               },
               {
                 to: "practice",
-                label: "💻 Practice Arena",
+                label: "Practice Arena",
               },
               {
                 to: "quizzes",
-                label: "⚡ Concept Quizzes",
+                label: "Concept Quizzes",
               },
               {
                 to: "quiz-solutions",
-                label: "✅ Compiled Solutions",
+                label: "Compiled Solutions",
               },
             ],
           },
           {
             to: "faq",
-            label: "❓ FAQ",
+            label: "FAQ",
             position: "left",
           },
           {
             type: "dropdown",
-            label: "👥 Community Hub",
+            label: "Community Hub",
             position: "right",
             className: "navbar-community-dropdown",
             items: [
@@ -213,19 +202,19 @@ const config = {
               },
               {
                 to: "contributors",
-                label: "🎖️ Contributors Wall",
+                label: "Contributors Wall",
               },
               {
                 to: "leaderboard",
-                label: "📊 Global Leaderboard",
+                label: "Global Leaderboard",
               },
               {
                 to: "achievements",
-                label: "🏆 Milestones & Badges",
+                label: "Milestones & Badges",
               },
               {
                 to: "sponsors",
-                label: "💰 Infrastructure Patrons",
+                label: "Infrastructure Patrons",
               },
               {
                 type: "html",
@@ -239,27 +228,25 @@ const config = {
               },
               {
                 to: "playground",
-                label: "🛝 Code Playground",
+                label: "Code Playground",
               },
               {
                 to: "stories",
-                label: "✨ Success Stories",
+                label: "Success Stories",
               },
               {
                 to: "community",
-                label: "💬 Public Discussions",
+                label: "Public Discussions",
               },
               {
                 to: "resources",
-                label: "📚 Extended Assets",
+                label: "Extended Assets",
               },
             ],
           },
           {
-            href: "https://github.com/ajay-dhangar/algo",
+            type: "localeDropdown",
             position: "right",
-            className: "header-github-link",
-            "aria-label": "GitHub Repository Run",
           },
           {
             type: "search",
@@ -308,11 +295,22 @@ const config = {
           hideable: true,
         },
       },
+      liveCodeBlock: {
+        /**
+         * The position of the live playground, above or under the editor
+         * Possible values: "top" | "bottom"
+         */
+        playgroundPosition: 'bottom',
+      },
     }),
 
-  themes: ["@docusaurus/theme-mermaid"],
+  themes: ["@docusaurus/theme-mermaid", "@docusaurus/theme-live-codeblock"],
   markdown: {
+    format: 'detect',
     mermaid: true,
+    // hooks: {
+    //   onBrokenMarkdownLinks: 'warn',
+    // },
   },
 
   plugins: [
@@ -323,7 +321,7 @@ const config = {
         id: "dsa-interview",
         path: "dsa-interview",
         routeBasePath: "dsa-interview",
-        sidebarPath: require.resolve("./dsa-interview-sidebars.js"),
+        sidebarPath: require.resolve("./sidebars.js"),
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
         showLastUpdateAuthor: showGitHistory,
