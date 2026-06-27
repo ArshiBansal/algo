@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Layout from "@theme/Layout";
 import "../../css/visualiezer.css";
+import { withVisualizerErrorBoundary } from "./VisualizerErrorBoundary";
 
 interface BarData {
   value: number;
@@ -43,15 +44,24 @@ const SortingVisualizer: React.FC = () => {
   const waitforme = async (millis: number, signal: AbortSignal): Promise<void> => {
     if (signal.aborted) throw new Error("aborted");
     while (isPausedRef.current) {
-      await new Promise<void>((resolve) => {
-        unpauseRef.current = resolve;
+      await new Promise<void>((resolve, reject) => {
+        const onAbort = () => {
+          signal.removeEventListener("abort", onAbort);
+          reject(new Error("aborted"));
+        };
+        signal.addEventListener("abort", onAbort);
+
+        unpauseRef.current = () => {
+          signal.removeEventListener("abort", onAbort);
+          resolve();
+        };
       });
-      if (signal.aborted) throw new Error("aborted");
     }
     return new Promise((resolve, reject) => {
       if (signal.aborted) return reject(new Error("aborted"));
       const onAbort = () => {
         clearTimeout(timeout);
+        signal.removeEventListener("abort", onAbort);
         reject(new Error("aborted"));
       };
       const timeout = setTimeout(() => {
@@ -653,4 +663,4 @@ const SortingVisualizer: React.FC = () => {
   );
 };
 
-export default SortingVisualizer;
+export default withVisualizerErrorBoundary(SortingVisualizer);

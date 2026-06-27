@@ -9,9 +9,9 @@
 }
 
 :root {
-  --ifm-color-primary: #3b82f6;
-  --ifm-color-primary-dark: #2563eb;
-  --ifm-color-primary-darker: #1d4ed8;
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1e40af;
   --ifm-color-primary-darkest: #1e3a8a;
   --ifm-color-primary-light: #60a5fa;
   --ifm-color-primary-lighter: #93c5fd;
@@ -24,6 +24,28 @@
   --announcement-bg-2: #fff7ed;
   --announcement-text: #4c1d95;
   --announcement-border: #e9d5ff;
+
+  /* Blueprint/Grid Pattern Accent Lines */
+  --ifm-color-emphasis-100: #f8fafc;
+  --ifm-color-emphasis-200: #e2e8f0;
+  --ifm-color-emphasis-300: #cbd5e1;
+  --ifm-color-emphasis-400: #94a3b8;
+  --ifm-color-emphasis-500: #64748b;
+  --ifm-color-emphasis-600: #475569;
+  --ifm-color-emphasis-700: #334155;
+
+  /* Card Backdrop Backings */
+  --ifm-card-background-color: rgba(255, 255, 255, 0.9);
+
+  /* Functional Status Accents */
+  --ifm-color-info-contrast-background: rgba(14, 165, 233, 0.08);
+  --ifm-color-danger-contrast-background: rgba(239, 68, 68, 0.08);
+  --ifm-color-danger-light: rgba(239, 68, 68, 0.3);
+  --ifm-color-danger-dark: #dc2626;
+
+  /* System Box Shadows */
+  --ifm-global-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --ifm-global-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] {  
@@ -41,6 +63,27 @@
   --announcement-bg-2: #431407;
   --announcement-text: #f5f3ff;
   --announcement-border: #4c1d95;
+
+  --ifm-color-emphasis-100: #0b0f17;
+  --ifm-color-emphasis-200: #1e293b;
+  --ifm-color-emphasis-300: #334155;
+  --ifm-color-emphasis-400: #475569;
+  --ifm-color-emphasis-500: #64748b;
+  --ifm-color-emphasis-600: #94a3b8;
+  --ifm-color-emphasis-700: #cbd5e1;
+
+  /* Card Backdrop Backings */
+  --ifm-card-background-color: rgba(13, 17, 23, 0.9);
+
+  /* Functional Status Accents */
+  --ifm-color-info-contrast-background: rgba(34, 211, 238, 0.12);
+  --ifm-color-danger-contrast-background: rgba(239, 68, 68, 0.12);
+  --ifm-color-danger-light: rgba(239, 68, 68, 0.4);
+  --ifm-color-danger-dark: #f87171;
+
+  /* System Box Shadows */
+  --ifm-global-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --ifm-global-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes pulseGlow {
@@ -53,11 +96,10 @@
 }
 
 .theme-announcement-bar {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  /* color: white; */
   letter-spacing: 0.2px;
-  padding: 10px 20px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,14 +129,27 @@
   }
 }
 
-.theme-announcement-bar a {
-  /* text-decoration: underline; */
+.theme-announcement-bar .announcementBarContent_xLdY a {
   text-underline-offset: 3px;
+  text-decoration: none;
   transition: opacity 0.2s ease;
 }
 
-.theme-announcement-bar a:hover {
+.theme-announcement-bar .announcementBarContent_xLdY a:hover {
   opacity: 0.8;
+  color: var(--ifm-color-primary);
+}
+
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--announcement-text);
+}
+
+.close:hover {
+  color:indianred;
 }
 
 .navbar {
@@ -170,22 +225,21 @@ html[data-theme='dark'] .noise-bg {
   background-image: url('/landing/grid-dark.svg');
 }
 
-.theme-doc-markdown header {
+header.doc-header-banner {
   background-image: linear-gradient(to bottom,
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 0.6)),
     url('/landing/grid-light.svg');
-  padding: 2rem 1rem;
-  margin-bottom: 2rem;
+  padding: 0.3rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid var(--ifm-color-primary-lightest);
   border-radius: 0.5rem;
   color: var(--ifm-color-primary);
 }
 
-html[data-theme='dark'] .theme-doc-markdown header {
+html[data-theme='dark'] header.doc-header-banner {
   background-image: url('/landing/grid-dark.svg');
 }
-
 
 .footer {
   background-color: #000;
@@ -213,13 +267,11 @@ button {
   border: 1px solid var(--ifm-color-primary);
 }
 
-
 .theme-doc-markdown {
   width: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
 }
-
 
 @media screen and (max-width: 768px) {
   .container {
@@ -343,14 +395,6 @@ button {
   padding-right: 2rem !important;
 }
 
-/* =============================================
-   Fix #2620: Cookie banner overlap + dark mode
-   ============================================= */
-
-body {
-  padding-bottom: 80px;
-}
-
 [data-theme='dark'] .cookieConsent,
 [data-theme='dark'] [class*='cookieConsent'],
 [data-theme='dark'] [class*='cookie'] {
@@ -363,4 +407,207 @@ body {
 [data-theme='dark'] [class*='cookie'] button {
   background-color: var(--ifm-color-primary) !important;
   color: #ffffff !important;
+}
+
+.algo-link {
+  background-color: var(--ifm-color-primary);
+  border-radius: 4px;
+  transition-property: all;
+  padding: 0.25rem 0.75rem !important;
+  margin: 0 0.5rem;
+}
+
+.algo-link:last-child {
+  margin-right: 0;
+}
+
+.algo-link svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0.2rem;
+}
+
+.algo-signup {
+  --ifm-link-hover-color: #ffffff;
+  --ifm-navbar-link-hover-color: #ffffff;
+  color: #ffffff !important;
+  background-color: var(--ifm-color-primary-dark) !important;
+}
+
+[data-theme="dark"] .algo-signup {
+  --ifm-link-hover-color: #000000;
+  --ifm-navbar-link-hover-color: #000000;
+  color: #000000 !important;
+  background-color: var(--ifm-color-primary) !important;
+}
+
+.algo-signup svg {
+  display: none;
+}
+
+.algo-signup:hover {
+  background-color: var(--ifm-color-primary-darker);
+}
+
+.algo-login {
+  background-color: transparent;
+}
+
+.navbar-sidebar .algo-link {
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* ==========================================================================
+   Print Layout Styling & Fixes (Docusaurus Docs)
+   ========================================================================== */
+
+@media print {
+  /* ---------------------------------------------------------------------- */
+  /* 1. GLOBAL RESETS & THEME OVERRIDES                                     */
+  /* ---------------------------------------------------------------------- */
+  
+  /* Reset background and colors for ink saving and high contrast */
+  html, body, [data-theme], :root {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important; /* Critical: Stops text cut-offs at page breaks */
+  }
+
+  /* Force standard block layout for print so standard pagination/breaks work (Chromium fix) */
+  #__docusaurus, 
+  .theme-doc-wrapper, 
+  .theme-doc-main-container, 
+  main, 
+  .container, 
+  .row, 
+  .col, 
+  article,
+  .markdown,
+  .theme-doc-markdown,
+  .theme-doc-toc {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  /* ---------------------------------------------------------------------- */
+  /* 2. CHROME, COMMENTS, & GOOGLE ADSENSE DELETION                         */
+  /* ---------------------------------------------------------------------- */
+  
+  /* Hide navigation, sidebar, TOC, footer, progress elements, and UI elements */
+  .navbar,                               /* Top Navigation Bar */
+  .theme-doc-sidebar-container,          /* Left Documentation Sidebar */
+  .theme-doc-toc,                        /* Right Desktop TOC Container */
+  .table-of-contents,                    /* Mobile/In-line TOC Lists */
+  .footer,                               /* Global Site Footer */
+  .pagination-nav,                       /* Next/Previous Page Buttons */
+  .breadcrumbs,                          /* Top Page File-path Links */
+  .theme-edit-this-page,                 /* "Edit this page" Link */
+  .theme-doc-footer-edit-meta-row,       /* Last updated timestamps */
+  .clean-btn.theme-back-to-top-button,   /* Back to top scroll button */
+  .theme-doc-footer,                     /* Inner document bottom area */
+  .no-print,                             /* Custom utilities hidden from paper */
+  aside,                                 /* Secondary tracking/sidebars */
+  .giscus,                               /* Comments section */
+  .giscus-component, 
+  #giscus, 
+  #comments,
+  .theme-code-block-button-group,        /* Overlay copy buttons on code elements */
+  
+  /* --- GOOGLE ADSENSE BLANKET DELETION --- */
+  ins.adsbygoogle,                       /* Native Google Ad Container tag */
+  iframe[id^="aswift"],                  /* Dynamic inner layout script frames */
+  iframe[name^="aswift"],                /* Variable iframe targeting handles */
+  iframe[id^="google_ads"],              /* Explicit Google Ad frame wrappers */
+  .google-ads,                           /* Common developer wrappers */
+  [data-ad-client],                      /* Direct data attribute hooks */
+  [data-ad-slot]                         /* Direct slot attribute hooks */ {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ---------------------------------------------------------------------- */
+  /* 3. DOCUMENT BODY OPTIMIZATION                                         */
+  /* ---------------------------------------------------------------------- */
+  
+  /* Add crisp margins so the pure document text doesn't touch the paper edge */
+  article {
+    padding: 1.5cm !important;
+  }
+
+  /* Prevent headings from being separated from their content down on the next sheet */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: #000000 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Ensure paragraphs, list items, and blockquotes don't break weirdly */
+  p, li, blockquote {
+    color: #111111 !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Avoid breaking inside content boxes like code blocks, tables, images, blockquotes */
+  pre, .theme-code-block, table, tr, img, svg, figure, blockquote, .mermaid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* ---------------------------------------------------------------------- */
+  /* 4. CODE BLOCK CLEANUP                                                 */
+  /* ---------------------------------------------------------------------- */
+  
+  /* Code block specific styling for high readability and contrast in print */
+  pre, code, .theme-code-block, .theme-code-block pre {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dddddd !important;
+    color: #000000 !important;
+    font-size: 9.5pt !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Custom header styling inside printable page */
+  .doc-header-banner {
+    background: none !important;
+    border-bottom: 2px solid #333333 !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 20px !important;
+    color: #000000 !important;
+  }
+}
+
+/* Accessibility Focus States (WCAG 2.1 AA) */
+:focus-visible {
+  outline: 2px solid var(--ifm-color-primary) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. PAGE SETUP CONFIGURATION                                                */
+/* -------------------------------------------------------------------------- */
+@page {
+  size: letter; /* Options: A4, letter */
+  margin: 1.5cm;
 }
