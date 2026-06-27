@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Layout from "@theme/Layout";
-import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaUserCircle,
@@ -12,7 +11,6 @@ import {
   FaChevronRight,
   FaHistory
 } from "react-icons/fa";
-import { buildApiUrl, useApiBaseUrl } from "../../utils/api";
 
 import QuestionProgress from "../../components/Quiz/QuestionProgress";
 import QuestionNavigator from "../../components/Quiz/QuestionNavigator";
@@ -204,10 +202,9 @@ const PriorityQueueQuiz: React.FC = () => {
   const [username, setUsername] = useState<string | null>(null);
   const [timeSpent, setTimeSpent] = useState(0);
   const [attempts, setAttempts] = useState<HistoryAttempt[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
-  const apiBaseUrl = useApiBaseUrl();
-
+  
   useEffect(() => {
     setIsMounted(true);
     const storedId = localStorage.getItem("quiz_userId");
@@ -218,9 +215,7 @@ const PriorityQueueQuiz: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (userId) fetchAttempts(userId);
-  }, [userId, apiBaseUrl]);
+  
 
   useEffect(() => {
     if (showResult || !userId) return;
@@ -237,14 +232,31 @@ const PriorityQueueQuiz: React.FC = () => {
     );
   }, [userAnswers]);
 
-  const fetchAttempts = async (uId: string) => {
-    try {
-      const res = await axios.get(buildApiUrl(apiBaseUrl, `/api/quiz-attempts/${uId}/priority-queue`));
-      if (res.data?.success && Array.isArray(res.data.attempts)) {
-        setAttempts(res.data.attempts);
+  const fetchAttempts = useCallback((uId: string) => {
+    const historyKey = `quiz_attempts_${uId}_priority-queue`;
+    const savedAttempts = localStorage.getItem(historyKey);
+    if (savedAttempts) {
+      try {
+        setAttempts(JSON.parse(savedAttempts));
+      } catch (e) {
+        console.error("Error parsing history attempts:", e);
+        setAttempts([]);
       }
-    } catch (e) {
-      console.error("Error fetching priority queue quiz history:", e);
+    } else {
+      setAttempts([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      fetchAttempts(userId);
+    }
+  }, [userId, fetchAttempts]);
+
+  const handleKeyDown = (e: React.KeyboardEvent, option: string) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleRegister(option);
     }
   };
 
@@ -267,19 +279,21 @@ const PriorityQueueQuiz: React.FC = () => {
     handleRetry();
   };
 
-  const submitAttempt = async (finalAnswers: string[]) => {
+  const submitAttempt = (finalAnswers: string[]) => {
     if (!userId) return;
-    try {
-      await axios.post(buildApiUrl(apiBaseUrl, "/api/quiz-attempts"), {
-        userId,
-        quizId: "priority-queue",
-        userAnswers: finalAnswers,
-        timeSpent
-      });
-      fetchAttempts(userId);
-    } catch (e) {
-      console.error("Failed to submit priority queue quiz attempt:", e);
-    }
+    const newAttempt: HistoryAttempt = {
+      id: Math.random().toString(36).substring(2, 9),
+      score: score,
+      totalQuestions: QUESTIONS.length,
+      timeSpent: timeSpent,
+      completedAt: new Date().toISOString()
+    };
+    const historyKey = `quiz_attempts_${userId}_priority-queue`;
+    const savedAttempts = localStorage.getItem(historyKey);
+    const existing = savedAttempts ? JSON.parse(savedAttempts) : [];
+    const updated = [newAttempt, ...existing].slice(0, 5);
+    localStorage.setItem(historyKey, JSON.stringify(updated));
+    setAttempts(updated);
   };
 
   const handleAnswer = (selected: string) => {
@@ -324,7 +338,7 @@ const PriorityQueueQuiz: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white dark:bg-slate-900 border border-solid border-slate-200 dark:border-slate-800 shadow-md rounded-2xl p-8 max-w-md w-full text-center"
           >
-            <div className="w-14 h-14 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 border border-solid border-orange-500/20">
+            <div className="w-14 h-14 bg-orange-500/10 text-orange-800 dark:text-orange-400 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 border border-solid border-orange-500/20">
               <FaSortAmountUp />
             </div>
             <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight m-0 mb-2">Priority Queue Quiz</h2>
@@ -335,6 +349,7 @@ const PriorityQueueQuiz: React.FC = () => {
               <input
                 type="text"
                 placeholder="Enter your identifier to begin"
+                aria-label="Enter your identifier to begin"
                 value={usernameInput}
                 onChange={(e) => setUsernameInput(e.target.value)}
                 maxLength={24}
@@ -368,7 +383,7 @@ const PriorityQueueQuiz: React.FC = () => {
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-solid border-rose-200 dark:border-rose-950/40 bg-rose-500/5 hover:bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-bold transition-all cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-solid border-rose-200 dark:border-rose-950/40 bg-rose-500/5 hover:bg-rose-500/10 text-rose-800 dark:text-rose-400 text-xs font-bold transition-all cursor-pointer"
             >
               <FaSignOutAlt /> Sign Out
             </button>
@@ -395,7 +410,7 @@ const PriorityQueueQuiz: React.FC = () => {
                       <span className="text-[10px] font-mono tracking-wider text-slate-400 uppercase font-black flex items-center gap-1 justify-end">
                         <FaClock /> Time
                       </span>
-                      <div className="text-base font-mono font-bold text-orange-600 dark:text-orange-400">
+                      <div className="text-base font-mono font-bold text-orange-800 dark:text-orange-400">
                         {formatDuration(timeSpent)}
                       </div>
                     </div>
@@ -417,8 +432,8 @@ const PriorityQueueQuiz: React.FC = () => {
                         QUESTIONS[currentQuestion].difficulty === "Easy"
                           ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
                           : QUESTIONS[currentQuestion].difficulty === "Medium"
-                            ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                            : "bg-rose-500/10 text-rose-600 border-rose-500/20"
+                            ? "bg-amber-500/10 text-amber-800 dark:text-amber-400 border-amber-500/20"
+                            : "bg-rose-500/10 text-rose-800 dark:text-rose-400 border-rose-500/20"
                       }`}>
                         {QUESTIONS[currentQuestion].difficulty}
                       </span>
@@ -428,13 +443,13 @@ const PriorityQueueQuiz: React.FC = () => {
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-3 pt-2">
+                  <div className="grid grid-cols-1 gap-3 pt-2" role="radiogroup" aria-label="Quiz Options">
                     {QUESTIONS[currentQuestion].options.map((option, index) => {
                       const isSelected = selectedOption === option;
                       return (
                         <button
                           key={index}
-                          onClick={() => handleAnswer(option)}
+                          onClick={() => handleAnswer(option)} role="radio" aria-checked={isSelected}
                           className={`w-full text-left p-4 rounded-xl border border-solid transition-all text-xs md:text-sm font-semibold tracking-wide cursor-pointer flex items-center justify-between min-h-[54px] ${
                             isSelected
                               ? "bg-orange-600 border-orange-600 text-white shadow-xs"
@@ -476,7 +491,7 @@ const PriorityQueueQuiz: React.FC = () => {
                   <div className="bg-slate-50 dark:bg-slate-950 border border-solid border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(8,145,178,0.03),transparent_50%)]" />
                     <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight m-0 mb-4">Quiz Results</h3>
-                    <div className="inline-flex items-baseline gap-1 text-5xl font-mono font-black text-orange-600 dark:text-orange-500">
+                    <div className="inline-flex items-baseline gap-1 text-5xl font-mono font-black text-orange-800 dark:text-orange-400">
                       {score}
                       <span className="text-xl text-slate-400 font-sans font-normal">/ {QUESTIONS.length}</span>
                     </div>
@@ -503,7 +518,7 @@ const PriorityQueueQuiz: React.FC = () => {
                             <h5 className="text-sm font-bold text-slate-900 dark:text-white m-0 leading-relaxed max-w-2xl">
                               {index + 1}. {q.question}
                             </h5>
-                            <span className={`text-base shrink-0 ${isCorrect ? "text-emerald-500" : "text-rose-500"}`}>
+                            <span className={`text-base shrink-0 ${isCorrect ? "text-emerald-500" : "text-rose-800 dark:text-rose-400"}`}>
                               {isCorrect ? <FaCheckCircle /> : <FaTimesCircle />}
                             </span>
                           </div>
@@ -531,6 +546,8 @@ const PriorityQueueQuiz: React.FC = () => {
               )}
             </AnimatePresence>
 
+                        
+
             {attempts.length > 0 && (
               <div className="mt-12 border-t border-solid border-slate-200 dark:border-slate-800/80 pt-8 text-left">
                 <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white mb-4">
@@ -554,7 +571,7 @@ const PriorityQueueQuiz: React.FC = () => {
                           </div>
                         </div>
                         <div className="text-right space-y-1">
-                          <div className="font-mono font-black text-sm text-orange-600 dark:text-orange-400">
+                          <div className="font-mono font-black text-sm text-orange-800 dark:text-orange-400">
                             {att.score} <span className="text-[10px] text-slate-400 font-sans font-normal">/ {totalCount}</span>
                           </div>
                           <div className="text-[10px] text-slate-400 font-mono">

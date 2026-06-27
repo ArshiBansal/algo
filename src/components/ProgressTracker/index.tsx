@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-// improt done and undone icons
-import { FaCheckCircle, FaRegCircle } from 'react-icons/fa';
+import React, { useState, useEffect, useCallback } from 'react';
+import clsx from 'clsx';
+import { FiCheckCircle, FiCircle, FiTrendingUp, FiAward } from 'react-icons/fi';
 
 interface Props {
   topicId: string;
@@ -8,9 +8,10 @@ interface Props {
 }
 
 export default function ProgressTracker({ topicId, topicTitle }: Props) {
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [animate, setAnimate] = useState(false);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [animate, setAnimate] = useState<boolean>(false);
 
+  // Safely check and read state from localStorage
   useEffect(() => {
     try {
       const saved = localStorage.getItem('algo_progress');
@@ -18,89 +19,159 @@ export default function ProgressTracker({ topicId, topicTitle }: Props) {
         const progress = JSON.parse(saved);
         setIsCompleted(!!progress[topicId]);
       }
-    } catch (e) {
-      console.error('Error loading progress:', e);
+    } catch (error) {
+      console.error('[Algo Progress] Failed to parse engine storage state:', error);
     }
   }, [topicId]);
 
-  const toggle = () => {
-    const newStatus = !isCompleted;
-    setIsCompleted(newStatus);
-    if (newStatus) {
-      setAnimate(true);
-      setTimeout(() => setAnimate(false), 600);
-    }
+  // Handle local state modification and sync globally
+  const toggleProgress = useCallback(() => {
+    const nextState = !isCompleted;
+    setIsCompleted(nextState);
+    setAnimate(true);
+    
+    setTimeout(() => setAnimate(false), 250);
+
     try {
       const saved = localStorage.getItem('algo_progress');
       const progress = saved ? JSON.parse(saved) : {};
-      progress[topicId] = newStatus;
+      
+      // Sync structured telemetry object schema
+      progress[topicId] = nextState;
       progress[`${topicId}_title`] = topicTitle;
+      progress[`${topicId}_updatedAt`] = new Date().toISOString();
+      
       localStorage.setItem('algo_progress', JSON.stringify(progress));
-      window.dispatchEvent(new CustomEvent('progressUpdated', {
-        detail: { topicId, completed: newStatus, title: topicTitle }
-      }));
-    } catch (e) {
-      console.error('Error saving progress:', e);
+
+      // Dispatch unified pipeline context updates across component domains
+      window.dispatchEvent(
+        new CustomEvent('progressUpdated', {
+          detail: { topicId, completed: nextState, title: topicTitle },
+        })
+      );
+    } catch (error) {
+      console.error('[Algo Progress] Failed to write engine storage state:', error);
     }
-  };
+  }, [isCompleted, topicId, topicTitle]);
 
   return (
-    <div style={{
-      margin: '28px 0 12px',
-      padding: '14px 20px',
-      background: isCompleted
-        ? 'linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%)'
-        : 'linear-gradient(135deg, #e8f0fe 0%, #f0f4ff 100%)',
-      borderRadius: '10px',
-      border: `1.5px solid ${isCompleted ? '#81c784' : '#4a90d9'}`,
-      display: 'flex',
-      alignItems: 'center',
-      gap: '14px',
-      transition: 'all 0.4s ease',
-      boxShadow: isCompleted
-        ? '0 2px 8px rgba(76,175,80,0.12)'
-        : '0 2px 8px rgba(74,144,217,0.12)'
-    }}>
+    <div
+      className={clsx('no-print margin-top--lg')}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px',
+        padding: '14px 20px',
+        borderRadius: '12px',
+        border: '1px solid var(--ifm-color-emphasis-200)',
+        backgroundColor: 'var(--ifm-card-background-color)',
+        boxShadow: 'var(--ifm-global-shadow-sm)',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      }}
+    >
+      {/* Informational Tracking Metadata Section */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: '260px' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '36px',
+            width: '36px',
+            borderRadius: '8px',
+            backgroundColor: isCompleted ? 'rgba(16, 185, 129, 0.1)' : 'var(--ifm-color-emphasis-100)',
+            border: `1px solid ${isCompleted ? 'rgba(16, 185, 129, 0.2)' : 'var(--ifm-color-emphasis-200)'}`,
+            color: isCompleted ? 'var(--ifm-color-success)' : 'var(--ifm-color-primary)',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          {isCompleted ? <FiAward size={18} /> : <FiTrendingUp size={18} />}
+        </div>
+
+        <div>
+          <span
+            style={{
+              display: 'block',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              opacity: 0.5,
+            }}
+          >
+            Telemetry Integration
+          </span>
+          <p
+            style={{
+              margin: 0,
+              fontSize: '0.9rem',
+              fontWeight: isCompleted ? 600 : 500,
+              color: isCompleted ? 'var(--ifm-color-success-darker)' : 'var(--ifm-heading-color)',
+            }}
+          >
+            {isCompleted ? (
+              <span>🎉 Optimization Mastered! Node checkpoint successfully compiled.</span>
+            ) : (
+              <span>Completed working through this block? Sync progress to workspace.</span>
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* Modern High-Fidelity Button Interface */}
       <button
-        onClick={toggle}
+        type="button"
+        onClick={toggleProgress}
         style={{
-          background: isCompleted
-            ? 'linear-gradient(135deg, #43a047, #2e7d32)'
-            : 'linear-gradient(135deg, #1976d2, #1565c0)',
-          color: 'white',
-          padding: '9px 20px',
-          border: 'none',
-          borderRadius: '7px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '8px',
+          padding: '8px 16px',
+          fontSize: '0.85rem',
+          fontWeight: 700,
+          borderRadius: '10px',
           cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '600',
-          letterSpacing: '0.3px',
-          boxShadow: isCompleted
-            ? '0 3px 8px rgba(46,125,50,0.35)'
-            : '0 3px 8px rgba(21,101,192,0.35)',
-          transform: animate ? 'scale(1.08)' : 'scale(1)',
-          transition: 'all 0.3s ease',
-          whiteSpace: 'nowrap' as const
+          whiteSpace: 'nowrap',
+          border: '1px solid transparent',
+          backgroundColor: isCompleted ? 'var(--ifm-color-success)' : 'var(--ifm-color-emphasis-100)',
+          color: isCompleted ? '#ffffff' : 'var(--ifm-heading-color)',
+          borderColor: isCompleted ? 'var(--ifm-color-success-dark)' : 'var(--ifm-color-emphasis-300)',
+          transform: animate ? 'scale(0.96)' : 'scale(1)',
+          boxShadow: isCompleted ? '0 4px 12px rgba(16, 185, 129, 0.15)' : 'none',
+          transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        }}
+        onMouseEnter={(e) => {
+          if (!isCompleted) {
+            e.currentTarget.style.backgroundColor = 'var(--ifm-color-emphasis-200)';
+            e.currentTarget.style.borderColor = 'var(--ifm-color-emphasis-400)';
+          } else {
+            e.currentTarget.style.opacity = '0.9';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!isCompleted) {
+            e.currentTarget.style.backgroundColor = 'var(--ifm-color-emphasis-100)';
+            e.currentTarget.style.borderColor = 'var(--ifm-color-emphasis-300)';
+          } else {
+            e.currentTarget.style.opacity = '1';
+          }
         }}
       >
-        {isCompleted ? <><FaCheckCircle className='w-3 h-3' /> <span>Completed!</span></> : <><FaRegCircle className='w-3 h-3' /> <span>Mark as Complete</span></>}
+        {isCompleted ? (
+          <>
+            <FiCheckCircle size={16} strokeWidth={2.5} />
+            <span>Mastery Verified</span>
+          </>
+        ) : (
+          <>
+            <FiCircle size={16} strokeWidth={2.5} />
+            <span>Commit to Profile</span>
+          </>
+        )}
       </button>
-      {isCompleted ? (
-        <span style={{
-          color: '#2e7d32',
-          fontWeight: '600',
-          fontSize: '14px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px'
-        }}>
-          🎉 Great work! Topic mastered.
-        </span>
-      ) : (
-        <span style={{ color: '#1565c0', fontSize: '13px', opacity: 0.8 }}>
-          Finished reading? Mark this topic as complete.
-        </span>
-      )}
     </div>
   );
 }

@@ -35,8 +35,8 @@ const QUIZZES_CONFIG: QuizCardConfig[] = [
     title: "Quiz on Queues",
     category: "Linear",
     description: "Challenge your skills on asynchronous FIFO task piping, sliding window architectures, priority schedulers, and circular double-ended buffers.",
-    path: "/quizzes/queues",
-    questionCount: 10
+    path: "/quizzes/queue",
+    questionCount: 16
   },
    {
     id: "linked-lists",
@@ -119,6 +119,38 @@ const QUIZZES_CONFIG: QuizCardConfig[] = [
     path: "/quizzes/b-tree",
     questionCount: 10
   },
+    {
+    id: "bplus-trees",
+    title: "Quiz on B+ Trees",
+    category: "Disk Storage",
+    description: "Test your knowledge of internal vs leaf node organization, range queries, linked leaf nodes, and database indexing applications.",
+    path: "/quizzes/bplus-tree",
+    questionCount: 12
+  },
+  {
+    id: "isam",
+    title: "Quiz on ISAM",
+    category: "Disk Storage",
+    description: "Evaluate static indexing concepts, overflow pages, search performance trade-offs, and how ISAM compares to dynamic B-Tree structures.",
+    path: "/quizzes/isam",
+    questionCount: 12
+  },
+  {
+    id: "hash-indexing",
+    title: "Quiz on Hash Indexing",
+    category: "Disk Storage",
+    description: "Test your understanding of static and dynamic hashing, extendible and linear hashing, and collision handling techniques.",
+    path: "/quizzes/hash-indexing",
+    questionCount: 12
+  },
+  {
+    id: "external-hashing",
+    title: "Quiz on External Hashing",
+    category: "Disk Storage",
+    description: "Assess your knowledge of bucket organization, disk block management, overflow handling, and disk-based performance analysis.",
+    path: "/quizzes/external-hashing",
+    questionCount: 12
+  },
   {
     id: "graphs",
     title: "Quiz on Graphs",
@@ -139,8 +171,8 @@ const Quizes: React.FC = () => {
     switch (category) {
       case "Linear": return "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20";
       case "Non-Linear": return "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20";
-      case "Balanced Tree": return "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20";
-      case "Disk Storage": return "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20";
+      case "Balanced Tree": return "bg-amber-500/10 text-amber-800 dark:text-amber-400 border-amber-500/20";
+      case "Disk Storage": return "bg-rose-500/10 text-rose-800 dark:text-rose-400 border-rose-500/20";
     }
   };
 
@@ -203,6 +235,7 @@ const Quizes: React.FC = () => {
               <input
                 type="text"
                 placeholder="Search specific structure queries..."
+                aria-label="Search specific structure queries..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full py-2.5 pl-10 pr-4 border border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-[var(--ifm-color-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs"
@@ -224,7 +257,7 @@ const Quizes: React.FC = () => {
                           : "border-slate-200/80 bg-white dark:bg-slate-950 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-[var(--ifm-color-primary)] hover:text-[var(--ifm-color-primary)]"
                       }`}
                     >
-                      {cat === "All" ? "All Frameworks" : cat}
+                      {cat === "All" ? "All Quizzes" : cat}
                     </button>
                   );
                 })}
