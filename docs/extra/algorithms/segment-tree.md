@@ -21,6 +21,17 @@ import TabItem from '@theme/TabItem';
 
 A **Segment Tree** is an advanced data structure that allows you to efficiently perform **range queries** and **point updates** on an array — operations that would take O(n) per query with brute force, reduced to O(log n) with a Segment Tree.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="-dUiRtJ8ot0"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Segment Tree: Build and Query | Live Coding.."
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## 🧠 Why Segment Tree?
@@ -710,6 +721,14 @@ public:
 - **Competitive programming** — Most Codeforces Div. 1 problems involving range queries
 - **Geographic Information Systems (GIS)** — Range queries on spatial data
 - **Network routing** — Finding minimum latency path in a range
+
+---
+
+## 🔗 Related Topics
+
+- **[Disjoint Set Union (DSU)](./disjoint-set-union.md)**: Manages dynamic connectivity and equivalence relations ($O(\alpha(N))$).
+- **[Trie](./trie.md)**: Tree structure specialized for efficient prefix lookup and string operations ($O(K)$).
+- **[Dijkstra's Algorithm](./dijkstras-algorithm.md)**: Priority-queue based shortest path algorithm on graphs ($O((V+E) \log V)$).
 
 ---
 

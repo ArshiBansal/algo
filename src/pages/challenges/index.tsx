@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useLocation } from "@docusaurus/router";
 import { motion, AnimatePresence } from "framer-motion";
 import Layout from "@theme/Layout";
 import {
@@ -7,6 +8,8 @@ import {
 } from "react-icons/fa";
 import ChallengeCard from "../../components/ChallengeCard";
 import challengeData from "../../data/challengeData";
+import WeeklyChallengeSpotlight from "../../components/WeeklyChallengeSpotlight";
+import DailyChallengeWidget from "../../components/DailyChallengeWidget";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,9 +30,18 @@ const DIFF_PILL: Record<string, string> = {
 };
 
 const Challenges: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const location = useLocation();
+  const categoryFromQuery = new URLSearchParams(location.search).get("category");
+  const initialCategory = CATEGORIES.find(
+    (category) => category.toLowerCase() === categoryFromQuery?.toLowerCase()
+  ) || "All";
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
   const [activeDifficulty, setActiveDifficulty] = useState<string>("All");
   const [search, setSearch] = useState<string>("");
+
+  useEffect(() => {
+    setActiveCategory(initialCategory);
+  }, [initialCategory]);
 
   const treeChallenges = useMemo(
     () => (challengeData as any[]).filter((c) => c.category === "Trees"),
@@ -212,6 +224,15 @@ const Challenges: React.FC = () => {
         )}
 
         <section className="py-10 px-6 md:px-12 max-w-6xl mx-auto space-y-6">
+
+          {/* ── Daily + Weekly challenge spotlight row ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            {/* Daily Challenge — resets every day */}
+            <DailyChallengeWidget />
+
+            {/* Weekly Challenge — resets every Monday, with live countdown */}
+            <WeeklyChallengeSpotlight />
+          </div>
 
           {/* Filter Bar */}
           <div className="flex flex-col sm:flex-row gap-4">

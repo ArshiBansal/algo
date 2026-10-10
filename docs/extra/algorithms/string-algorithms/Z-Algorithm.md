@@ -9,6 +9,17 @@ tags: [pattern matching, string algorithms, competitive programming]
 
 In computer science, the **Z-Algorithm** is an efficient linear-time algorithm used for pattern matching in strings. It computes an array Z for a given string S, where Z[i] contains the length of the longest substring starting from S[i] that is also a prefix of S. The Z-Algorithm is widely used in competitive programming and string matching applications.
 
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="CpZh4eF8QBw"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Z Algorithm Z values"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 <AdsComponent />
 
 ## Definition:
@@ -169,3 +180,9 @@ Efficiently find all occurrences of a pattern in a string, which is useful in so
 
 ### Prefix-Suffix Problems:
 Can be used to find all prefixes of a string that are also suffixes, which is helpful in problems like finding palindromes and string periodicity.
+
+## Related Topics
+
+- **[KMP Algorithm](./kmp-algorithm.md)**: Equivalent linear-time matching using failure function instead of Z-array.
+- **[Manacher's Algorithm](./manacher-algorithm.md)**: Linear-time palindrome detection using similar prefix-expansion logic.
+- **[Rabin-Karp Algorithm](./rabin-karp-algorithms.md)**: Hash-based string matching alternative ($O(N + M)$ average).

@@ -1,9 +1,19 @@
 ---
 id: maximal-rectangle
-title: "Maximal Rectangle"
+title: Maximal Rectangle
 sidebar_label: Maximal Rectangle
-description: "Finding the largest rectangle containing only 1's in a binary matrix using a monotonic stack approach."
-tags: [DSA, leetcode, array, dynamic-programming, stack, monotonic-stack]
+description: >-
+  Finding the largest rectangle containing only 1's in a binary matrix using a
+  monotonic stack approach.
+tags:
+  - DSA
+  - leetcode
+  - array
+  - dynamic-programming
+  - stack
+  - monotonic-stack
+companies:
+  - Google
 ---
 
 import MaximalRectangleVisualizer from '@site/src/components/Visualizing/maximal-rectangle-visualizer';
@@ -28,6 +38,16 @@ Output: `0`
 Input: `matrix = [["1"]]`
 Output: `1`
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="9u2BJfmWNEg"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Lecture 57: Stack - Celebrity Problem && Max Rectangle in Binary Matrix with all 1's"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -46,9 +66,11 @@ This problem is an extension of the "Largest Rectangle in Histogram" problem. We
 * **Time Complexity:** $O(R \times C)$ where $R$ is the number of rows and $C$ is the number of columns. We visit each cell a constant number of times while updating heights and processing the stack.
 * **Space Complexity:** $O(C)$ because we use an array of size $C + 1$ to store the heights and a stack that can grow up to size $C$.
 
-#### Solutions:
+## Solutions
 
-**C++**
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
 ```cpp
 class Solution {
 public:
@@ -81,7 +103,9 @@ public:
 };
 ```
 
-**Java**
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public int maximalRectangle(char[][] matrix) {
@@ -116,8 +140,10 @@ class Solution {
 }
 ```
 
-**Python**
-```py
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
 class Solution:
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         if not matrix or not matrix[0]: 
@@ -142,8 +168,10 @@ class Solution:
         return max_area
 ```
 
-**JavaScript**
-```js
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
 /**
  * @param {character[][]} matrix
  * @return {number}
@@ -174,3 +202,6 @@ const maximalRectangle = function(matrix) {
     return maxArea;
 };
 ```
+
+  </TabItem>
+</Tabs>

@@ -13,6 +13,16 @@ import RelatedTopics from '@site/src/components/RelatedTopics';
 
 A **LinkedList** is a linear data structure in which elements are stored in nodes, and each node points to the next node, forming a chain. Imagine a train where each car is connected to the next car, but you can only move forward through the train. Each car contains passengers (data) and has a coupling (pointer) that connects it to the next car.
 
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="oAja8-Ulz6o"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Introduction to Linked List | Data Structures & Algorithms | Java Placement Course"
+  lazyLoad={true}
+  webp
+/>
+
 ### Definition and Structure
 A linked list consists of nodes, where each node contains:
 - **Data:** The value stored in the node.
@@ -420,17 +430,17 @@ class LinkedList {
 }
 ```
 
-### Complexity
+### Complexity Cheat Sheet
 
-- **Time Complexity**:
-
-  - Insertion at the Beginning: $O(1)$
-  - Insertion at the End: $O(n)$
-  - Deletion by Value: $O(n)$
-  - Search for a Node by Value: $O(n)$
-  - Traversal (Print the List): $O(n)$
-
-- **Space Complexity**: $O(n)$, where $n$ is the number of nodes.
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Insertion (Beginning)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Insertion (End)** | $O(1)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Deletion (Beginning)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Deletion (By Value / End)** | $O(1)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Search (By Value)** | $O(1)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Traversal** | $O(n)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Overall Storage** | - | - | - | $O(n)$ |
 
 ### Example
 

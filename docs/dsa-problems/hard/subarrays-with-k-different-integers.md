@@ -1,9 +1,18 @@
 ---
 id: subarrays-with-k-different-integers
-title: "Subarrays with K Different Integers"
+title: Subarrays with K Different Integers
 sidebar_label: Subarrays with K Different Integers
-description: "Finding the number of subarrays with exactly K different integers using the sliding window approach."
-tags: [DSA, leetcode, array, sliding-window, hash-table]
+description: >-
+  Finding the number of subarrays with exactly K different integers using the
+  sliding window approach.
+tags:
+  - DSA
+  - leetcode
+  - array
+  - sliding-window
+  - hash-table
+companies:
+  - Microsoft
 ---
 
 ## Description:
@@ -26,6 +35,16 @@ Input: `nums = [1,2,1,3,4]`, `k = 3`
 Output: `3`
 **Explanation:** Subarrays formed with exactly 3 different integers: [1,2,1,3], [2,1,3], [1,3,4].
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="7wYGbV_LsX4"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L11. Subarray with k different integers | 2 Pointers and Sliding Window Playlist"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -47,9 +66,11 @@ $Exact(K) = AtMost(K) - AtMost(K-1)$
 * **Time Complexity:** $O(N)$ where $N$ is the number of elements in `nums`. Both the `left` and `right` pointers traverse the array at most once in the `atMost` helper function.
 * **Space Complexity:** $O(N)$ in the worst-case scenario to store the frequencies of the elements in a hash map.
 
-#### Solutions:
+## Solutions
 
-**C++**
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
 ```cpp
 class Solution {
 public:
@@ -78,7 +99,9 @@ private:
 };
 ```
 
-**Java**
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public int subarraysWithKDistinct(int[] nums, int k) {
@@ -107,8 +130,10 @@ class Solution {
 }
 ```
 
-**Python**
-```py
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
 class Solution:
     def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
         return self.atMost(nums, k) - self.atMost(nums, k - 1)
@@ -131,8 +156,10 @@ class Solution:
         return res
 ```
 
-**JavaScript**
-```js
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
 /**
  * @param {number[]} nums
  * @param {number} k
@@ -165,3 +192,6 @@ const subarraysWithKDistinct = function(nums, k) {
     return atMost(k) - atMost(k - 1);
 };
 ```
+
+  </TabItem>
+</Tabs>

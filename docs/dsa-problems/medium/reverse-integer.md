@@ -1,13 +1,32 @@
 ---
 id: reverse-integer
-title: "Reverse Integer"
+title: Reverse Integer
 sidebar_label: Reverse Integer
-description: "This document explains the Reverse Integer problem, including its description, approach, and implementation."
-tags: [dsa, algorithms, problem-solving, math]
+description: >-
+  This document explains the Reverse Integer problem, including its description,
+  approach, and implementation.
+tags:
+  - dsa
+  - algorithms
+  - problem-solving
+  - math
+companies:
+  - Apple
 ---
 
 ## Problem Statement
 Given a signed 32-bit integer `x`, return `x` with its digits reversed. If reversing `x` causes the value to go outside the signed 32-bit integer range `[-2^31, 2^31 - 1]`, then return `0`.
+
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="0fwrMYPcGQ0"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Lecture 7: LeetCode Problem Solving Session"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
 
 ## Approach
 To reverse an integer, we can repeatedly extract the last digit using the modulo operator (`% 10`) and append it to our reversed number by multiplying the current reversed number by 10 and adding the extracted digit. 
@@ -30,7 +49,32 @@ To reverse an integer, we can repeatedly extract the last digit using the modulo
 4. **Return**:  
    - Restore the sign and return `reversed_num`.
 
-## Java Implementation
+## Solutions
+
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
+```cpp
+#include <climits>
+
+class Solution {
+public:
+    int reverse(int x) {
+        int reversed_num = 0;
+        while (x != 0) {
+            int digit = x % 10;
+            x /= 10;
+            if (reversed_num > INT_MAX / 10 || (reversed_num == INT_MAX / 10 && digit > 7)) return 0;
+            if (reversed_num < INT_MIN / 10 || (reversed_num == INT_MIN / 10 && digit < -8)) return 0;
+            reversed_num = reversed_num * 10 + digit;
+        }
+        return reversed_num;
+    }
+};
+```
+
+  </TabItem>
+  <TabItem value="java" label="Java">
 
 ```java
 class Solution {
@@ -57,7 +101,8 @@ class Solution {
 }
 ```
 
-## Python Implementation
+  </TabItem>
+  <TabItem value="python" label="Python">
 
 ```python
 class Solution:
@@ -82,28 +127,8 @@ class Solution:
         return reversed_num
 ```
 
-## C++ Implementation
-
-```cpp
-#include <climits>
-
-class Solution {
-public:
-    int reverse(int x) {
-        int reversed_num = 0;
-        while (x != 0) {
-            int digit = x % 10;
-            x /= 10;
-            if (reversed_num > INT_MAX / 10 || (reversed_num == INT_MAX / 10 && digit > 7)) return 0;
-            if (reversed_num < INT_MIN / 10 || (reversed_num == INT_MIN / 10 && digit < -8)) return 0;
-            reversed_num = reversed_num * 10 + digit;
-        }
-        return reversed_num;
-    }
-};
-```
-
-## JavaScript Implementation
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
 
 ```javascript
 /**
@@ -135,5 +160,5 @@ var reverse = function(x) {
 };
 ```
 
-Time Complexity: $O(log(x))$ <br /> 
-Space Complexity: $O(1)$
+  </TabItem>
+</Tabs>

@@ -1,15 +1,26 @@
 ---
-
 id: levenshtein-distance-algorithm
 sidebar_position: 19
 title: Levenshtein Distance Algorithm
 sidebar_label: Levenshtein Distance Algorithm
-
+description: "Detailed guide on Levenshtein Distance Edit Distance algorithm implementation."
+tags: [string algorithms, edit distance, dynamic programming, dsa]
 ---
 
 ### Definition:
 
 The Levenshtein Distance Algorithm, also known as Edit Distance, calculates the minimum number of single-character operations (insertions, deletions, or substitutions) required to transform one string into another. Developed by Vladimir Levenshtein in 1965, it is widely used in spell checking, DNA sequence analysis, and natural language processing.
+
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="We3YDTzNXEk"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Minimum Edit Distance Dynamic Programming"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
 
 ### Characteristics:
 
@@ -370,3 +381,9 @@ The algorithm's strength lies in its ability to handle different types of string
 The practical applications span multiple domains, from text processing and spell checking to bioinformatics and natural language processing. Its ability to quantify string similarity makes it a fundamental tool in many modern applications requiring fuzzy string matching or error tolerance.
 
 The algorithm's versatility in handling different requirements through customizable operation costs and various implementation options makes it adaptable to different use cases while maintaining its fundamental efficiency in measuring string similarity and edit distances.
+
+## Related Topics
+
+- **[LCS Algorithm](./lcs-algorithm.md)**: Longest Common Subsequence — related DP approach for string similarity.
+- **[Dynamic Programming](../../dynamic-programming/how-to-identify.md)**: Levenshtein is a classic 2D DP problem ($O(N \cdot M)$).
+- **[Needleman-Wunsch Algorithm](./needleman-wunsch-algorithm.md)**: Sequence alignment extension of edit distance used in bioinformatics.

@@ -1,15 +1,26 @@
 ---
-
 id: quick-sort-algo  
 sidebar_position: 5  
 title: Quick Sort  
-sidebar_label: Quick Sort  
-
+sidebar_label: Quick Sort
+description: "Complete guide on Quick Sort divide-and-conquer sorting algorithm implementation."
+tags: [sorting algorithms, quick sort, dsa, algorithms]
 ---
 
 ### Definition:
 
 Quick sort is a **divide-and-conquer** sorting algorithm that works by selecting a 'pivot' element from the array and partitioning the other elements into two subarrays, according to whether they are less than or greater than the pivot. The subarrays are then recursively sorted. This process of partitioning and sorting leads to a highly efficient sorting algorithm.
+
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="7h1s2SojIRw"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="2.8.1 QuickSort Algorithm"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
 
 ### Characteristics:
 
@@ -207,3 +218,16 @@ Use Quick Sort when:
 - Incorrect partition logic causing unsorted output → verify Lomuto/Hoare boundary conditions
 - Deep recursion causing stack overflow for large datasets → apply **tail recursion elimination** (recurse on smaller partition only)
 - Not handling duplicate values efficiently → consider 3-way partition for duplicate-heavy data
+
+## Common Interview Questions
+
+- **Kth Largest Element in an Array (LeetCode 215)**: Solve using the QuickSelect algorithm (based on Quick Sort's partitioning steps). [Problem Link](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+- **Sort Colors (LeetCode 75)**: Sort an array with 0s, 1s, and 2s using 3-way Quick Sort partitioning. [Problem Link](https://leetcode.com/problems/sort-colors/)
+- **K Closest Points to Origin (LeetCode 973)**: Find the $k$ closest points using QuickSelect for $O(n)$ average time complexity. [Problem Link](https://leetcode.com/problems/k-closest-points-to-origin/)
+
+
+## Related Topics
+
+- **[Merge Sort](./MergeSort.mdx)**: Stable divide-and-conquer sort with guaranteed $O(N \log N)$ worst case.
+- **[Heap Sort](./HeapSort.md)**: In-place $O(N \log N)$ sort using a binary heap.
+- **[Selection Sort](./SelectionSort.md)**: Simple in-place comparison sort ($O(N^2)$) useful for small arrays.
