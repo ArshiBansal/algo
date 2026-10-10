@@ -255,7 +255,7 @@ const UserTestimonialsSection: React.FC = () => {
       </div>
 
       {/* Swiper styles */}
-      <style jsx global>{`
+      <style>{`
         .testimonial-swiper .swiper-wrapper {
           transition-timing-function: linear !important;
         }

@@ -15,6 +15,17 @@ Topological Sorting is a graph-based algorithm used to order vertices of a **Dir
 ## Introduction
 In **Topological Sorting**, vertices of a DAG are arranged in a sequence such that every directed edge points from an earlier vertex to a later one in the sequence. This algorithm is applicable only for **DAGs**, as the presence of a cycle would violate the ordering.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="dis_c84ejhQ"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="6.10 Topological Sorting (with Examples) | How to find all Topological Orderings of a Graph"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ## Characteristics of Topological Sorting Algorithm
 - **Linear Ordering**: Topological sorting produces a linear sequence that respects the directed edges.
 - **Acyclic Graph**: Works only with **DAGs** (Directed Acyclic Graphs).
@@ -92,3 +103,9 @@ Each vertex and edge is visited exactly once, making the algorithm linear.
 ## Conclusion
 Topological Sorting is a fundamental algorithm used in many real-world applications such as task scheduling, dependency resolution, and compiler optimization. Understanding how to implement and apply this algorithm is essential for working with Directed Acyclic Graphs (DAGs) in graph theory and computer science. Its linear time complexity makes it efficient for large-scale problems, and its ability to detect cycles ensures that tasks are organized correctly in the absence of cyclic dependencies.
 
+
+## Related Topics
+
+- **[Depth-First Search (DFS)](../../algorithms/Searching%20Algorithms/Depth-First-Search-%28DFS%29-Algo.md)**: DFS-based approach drives the recursive topological sort ($O(V + E)$).
+- **[Breadth-First Search (BFS)](../../algorithms/Searching%20Algorithms/Breadth-First-Search-%28BFS%29-Algo.md)**: Kahn's algorithm uses BFS with in-degree tracking ($O(V + E)$).
+- **[Disjoint Set Union (DSU)](../disjoint-set-union.md)**: Used for cycle detection in directed graphs ($O(\alpha(N))$).

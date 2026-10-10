@@ -30,6 +30,16 @@ Input: `text = "leetcode"`
 Output: `0`
 **Explanation:** We cannot form the word "balloon".
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="G9xeB2-7PqY"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Maximum Number of Balloons - Leetcode 1189 - Python"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -55,9 +65,11 @@ The word **"balloon"** requires:
 
 ---
 
-## Solutions:
+## Solutions
 
-### C++
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
 ```cpp
 class Solution {
 public:
@@ -81,7 +93,9 @@ public:
 };
 ```
 
-### Java
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public int maxNumberOfBalloons(String text) {
@@ -101,8 +115,10 @@ class Solution {
 }
 ```
 
-### Python
-```py
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
 from collections import Counter
 
 class Solution:
@@ -120,8 +136,10 @@ class Solution:
         )
 ```
 
-### JavaScript
-```js
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
 /**
  * @param {string} text
  * @return {number}
@@ -146,3 +164,6 @@ var maxNumberOfBalloons = function(text) {
     );
 };
 ```
+
+  </TabItem>
+</Tabs>

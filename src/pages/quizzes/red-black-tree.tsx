@@ -15,6 +15,8 @@ import {
 } from "react-icons/fa";
 
 // Existing custom quiz sub-components (assumed available in your project)
+import { saveQuizAttemptLocal } from "../../utils/safeStorage";
+import { getQuizAttempts } from "../../utils/progressStore";
 
 interface RBTQuestion {
   id: number;
@@ -26,12 +28,12 @@ interface RBTQuestion {
 }
 
 interface AttemptRecord {
-  timestamp: number;
   score: number;
   timeSpent: number;
+  completedAt: string;
 }
 
-const QUESTIONS: RBTQuestion[] = [
+export const QUESTIONS: RBTQuestion[] = [
   {
     id: 1,
     difficulty: "Easy",
@@ -157,11 +159,10 @@ const RedBlackTreeQuiz: React.FC = () => {
   // Initialize from LocalStorage
   useEffect(() => {
     setIsMounted(true);
-    const savedUser = localStorage.getItem("rbt_quiz_user");
+    const savedUser = localStorage.getItem("quiz_username");
     if (savedUser) {
       setUsername(savedUser);
-      const savedHistory = localStorage.getItem(`rbt_history_${savedUser}`);
-      if (savedHistory) setHistory(JSON.parse(savedHistory));
+      setHistory(getQuizAttempts("red-black-trees") as AttemptRecord[]);
     }
   }, []);
 
@@ -176,23 +177,19 @@ const RedBlackTreeQuiz: React.FC = () => {
     return userAnswers.reduce((acc, ans, idx) => (ans === QUESTIONS[idx]?.answer ? acc + 1 : acc), 0);
   }, [userAnswers]);
 
-  const handleKeyDown = (e: React.KeyboardEvent, option: string) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleRegister(option);
-    }
-  };
-
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!usernameInput.trim()) return;
-    localStorage.setItem("rbt_quiz_user", usernameInput.trim());
-    setUsername(usernameInput.trim());
+    const cleanName = usernameInput.trim();
+    localStorage.setItem("quiz_username", cleanName);
+    setUsername(cleanName);
+    setHistory(getQuizAttempts("red-black-trees") as AttemptRecord[]);
   };
-
   const handleLogout = () => {
-    localStorage.removeItem("rbt_quiz_user");
+    localStorage.removeItem("quiz_username");
     setUsername(null);
+    setUsernameInput("");
+    setHistory([]);
     handleRetry();
   };
 
@@ -207,10 +204,12 @@ const RedBlackTreeQuiz: React.FC = () => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResult(true);
-      const newAttempt = { timestamp: Date.now(), score, timeSpent };
+      const newAttempt = { score, timeSpent, completedAt: new Date().toISOString() };
       const updatedHistory = [newAttempt, ...history].slice(0, 5);
       setHistory(updatedHistory);
-      localStorage.setItem(`rbt_history_${username}`, JSON.stringify(updatedHistory));
+      if (username) {
+        saveQuizAttemptLocal(username.toLowerCase(), "red-black-trees", newAttempt);
+      }
     }
   };
 
@@ -269,7 +268,7 @@ const RedBlackTreeQuiz: React.FC = () => {
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-10 shadow-xl overflow-hidden relative">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 rounded-bl-full -mr-10 -mt-10 pointer-events-none"></div>
+             <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 rounded-bl-full -mr-10 -mt-10 pointer-events-none" />
 
             <AnimatePresence mode="wait">
               {!showResult ? (
@@ -297,7 +296,7 @@ const RedBlackTreeQuiz: React.FC = () => {
                           className={`w-full text-left p-5 rounded-2xl border-2 transition-all flex items-center justify-between group cursor-pointer ${userAnswers[currentQuestion] === opt ? 'bg-red-600/5 border-red-600 dark:bg-red-600/10' : 'bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 hover:border-red-600/50'}`}>
                           <span className={`text-sm md:text-base font-semibold ${userAnswers[currentQuestion] === opt ? 'text-red-800 dark:text-red-400' : 'text-slate-700 dark:text-slate-300'}`}>{opt}</span>
                           <div className={`w-5 h-5 rounded-full border-2 ${userAnswers[currentQuestion] === opt ? 'border-red-600 bg-red-600' : 'border-slate-300 dark:border-slate-600 group-hover:border-red-600/50'}`}>
-                            {userAnswers[currentQuestion] === opt && <div className="w-2 h-2 bg-white rounded-full m-auto mt-1"></div>}
+                            {userAnswers[currentQuestion] === opt && <div className="w-2 h-2 bg-white rounded-full m-auto mt-1" />}
                           </div>
                         </button>
                       ))}
@@ -363,7 +362,7 @@ const RedBlackTreeQuiz: React.FC = () => {
                   {history.map((h, i) => (
                     <div key={i} className="bg-slate-100/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex justify-between items-center group hover:border-red-600/30 transition-all">
                       <div className="space-y-1">
-                        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-tighter">{new Date(h.timestamp).toLocaleString(undefined, {dateStyle: 'short', timeStyle: 'short'})}</div>
+                        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-tighter">{new Date(h.completedAt).toLocaleString(undefined, {dateStyle: 'short', timeStyle: 'short'})}</div>
                         <div className="text-xs font-black text-slate-700 dark:text-slate-200 uppercase">RUN_#{history.length - i}</div>
                       </div>
                       <div className="text-right">

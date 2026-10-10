@@ -2,7 +2,9 @@
 id: bfs-algo  
 sidebar_position: 6
 title: Breadth-First Search  
-sidebar_label: BFS  
+sidebar_label: BFS
+description: "Overview and implementation of Breadth-First Search (BFS) graph traversal algorithm."
+tags: [searching algorithms, bfs, graph algorithms, dsa]
 ---
 
 ### Definition:
@@ -19,6 +21,16 @@ sidebar_label: BFS
 
 - **Complete Exploration:**
   BFS continues to search until all the nodes of the graph are visited.
+
+### Video Explanation 
+
+<LiteYouTubeEmbed
+  id="pcKY4hjDrxk"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="5.1 Graph Traversals - BFS & DFS - Breadth First Search and Depth First Search"
+  lazyLoad={true}
+  webp
+/>
 
 ### How BFS Works:
 
@@ -139,3 +151,9 @@ BFS helps identify connected components in undirected graphs.
 
 ### Summary:
 BFS is a fundamental algorithm for graph traversal and plays a crucial role in various applications like shortest path finding and level-order traversal. Its systematic approach ensures that all nodes at the current level are explored before moving deeper, making it invaluable for many graph-related
+
+## Related Topics
+
+- **[Depth-First Search (DFS)](./Depth-First-Search-%28DFS%29-Algo.md)**: Graph traversal exploring deeply along branches using stacks/recursion ($O(V + E)$).
+- **[Dijkstra's Algorithm](../dijkstras-algorithm.md)**: Weighted shortest path algorithm extending BFS with priority queues ($O((V + E) \log V)$).
+- **[Queue Data Structure](../../Queue/circular-queue.md)**: FIFO data structure underlying Breadth-First Search.

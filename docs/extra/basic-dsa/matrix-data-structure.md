@@ -9,6 +9,17 @@ tags: [dsa, Matrix, DataStructure]
 
 A **matrix** is a two-dimensional data structure that consists of rows and columns, forming a rectangular arrangement of numbers or other elements. Matrices are widely used in mathematics, computer science, engineering, and various applications such as graphics, machine learning, and optimization.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="WrhQ-dIZ3nk"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Deep Dive into the Matrix Data Structure"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ## Key Characteristics
 
 1. **Dimensions**: A matrix is defined by its dimensions, expressed as `m x n`, where `m` is the number of rows and `n` is the number of columns. For example, a matrix with 3 rows and 4 columns is referred to as a `3 x 4` matrix.
@@ -74,6 +85,17 @@ Matrices are used in various fields and applications, including:
 - **Machine Learning**: In algorithms involving linear regression, neural networks, and more.
 - **Physics and Engineering**: To model systems and solve equations.
 - **Statistics**: In multivariate analysis and data representation.
+
+## Complexity Cheat Sheet
+
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Element Access `[r][c]`** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Element Search (Unsorted)** | $O(1)$ | $O(R \times C)$ | $O(R \times C)$ | $O(1)$ |
+| **Matrix Addition / Subtraction** | $O(R \times C)$ | $O(R \times C)$ | $O(R \times C)$ | $O(R \times C)$ |
+| **Matrix Multiplication** | $O(N^3)$ | $O(N^3)$ | $O(N^3)$ | $O(N^2)$ |
+| **Matrix Transpose** | $O(R \times C)$ | $O(R \times C)$ | $O(R \times C)$ | $O(R \times C)$ |
+| **Overall Matrix Storage** | - | - | - | $O(R \times C)$ |
 
 ## Conclusion
 

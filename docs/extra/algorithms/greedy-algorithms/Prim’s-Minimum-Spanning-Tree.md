@@ -9,6 +9,16 @@ tags: [dsa, algorithms, greedy algorithms, graph algorithms]
 ### Definition:
 Prim's Minimum Spanning Tree (MST) is a greedy algorithm that finds the Minimum Spanning Tree for a weighted undirected graph. The MST is a subset of the graph that includes all the vertices and the minimum possible total edge weight without forming any cycles. Prim's algorithm starts with an arbitrary node and grows the MST by adding the shortest edge from the tree to a new vertex, ensuring all vertices are eventually included.
 
+### Video Explanation 
+
+<LiteYouTubeEmbed
+  id="4ZlRH0eK-qQ"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="3.5 Prims and Kruskals Algorithms - Greedy Method"
+  lazyLoad={true}
+  webp
+/>
+
 ### Characteristics:
 - **Greedy Approach**:  
   Prim's algorithm is a greedy algorithm that always selects the smallest edge connecting a vertex in the MST to a vertex outside the MST. This process continues until all vertices are included.
@@ -147,3 +157,10 @@ int main() {
 
 ### Summary:
 Prim's MST algorithm is an efficient greedy approach to finding the Minimum Spanning Tree in a weighted undirected graph. By selecting the smallest edge at each step, it ensures that the MST is built with the least total weight, avoiding cycles. The time complexity of the algorithm is $O(E \log V)$, making it suitable for large, dense graphs. Prim's algorithm is used in various network design applications, including telecommunications, electrical grids, and transportation networks.
+
+## Related Topics
+
+- **[Disjoint Set Union (DSU)](../disjoint-set-union.md)**: Data structure used in Kruskal's MST algorithm ($O(\alpha(N))$).
+- **[Dijkstra's Algorithm](../dijkstras-algorithm.md)**: Shortest path algorithm using similar greedy edge expansion ($O((V + E) \log V)$).
+- **[Heap Basics](../../heap/heap-basics.md)**: Min-heap structure powering Prim's efficient edge selection.
+

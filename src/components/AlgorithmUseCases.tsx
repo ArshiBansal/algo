@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getCanonicalAlgoKey } from "../utils/slugUtils";
 import {
   FiCpu,
   FiCompass,
@@ -623,6 +624,23 @@ const AlgorithmUseCases: React.FC = () => {
   const keys = Object.keys(algorithmData);
   const [selected, setSelected] = useState<string>(keys[0]);
   const [expandedApps, setExpandedApps] = useState<Record<string, boolean>>({});
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const algoParam = params.get("algo");
+      if (algoParam) {
+        if (algorithmData[algoParam]) {
+          setSelected(algoParam);
+        } else {
+          const resolvedKey = getCanonicalAlgoKey(algoParam);
+          if (resolvedKey && algorithmData[resolvedKey]) {
+            setSelected(resolvedKey);
+          }
+        }
+      }
+    }
+  }, []);
 
   const activeData = algorithmData[selected];
 
