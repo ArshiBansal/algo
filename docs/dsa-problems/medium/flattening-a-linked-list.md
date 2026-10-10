@@ -1,33 +1,14 @@
 ---
 id: flattening-a-linked-list
-title: >-
-  Flattening a linked list involves converting a multi-level linked list into a
-  single-level linked list.
-sidebar_label: flattening a linked list
-description: >-
-  Flattening a linked list involves converting a multi-level linked list into a
-  single-level linked list.
-tags:
-  - linked list
-  - flattening
-companies:
-  - LinkedIn
+title: "Flattening a linked list involves converting a multi-level linked list into a single-level linked list."
+sidebar_label: "flattening a linked list"
+description: "Flattening a linked list involves converting a multi-level linked list into a single-level linked list."
+tags: [linked list,flattening]
 ---
 
 # Flattening a Linked List
 
 Flattening a linked list involves converting a multi-level linked list into a single-level linked list. In this context, a multi-level linked list is one where each node may point to another linked list (next and child pointers). Flattening means that all child lists are combined into a single list, maintaining the original order.
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="ykelywHJWLg"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="L24. Flattening a LinkedList | Multiple Approaches with Dry Run"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ## Structure of the Linked List
 
@@ -65,12 +46,57 @@ The goal is to flatten this structure into a single linked list:
 3. ### Connecting Nodes: Ensure that the next pointers are set correctly so that the flattened structure maintains the correct order.
 
 ## Implementation
+## Java
+```java
+class Node {
+    int data;
+    Node next;
+    Node child;
 
-## Solutions
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.child = null;
+    }
+}
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
+public class LinkedListFlattener {
 
+    public Node flatten(Node root) {
+        if (root == null) {
+            return null;
+        }
+
+        Node dummy = new Node(0);
+        Node tail = dummy;
+
+        flattenHelper(root, tail);
+
+        return dummy.next;
+    }
+
+    private void flattenHelper(Node node, Node tail) {
+        while (node != null) {
+            tail.next = node;
+            tail = tail.next;
+
+            if (node.child != null) {
+                flattenHelper(node.child, tail);
+            }
+
+            node = node.next;
+        }
+    }
+
+    // Example Usage
+    public static void main(String[] args) {
+        // Create nodes and link them as per the multi-level structure
+    }
+}
+
+```
+
+## C++
 ```cpp
 class Node {
 public:
@@ -118,62 +144,9 @@ private:
 int main() {
     // Create nodes and link them as per the multi-level structure
 }
+
 ```
-
-  </TabItem>
-  <TabItem value="java" label="Java">
-
-```java
-class Node {
-    int data;
-    Node next;
-    Node child;
-
-    Node(int data) {
-        this.data = data;
-        this.next = null;
-        this.child = null;
-    }
-}
-
-public class LinkedListFlattener {
-
-    public Node flatten(Node root) {
-        if (root == null) {
-            return null;
-        }
-
-        Node dummy = new Node(0);
-        Node tail = dummy;
-
-        flattenHelper(root, tail);
-
-        return dummy.next;
-    }
-
-    private void flattenHelper(Node node, Node tail) {
-        while (node != null) {
-            tail.next = node;
-            tail = tail.next;
-
-            if (node.child != null) {
-                flattenHelper(node.child, tail);
-            }
-
-            node = node.next;
-        }
-    }
-
-    // Example Usage
-    public static void main(String[] args) {
-        // Create nodes and link them as per the multi-level structure
-    }
-}
-```
-
-  </TabItem>
-  <TabItem value="python" label="Python">
-
+## Python
 ```python
 class Node:
     def __init__(self, data):
@@ -213,33 +186,3 @@ def flatten(root):
 # Example Usage
 # Create nodes and link them as per the multi-level structure
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-function merge(a, b) {
-    if (!a) return b;
-    if (!b) return a;
-    let result;
-    if (a.data < b.data) {
-        result = a;
-        result.bottom = merge(a.bottom, b);
-    } else {
-        result = b;
-        result.bottom = merge(a, b.bottom);
-    }
-    result.next = null;
-    return result;
-}
-
-var flatten = function(root) {
-    if (!root || !root.next) return root;
-    root.next = flatten(root.next);
-    root = merge(root, root.next);
-    return root;
-};
-```
-
-  </TabItem>
-</Tabs>

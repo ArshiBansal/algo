@@ -1,27 +1,16 @@
 ---
+
 id: radix-sort-algo 
 sidebar_position: 7  
 title: Radix Sort  
-sidebar_label: Radix Sort
-description: "Detailed guide on Radix Sort non-comparative sorting algorithm implementation."
-tags: [sorting algorithms, radix sort, dsa, algorithms]
+sidebar_label: Radix Sort  
+
 ---
 
 
 ### Definition:
 
 Radix sort is a non-comparative sorting algorithm that sorts numbers by processing individual digits. It processes each digit of the numbers one at a time, starting from the least significant digit to the most significant digit (LSD variant) or vice versa (MSD variant), using a stable subroutine such as counting sort.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="9QSgBO9yjKU"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="L-3.9: Radix Sort | Easiest explanation with example"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 
@@ -129,9 +118,3 @@ int main() {
 ### Summary:
 
 Radix sort is an efficient algorithm for sorting integers and other data types with a fixed range of digits. Unlike comparison-based algorithms, it processes the digits of the numbers in multiple passes, making it suitable for large datasets where elements have many digits. Its predictable time complexity, especially in cases where the number of digits is much smaller than the number of elements, makes it an attractive option in such scenarios.
-
-## Related Topics
-
-- **[Counting Sort](./CountingSort.md)**: Used as a stable subroutine digit-sort within Radix Sort ($O(N + K)$).
-- **[Bucket Sort](./BucketSort.md)**: Distribution-based sort grouping elements by value range.
-- **[Quick Sort](./QuickSort.md)**: Comparison-based $O(N \log N)$ alternative for general-purpose sorting.

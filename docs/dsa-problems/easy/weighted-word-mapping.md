@@ -25,16 +25,6 @@ Return a string formed by concatenating the mapped characters for all words in o
 - The weight of `"xyz"` is $7 + 7 + 2 = 16$. The result modulo 26 is $16 \pmod{26} = 16$, which maps to `'j'`.
 Thus, the string formed by concatenating the mapped characters is `"rij"`.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="JLemlFGtqow"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Weighted Word Mapping | Leetcode 3838 | Java | Hindi"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Intuition & Approach
@@ -53,9 +43,7 @@ The problem asks us to simulate a specific mapping process for each word. The pr
 
 ## Solutions
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+### C++
 ```cpp
 class Solution {
 public:
@@ -74,9 +62,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+### Java
 ```java
 class Solution {
     public String mapWordWeights(String[] words, int[] weights) {
@@ -94,10 +80,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+### Python
+```py
 class Solution:
     def mapWordWeights(self, words: list[str], weights: list[int]) -> str:
         result = []
@@ -109,10 +93,8 @@ class Solution:
         return "".join(result)
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+### JavaScript
+```js
 /**
  * @param {string[]} words
  * @param {number[]} weights
@@ -131,6 +113,3 @@ var mapWordWeights = function(words, weights) {
     return result;
 };
 ```
-
-  </TabItem>
-</Tabs>

@@ -25,16 +25,6 @@ Output: `75`
 Input: `hour = 3`, `minutes = 15`
 Output: `7.5`
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="FK_wnA0ERBQ"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Angle Between Hands of a Clock | LeetCode 1344 | C++, Java, Python"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -51,11 +41,9 @@ To find the angle between the hands, we calculate the exact position (in degrees
 * **Time Complexity:** $O(1)$ because the calculation relies on a few basic arithmetic operations, regardless of the input size.
 * **Space Complexity:** $O(1)$ because we only use a few variables to store the angles, requiring constant extra space.
 
-## Solutions
+#### Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -70,9 +58,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public double angleClock(int hour, int minutes) {
@@ -86,10 +72,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def angleClock(self, hour: int, minutes: int) -> float:
         minute_angle = minutes * 6
@@ -100,10 +84,8 @@ class Solution:
         return min(diff, 360 - diff)
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number} hour
  * @param {number} minutes
@@ -118,6 +100,3 @@ const angleClock = function(hour, minutes) {
     return Math.min(diff, 360 - diff);
 };
 ```
-
-  </TabItem>
-</Tabs>

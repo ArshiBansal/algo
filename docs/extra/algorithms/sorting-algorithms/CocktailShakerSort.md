@@ -2,26 +2,12 @@
 id: cocktail-shaker-sort-algo  
 sidebar_position: 18  
 title: Cocktail Shaker Sort  
-sidebar_label: Cocktail Shaker Sort
-description: "Complete guide to Cocktail Shaker Sort, a bidirectional bubble sort variant that traverses the array in both directions."
-tags: [sorting algorithms, cocktail shaker sort, bubble sort, dsa]
-
+sidebar_label: Cocktail Shaker Sort  
 ---
 
 ### Definition:
 
 Cocktail Shaker Sort, also known as Bidirectional Bubble Sort, is a variation of the Bubble Sort algorithm that sorts an array in both directions. It traverses the array back and forth, moving larger elements towards the end and smaller elements towards the beginning, making it more efficient than standard Bubble Sort in some cases.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="Xmx_6YRBaq8"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Sorting Algorithms Redux 04: Cocktail Sort"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

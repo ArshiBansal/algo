@@ -9,17 +9,6 @@ tags: [pattern matching, string algorithms, brute-force search, naive search, co
 
 In computer science, the **Naive Search Algorithm** (also known as brute-force search) is a basic string matching technique that checks every possible position in the text for the occurrence of a given pattern. Although simple to implement, it is inefficient for large texts and patterns as it performs comparisons one by one without any optimization.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="nK7SLhXcqRo"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Naive Algorithm for Pattern Searching | GeeksforGeeks"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 <AdsComponent />
 
 ## Overview
@@ -49,76 +38,6 @@ For the text `text = "abcabcabc"` and pattern `pattern = "abc"`, the naive searc
 - Compare `"abc"` with the next `"abc"` at index 3: **Match**.
 
 Thus, matches are found at indices 0 and 3.
-
-<AdsComponent />
-
-## Brute-Force vs Optimized Comparison
-
-<BruteForceOptimizedDiff
-  title="Naive Search vs Optimized Search"
-  language="python"
-  bruteForceLabel="Naive Search"
-  optimizedLabel="Optimized Search"
-  bruteForceCode={
-`def naive_search(pattern, text):
-    m = len(pattern)
-    n = len(text)
-    result = []
-
-    for i in range(n - m + 1):
-        if text[i:i + m] == pattern:
-            result.append(i)
-
-    return result
-
-text = "abcabcabc"
-pattern = "abc"
-matches = naive_search(pattern, text)
-print("Pattern found at indices:", matches)
-`}
-  optimizedCode={
-`def optimized_search(pattern, text):
-    m = len(pattern)
-    n = len(text)
-    result = []
-    pattern_hash = hash(pattern)
-    current_hash = hash(text[:m])
-    power = 1
-
-    for _ in range(m - 1):
-        power *= 31
-
-    for i in range(n - m + 1):
-        if current_hash == pattern_hash and text[i:i+m] == pattern:
-            result.append(i)
-        if i < n - m:
-            current_hash = (current_hash - ord(text[i]) * power) * 31 + ord(text[i + m])
-
-    return result
-
-text = "abcabcabc"
-pattern = "abc"
-matches = optimized_search(pattern, text)
-print("Pattern found at indices:", matches)
-`}
-  annotations={
-    [
-      {
-        title: "Reduces repeated substring comparison",
-        highlight: "Replace repeated text slices with rolling hash checks",
-        description: "The optimized version calculates a hash for each window instead of comparing the pattern to every substring, lowering the expected work per position.",
-      },
-      {
-        title: "Improves average-case complexity",
-        description: "A rolling-hash-based search can approach O(n + m) on average, compared to the naive O(n * m) comparisons in the brute-force method.",
-      },
-      {
-        title: "Maintains correctness with verification",
-        description: "Whenever the rolling hash matches, the implementation still verifies the substring to avoid false positives from hash collisions.",
-      },
-    ]
-  }
-/>
 
 <AdsComponent />
 

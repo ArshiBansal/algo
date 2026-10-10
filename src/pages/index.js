@@ -6,13 +6,36 @@ import Homepage from "../components/Homepage";
 import BottomToTop from "../components/Scroller/BottomToTop/BottomToTop.tsx";
 import TopToBottom from "../components/Scroller/TopToBottom/TopToBottom.tsx";
 
+
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
-  
+
+  // useEffect(() => {
+  //   // Create and append the Chatrace script
+  //   const chatraceScript = document.createElement("script");
+  //   chatraceScript.src = "https://chatrace.com/webchat/plugin.js?v=5";
+  //   chatraceScript.async = true;
+  //   chatraceScript.onload = () => {
+  //     // Initialize the chat widget after the script loads
+  //     if (window.ktt10) {
+  //       window.ktt10.setup({
+  //         id: "2Xk6i0bywhd02D",
+  //         accountId: "1322274",
+  //         color: "#006dff",
+  //       });
+  //     }
+  //   };
+  //   document.body.appendChild(chatraceScript);
+
+  //   return () => {
+  //     document.body.removeChild(chatraceScript);
+  //   };
+  // }, []);
+
   return (
     <Layout
-      title={`DSA Guide | ${siteConfig.title}`}
-      description="Learn data structures and algorithms with our comprehensive, open-source educational platform. Explore clean solutions, boost your coding interview prep, and contribute to world-class developer documentation."
+      title={`Hello from ${siteConfig.title}`}
+      description="Description will go into a meta tag in <head />"
     >
       <Head>
         <script
@@ -20,27 +43,14 @@ export default function Home() {
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5832817025080991"
           crossorigin="anonymous"
         />
-        <meta name='impact-site-verification' value='1e9bf198-a4f7-4132-b77d-46b34e45f6ad' />   
-         {/* Inline Script for AdSense Initialization */}
-        <script>
-          {`
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          `}
-        </script>
+        <script
+          async
+          custom-element="amp-auto-ads"
+          src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"
+        ></script>
       </Head>
       <main>
         <Homepage />
-        {/* AdSense In-feed / Display Unit */}
-        <div style={{ padding: '10px 0' }}>
-          <ins 
-            className="adsbygoogle"
-            style={{ display: 'block' }}
-            data-ad-format="fluid"
-            data-ad-layout-key="-fd-24+9-a1+se"
-            data-ad-client="ca-pub-5832817025080991"
-            data-ad-slot="4344560339"
-          />
-        </div>
         <BottomToTop />
         <TopToBottom />
       </main>

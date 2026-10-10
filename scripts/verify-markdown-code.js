@@ -13,7 +13,11 @@ const { execSync, execFileSync } = require('child_process');
 const SKIP_VERIFICATION_FILES = new Set([
   'CONTRIBUTING.md',
   'README.md',
+  'IMPLEMENTATION_SUMMARY.md',
+  'MULTI_LANGUAGE_PLAYGROUND.md',
   'learn.md',
+  'QUICK_START.md',
+  'CHECKLIST.md',
 ]);
 
 // Languages we support executing
@@ -80,14 +84,7 @@ function runJsCode(code) {
   try {
     // Inject mock console context to suppress heavy logs if desired, but allow execution
     fs.writeFileSync(tempFile, code, 'utf8');
-    // Rename to .mjs so `node --check` accepts both ES module and CommonJS syntax
-    const tempMjs = tempFile.replace(/\.js$/, '.mjs');
-    fs.renameSync(tempFile, tempMjs);
-    try {
-      execFileSync('node', ['--check', tempMjs], { stdio: 'ignore', timeout: 5000 });
-    } finally {
-      if (fs.existsSync(tempMjs)) fs.unlinkSync(tempMjs);
-    }
+    execFileSync('node', [tempFile], { stdio: 'ignore', timeout: 5000 });
     return { success: true };
   } catch (err) {
     return { success: false, error: err.message };
@@ -107,11 +104,7 @@ function runPythonCode(code) {
     } catch {
       pyCmd = 'python3';
     }
-    execFileSync(
-      pyCmd,
-      ['-c', "import sys; compile(open(sys.argv[1], 'rb').read(), sys.argv[1], 'exec')", tempFile],
-      { stdio: 'ignore', timeout: 5000 }
-    );
+    execFileSync(pyCmd, [tempFile], { stdio: 'ignore', timeout: 5000 });
     return { success: true };
   } catch (err) {
     return { success: false, error: err.message };
@@ -151,7 +144,7 @@ function main() {
       }
 
       if (result.success) {
-        console.log(`  ✅ Block #${idx + 1} passed syntax check.`);
+        console.log(`  ✅ Block #${idx + 1} passed syntax & execution check.`);
       } else {
         failedBlocks++;
         console.error(`  ❌ Block #${idx + 1} FAILED check!`);

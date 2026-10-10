@@ -34,16 +34,6 @@ Input: `costs = [1,6,3,1,2,5]`, `coins = 20`
 Output: `6`
 **Explanation:** The boy can buy all the ice cream bars for a total price of 1 + 6 + 3 + 1 + 2 + 5 = 18.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="uY3mWwJvRkA"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Maximum Ice Cream Bars | Leetcode 1833 | Simple Approach | codestorywithMIK"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -62,11 +52,9 @@ To maximize the total *number* of items we can buy with a limited budget, we sho
 
 ---
 
-## Solutions
+## Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+### C++
 ```cpp
 #include <vector>
 #include <algorithm>
@@ -94,9 +82,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+### Java
 ```java
 import java.util.Arrays;
 
@@ -122,10 +108,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+### Python
+```py
 class Solution:
     def maxIceCream(self, costs: list[int], coins: int) -> int:
         # Sort the costs to pick the cheapest ones first
@@ -144,10 +128,8 @@ class Solution:
         return count
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+### JavaScript
+```js
 /**
  * @param {number[]} costs
  * @param {number} coins
@@ -172,6 +154,3 @@ const maxIceCream = function(costs, coins) {
     return count;
 };
 ```
-
-  </TabItem>
-</Tabs>

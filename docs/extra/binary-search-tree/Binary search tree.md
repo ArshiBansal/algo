@@ -14,17 +14,6 @@ A **Binary Search Tree (BST)** is a type of binary tree where each node follows 
 
 This structure makes it efficient for performing operations like searching, insertion, and deletion. BSTs are an important part of computer science and widely used in various applications like databases and search engines.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="cySVml6e_Fc"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="5.10 Binary Search Trees (BST) - Insertion and Deletion | DSA Full Course"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ## Definition and Structure
 A binary search tree consists of nodes, where each node contains:
 - **Data:** The value stored in the node.
@@ -236,16 +225,6 @@ If the node to be deleted has two children, replace it with its **inorder predec
 
 - Can become unbalanced, leading to O(n) worst-case time complexity.
 - Extra memory required for storing pointers to left and right children.
-## Complexity Cheat Sheet
-
-| Operation | Best Case | Average Case | Worst Case | Space Complexity |
-| :--- | :--- | :--- | :--- | :--- |
-| **Search** | $O(1)$ | $O(\log n)$ | $O(n)$ | $O(h)$ |
-| **Insertion** | $O(1)$ | $O(\log n)$ | $O(n)$ | $O(h)$ |
-| **Deletion** | $O(1)$ | $O(\log n)$ | $O(n)$ | $O(h)$ |
-| **In-order Traversal** | $O(n)$ | $O(n)$ | $O(n)$ | $O(h)$ |
-| **Overall Tree Storage** | - | - | - | $O(n)$ |
-
 ## Applications of Binary Search Trees
 - **Searching and Sorting:** Efficient for performing binary search and organizing data.
 - **Database Indexing:** BSTs help in implementing indexes for fast query retrieval.

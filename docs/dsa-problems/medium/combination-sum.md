@@ -1,16 +1,9 @@
 ---
 id: combination-sum
-title: Combination Sum
+title: "Combination Sum"
 sidebar_label: Combination Sum
-description: Solving the Combination Sum problem using a recursive backtracking approach.
-tags:
-  - DSA
-  - leetcode
-  - array
-  - backtracking
-  - recursion
-companies:
-  - Amazon
+description: "Solving the Combination Sum problem using a recursive backtracking approach."
+tags: [DSA, leetcode, array, backtracking, recursion]
 ---
 
 ## Description:
@@ -40,16 +33,6 @@ Output: `[[2,2,2,2],[2,3,3],[3,5]]`
 Input: `candidates = [2], target = 1`
 Output: `[]`
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="OyZFFqQtu98"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="L8. Combination Sum | Recursion | Leetcode | C++ | Java"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -73,11 +56,9 @@ Since we need to find *all* possible combinations that meet a specific condition
 
 ---
 
-## Solutions
+## Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+### C++
 ```cpp
 class Solution {
 public:
@@ -111,9 +92,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+### Java
 ```java
 import java.util.ArrayList;
 import java.util.List;
@@ -148,10 +127,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+### Python
+```py
 class Solution:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
         res = []
@@ -178,10 +155,8 @@ class Solution:
         return res
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+### JavaScript
+```js
 /**
  * @param {number[]} candidates
  * @param {number} target
@@ -215,6 +190,3 @@ const combinationSum = function(candidates, target) {
     return res;
 };
 ```
-
-  </TabItem>
-</Tabs>

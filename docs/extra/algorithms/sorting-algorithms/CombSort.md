@@ -3,26 +3,13 @@
 id: comb-sort-algo  
 sidebar_position: 10  
 title: Comb Sort  
-sidebar_label: Comb Sort
-description: "Complete guide to Comb Sort, an improvement over bubble sort that compares elements separated by a shrinking gap to eliminate turtles."
-tags: [sorting algorithms, comb sort, bubble sort, dsa]
+sidebar_label: Comb Sort  
 
 ---
 
 ### Definition:
 
 Comb sort is an improvement over bubble sort. It compares elements that are farther apart initially, decreasing the gap between elements in subsequent iterations. The idea is to eliminate "turtles" (small values near the end of the list) early in the sorting process, which slows down bubble sort.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="n51GFZHXlYY"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Comb Sort | GeeksforGeeks"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

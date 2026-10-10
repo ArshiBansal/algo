@@ -19,17 +19,6 @@ SELECT \*
 FROM Customers  
 WHERE Country = 'Germany' OR Country = 'Spain';
 ```
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="q19CWNEMjCM"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="OR Operator in SQL | SQL Tutorial for Beginners"
-  lazyLoad={true}
-  webp
-/>
-
 * * *
 
 ### Syntax

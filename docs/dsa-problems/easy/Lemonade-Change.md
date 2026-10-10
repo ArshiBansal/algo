@@ -14,17 +14,6 @@ Note that you do not have any change in hand at first.
 
 Given an integer array `bills` where `bills[i]` is the bill the $i^{th}$ customer pays, return `true` *if you can provide every customer with the correct change, or* `false` *otherwise*.
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="n_tmibEhO6Q"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="L2. Lemonade Change | Greedy Algorithm Playlist"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 **Example 1:**
 Input: `bills = [5, 5, 5, 10, 20]`
 Output: `true`
@@ -64,11 +53,7 @@ There are three scenarios based on the bill received:
 
 #### Greedy Solutions:
 
-## Solutions
-
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -98,9 +83,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public boolean lemonadeChange(int[] bills) {
@@ -129,10 +112,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def lemonadeChange(self, bills: List[int]) -> bool:
         five = ten = 0
@@ -156,10 +137,8 @@ class Solution:
         return True
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number[]} bills
  * @return {boolean}
@@ -188,6 +167,3 @@ var lemonadeChange = function(bills) {
     return true;
 };
 ```
-
-  </TabItem>
-</Tabs>

@@ -1,75 +1,56 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import { FiCheckCircle, FiCircle, FiTrendingUp, FiAward } from 'react-icons/fi';
-import { recordLastVisited } from '../../utils/safeStorage';
-import { setTopicCompleted, isTopicCompleted } from '../../utils/progressStore';
 
 interface Props {
   topicId: string;
   topicTitle: string;
 }
 
-/** Renders a topic-level progress card with a toggle for marking a doc as completed. */
-const ProgressTracker = ({ topicId, topicTitle }: Props) => {
+export default function ProgressTracker({ topicId, topicTitle }: Props) {
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [animate, setAnimate] = useState<boolean>(false);
-  const animateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (animateTimeoutRef.current) clearTimeout(animateTimeoutRef.current);
-    };
-  }, []);
-
-      // Safely check and read state from unified progress store
+  // Safely check and read state from localStorage
   useEffect(() => {
     try {
-      const completed = isTopicCompleted(topicId);
-      setIsCompleted(completed);
-
-      // Record this doc as last visited so the homepage widget can surface it
-      recordLastVisited({
-        id: topicId,
-        title: topicTitle,
-        url: typeof window !== 'undefined' ? window.location.pathname : `/docs/${topicId}`,
-        type: 'doc',
-        readingTime: '4 min read',
-        isCompleted: completed,
-      });
+      const saved = localStorage.getItem('algo_progress');
+      if (saved) {
+        const progress = JSON.parse(saved);
+        setIsCompleted(!!progress[topicId]);
+      }
     } catch (error) {
-      console.error('[Algo Progress] Failed to read progress from store:', error);
+      console.error('[Algo Progress] Failed to parse engine storage state:', error);
     }
-  }, [topicId, topicTitle]);
+  }, [topicId]);
 
   // Handle local state modification and sync globally
   const toggleProgress = useCallback(() => {
     const nextState = !isCompleted;
     setIsCompleted(nextState);
     setAnimate(true);
-    if (animateTimeoutRef.current) clearTimeout(animateTimeoutRef.current);
-    animateTimeoutRef.current = setTimeout(() => setAnimate(false), 250);
+    
+    setTimeout(() => setAnimate(false), 250);
 
     try {
-      setTopicCompleted(topicId, topicTitle, nextState);
+      const saved = localStorage.getItem('algo_progress');
+      const progress = saved ? JSON.parse(saved) : {};
+      
+      // Sync structured telemetry object schema
+      progress[topicId] = nextState;
+      progress[`${topicId}_title`] = topicTitle;
+      progress[`${topicId}_updatedAt`] = new Date().toISOString();
+      
+      localStorage.setItem('algo_progress', JSON.stringify(progress));
 
-      // Update last visited whenever the user interacts with this doc
-      recordLastVisited({
-        id: topicId,
-        title: topicTitle,
-        url: typeof window !== 'undefined' ? window.location.pathname : `/docs/${topicId}`,
-        type: 'doc',
-        readingTime: '4 min read',
-        isCompleted: nextState,
-      });
-
-      // Notify other components that progress has changed
+      // Dispatch unified pipeline context updates across component domains
       window.dispatchEvent(
         new CustomEvent('progressUpdated', {
           detail: { topicId, completed: nextState, title: topicTitle },
         })
       );
     } catch (error) {
-      console.error('[Algo Progress] Failed to save progress to store:', error);
+      console.error('[Algo Progress] Failed to write engine storage state:', error);
     }
   }, [isCompleted, topicId, topicTitle]);
 
@@ -90,7 +71,7 @@ const ProgressTracker = ({ topicId, topicTitle }: Props) => {
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       }}
     >
-      {/* Progress Status */}
+      {/* Informational Tracking Metadata Section */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: '260px' }}>
         <div
           style={{
@@ -120,7 +101,7 @@ const ProgressTracker = ({ topicId, topicTitle }: Props) => {
               opacity: 0.5,
             }}
           >
-            Track Your Progress
+            Telemetry Integration
           </span>
           <p
             style={{
@@ -131,15 +112,15 @@ const ProgressTracker = ({ topicId, topicTitle }: Props) => {
             }}
           >
             {isCompleted ? (
-              <span>🎉 Great job! You've completed this topic.</span>
+              <span>🎉 Optimization Mastered! Node checkpoint successfully compiled.</span>
             ) : (
-              <span>Done with this topic? Mark it as complete to track your progress.</span>
+              <span>Completed working through this block? Sync progress to workspace.</span>
             )}
           </p>
         </div>
       </div>
 
-      {/* Toggle Button */}
+      {/* Modern High-Fidelity Button Interface */}
       <button
         type="button"
         onClick={toggleProgress}
@@ -182,17 +163,15 @@ const ProgressTracker = ({ topicId, topicTitle }: Props) => {
         {isCompleted ? (
           <>
             <FiCheckCircle size={16} strokeWidth={2.5} />
-            <span>Completed</span>
+            <span>Mastery Verified</span>
           </>
         ) : (
           <>
             <FiCircle size={16} strokeWidth={2.5} />
-            <span>Mark as Complete</span>
+            <span>Commit to Profile</span>
           </>
         )}
       </button>
     </div>
   );
-};
-
-export default ProgressTracker;
+}

@@ -11,17 +11,6 @@ tags: [Sorting Algorithms, Selection Sort]
 
 Selection sort is a simple comparison-based sorting algorithm that repeatedly selects the smallest (or largest) element from the unsorted portion of the array and swaps it with the first unsorted element. It works by dividing the array into a sorted and an unsorted region and systematically reducing the size of the unsorted region.
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="Jb8AYaYMxq4"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Selection Sort Algorithm"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ### Characteristics:
 
 - **In-Place Sorting**:
@@ -145,16 +134,3 @@ int main() {
 ### Summary:
 
 Selection sort is a simple, easy-to-understand algorithm that can be useful for small datasets or when memory space is limited. However, its quadratic time complexity makes it inefficient for large datasets. The algorithm iteratively selects the minimum element from the unsorted portion of the array and swaps it into place. The iterative and recursive implementations both perform the same function, with the recursive version offering a cleaner, although slightly more complex, approach.
-
-## Common Interview Questions
-
-- **Kth Largest Element in an Array (LeetCode 215)**: Find the $k$-th largest element in an unsorted array (can be conceptually related to partial Selection Sort). [Problem Link](https://leetcode.com/problems/kth-largest-element-in-an-array/)
-- **Minimum Swaps to Sort**: Find the minimum number of swaps required to sort an array (relates to Selection Sort's property of performing at most $O(n)$ swaps).
-- **Sort an Array (LeetCode 912)**: General sorting challenge to compare selection sort's performance against optimal algorithms (note: Selection Sort will Time Limit Exceeded (TLE) due to its $O(n^2)$ complexity). [Problem Link](https://leetcode.com/problems/sort-an-array/)
-
-
-## Related Topics
-
-- **[Bubble Sort](./BubbleSort.mdx)**: Comparison sort with similar $O(N^2)$ complexity and simpler swap logic.
-- **[Insertion Sort](./InsertionSort.md)**: Adaptive $O(N^2)$ sort that performs better on nearly sorted arrays.
-- **[Heap Sort](./HeapSort.md)**: Generalizes Selection Sort using a heap for $O(N \log N)$ performance.

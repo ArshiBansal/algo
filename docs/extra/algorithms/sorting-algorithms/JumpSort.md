@@ -2,26 +2,12 @@
 id: jump-sort-algo  
 sidebar_position: 2  
 title: Jump Sort  
-sidebar_label: Jump Sort
-description: "Complete guide to Jump Sort, a comparison-based sorting algorithm that divides the list into blocks and performs linear search within blocks to find sorted position."
-tags: [sorting algorithms, jump sort, dsa, algorithms]
-
+sidebar_label: Jump Sort  
 ---
 
 ### Definition:
 
 Jump Sort is a simple comparison-based sorting algorithm that sorts elements by dividing the list into blocks and performing a linear search within these blocks. The algorithm jumps ahead by a fixed step size to reduce the number of comparisons, making it more efficient than naive sorting algorithms for larger datasets.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="wNOoyZ45SmQ"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="What is Jump Search and how does it work (with CODE)"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

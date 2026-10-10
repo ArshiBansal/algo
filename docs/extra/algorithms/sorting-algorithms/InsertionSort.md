@@ -1,26 +1,15 @@
 ---
+
 id: insertion-sort-algo  
 sidebar_position: 3 
 title: Insertion Sort  
-sidebar_label: Insertion Sort
-description: "Detailed explanation and implementation of Insertion Sort algorithm."
-tags: [sorting algorithms, insertion sort, dsa, algorithms]
+sidebar_label: Insertion Sort  
+
 ---
 
 ### Definition:
 
 Insertion sort is a simple and efficient comparison-based sorting algorithm that builds the final sorted array one element at a time. It works similarly to how people sort playing cards in their hands. The algorithm starts with one element and repeatedly inserts the next element into its correct position within the already sorted portion of the array.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="oTICKmJhLXI"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Insertion Sort By Abdul Bari"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 
@@ -136,16 +125,3 @@ int main() {
 ### Summary:
 
 Insertion sort is a simple yet efficient algorithm for small or nearly sorted datasets. It works by building a sorted array one element at a time, inserting each element into its correct position. Although it has a quadratic time complexity for average and worst-case scenarios, its linear time complexity in the best case makes it advantageous for sorting small datasets or datasets that are already nearly sorted. The iterative version is more common and easier to understand, while the recursive version provides a more elegant solution at the cost of slightly more overhead.
-
-## Common Interview Questions
-
-- **Insertion Sort List (LeetCode 147)**: Sort a singly linked list using insertion sort. [Problem Link](https://leetcode.com/problems/insertion-sort-list/)
-- **Sort a K-Sorted (Nearly Sorted) Array**: Sort an array where each element is at most $k$ positions away from its target position (highly efficient with Insertion Sort in $O(n k)$ time).
-- **Kth Largest Element in a Stream (LeetCode 703)**: Maintain a sorted list of elements dynamically as new elements arrive. [Problem Link](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
-
-
-## Related Topics
-
-- **[Bubble Sort](./BubbleSort.mdx)**: Adjacent-swap comparison sort with similar $O(N^2)$ complexity.
-- **[Selection Sort](./SelectionSort.md)**: In-place comparison sort that always makes exactly $N-1$ swaps.
-- **[Tim Sort](./TimSort.md)**: Hybrid sort combining Insertion Sort with Merge Sort for real-world data.

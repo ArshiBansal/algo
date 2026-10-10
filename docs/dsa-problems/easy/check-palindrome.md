@@ -2,14 +2,8 @@
 id: check-palindrome
 title: DSA Problem Solution
 sidebar_label: Check Palindrome
-description: 'A palindrome reads the same forwards and backwards, like "121" or "racecar."'
-tags:
-  - DSA
-  - leetcode
-  - problem-solving
-companies:
-  - Apple
-  - Google
+description: A palindrome reads the same forwards and backwards, like "121" or "racecar."
+tags: [DSA, leetcode, problem-solving]
 ---
 
 ## Leetcode: Problem-9
@@ -17,17 +11,6 @@ companies:
 ### Description:
 
 Given an integer x, return true if x is a palindrome, and false otherwise.
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="kNE3vq1g2e8"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Frequently Asked Java Program 04: Palindrome Number | How to Check Given Number is Palindrome or Not"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 - **Example 1**:
 Input: x = 121
@@ -44,28 +27,7 @@ Input: x = 10
 Output: false
 Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
 
-## Solutions
-
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
-```cpp
-class Solution {
-public:
-    bool isPalindrome(int x) {
-        if (x < 0) return false;
-        long long reversed = 0, original = x;
-        while (x != 0) {
-            reversed = reversed * 10 + x % 10;
-            x /= 10;
-        }
-        return original == reversed;
-    }
-};
-```
-
-  </TabItem>
-  <TabItem value="java" label="Java">
+## Solution in Java:
 
 ```java
 public class Solution {
@@ -96,28 +58,11 @@ public class Solution {
     }
 }
 ```
+## Output:
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+![Screenshot 2024-10-15 162332](https://github.com/user-attachments/assets/18ec353a-3920-4151-bfcb-1805f45b08d4)
 
-```python
-class Solution:
-    def isPalindrome(self, x: int) -> bool:
-        if x < 0:
-            return False
-        return str(x) == str(x)[::-1]
-```
+## Analyze Complexity:
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
+![Screenshot 2024-10-15 162602](https://github.com/user-attachments/assets/7dd17351-82b9-4863-b072-58dfcf6d806b)
 
-```javascript
-var isPalindrome = function(x) {
-    if (x < 0) return false;
-    const str = x.toString();
-    return str === str.split('').reverse().join('');
-};
-```
-
-  </TabItem>
-</Tabs>

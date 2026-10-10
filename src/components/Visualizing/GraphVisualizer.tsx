@@ -141,7 +141,7 @@ const GraphVisualizer: React.FC = () => {
   };
 
   // Node selection and edge drawing logic
-  const handleNodeClick = (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, id: number) => {
+  const handleNodeClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
     if (isRunning) return;
 
@@ -193,7 +193,7 @@ const GraphVisualizer: React.FC = () => {
     setDraggingNode(null);
   };
 
-  const handleWeightClick = (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, u: number, v: number) => {
+  const handleWeightClick = (e: React.MouseEvent, u: number, v: number) => {
     e.stopPropagation();
     if (mode !== "edit" || isRunning) return;
     const edge = edges.find((edge) => edge.u === u && edge.v === v);
@@ -653,9 +653,7 @@ const GraphVisualizer: React.FC = () => {
         </select>
 
         <div className="speed-control">
-          <label htmlFor="speed" className="form-label">
-            Speed:
-          </label>
+          <label htmlFor="speed">Speed:</label>
           <input
             id="speed"
             type="range"
@@ -716,16 +714,14 @@ const GraphVisualizer: React.FC = () => {
         <div className="svg-container">
           <svg
             ref={svgRef}
-            width="auto"
-            height="400"
+            width="520"
+            height="360"
             onDoubleClick={handleSvgDoubleClick}
             onMouseMove={handleSvgMouseMove}
             onMouseUp={handleSvgMouseUp}
             onMouseLeave={handleSvgMouseUp}
-            role="application"
-            aria-label="Interactive Graph Visualizer Canvas"
           >
-            {/* Draw edge lines and weight badges */}
+            {/* Draw edge lines */}
             {edges.map((e, idx) => {
               const u = nodes.find((n) => n.id === e.u);
               const v = nodes.find((n) => n.id === e.v);
@@ -733,10 +729,9 @@ const GraphVisualizer: React.FC = () => {
 
               const midX = (u.x + v.x) / 2;
               const midY = (u.y + v.y) / 2;
-              const edgeKey = `edge-${e.u}-${e.v}-${idx}`;
 
               return (
-                <g key={edgeKey}>
+                <g key={`edge-group-${idx}`}>
                   <line
                     x1={u.x}
                     y1={u.y}
@@ -745,19 +740,12 @@ const GraphVisualizer: React.FC = () => {
                     className={getEdgeClass(e.u, e.v)}
                   />
                   {/* Clickable Edge Weight Badges */}
-                  <g
-                    onClick={(ev) => handleWeightClick(ev, e.u, e.v)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Edge weight ${e.weight} between node ${e.u} and node ${e.v}`}
-                    onKeyDown={(ev) => ev.key === 'Enter' && handleWeightClick(ev, e.u, e.v)}
-                    className="clickable-badge"
-                  >
+                  <g onClick={(ev) => handleWeightClick(ev, e.u, e.v)}>
                     <rect
                       x={midX - 12}
                       y={midY - 9}
-                      width="16"
-                      height="12"
+                      width="24"
+                      height="18"
                       className="weight-rect"
                     />
                     <text x={midX} y={midY} className="weight-text">
@@ -775,10 +763,6 @@ const GraphVisualizer: React.FC = () => {
                 className="node-group"
                 onClick={(e) => handleNodeClick(e, n.id)}
                 onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
-                role="button"
-                tabIndex={0}
-                aria-label={`Node ${n.id}`}
-                onKeyDown={(e) => e.key === 'Enter' && handleNodeClick(e, n.id)}
               >
                 <circle
                   cx={n.x}
@@ -794,6 +778,7 @@ const GraphVisualizer: React.FC = () => {
           </svg>
         </div>
 
+        {/* Dynamic Sidebar Console logs */}
         <div className="ds-container">
           <div className="ds-header">
             {algorithm === "BFS" && "Queue (BFS)"}
@@ -804,20 +789,18 @@ const GraphVisualizer: React.FC = () => {
           </div>
           <div className="ds-items">
             {dataStructure.map((item, idx) => (
-              <div key={`ds-item-${item}-${idx}`} className="ds-item">
+              <div key={`${item}-${idx}`} className="ds-item">
                 {item}
               </div>
             ))}
-
             {dataStructure.length === 0 && (
-              <div className="ds-empty-state">
+              <div style={{ textAlign: "center", color: "var(--ifm-color-emphasis-500)", marginTop: "20px" }}>
                 Empty (Idle)
               </div>
             )}
           </div>
         </div>
       </div>
-
     </div>
   );
 };

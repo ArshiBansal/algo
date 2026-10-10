@@ -26,16 +26,6 @@ The algorithm works for:
 
 However, it does **not** work correctly for graphs containing **negative weight cycles**.
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="oNI0rf2P9gE"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="4.2 All Pairs Shortest Path (Floyd-Warshall) - Dynamic Programming"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Dynamic Programming Concept
@@ -360,9 +350,3 @@ O(V^2)
 The Floyd-Warshall Algorithm is one of the most important graph algorithms for solving the All-Pairs Shortest Path problem.
 
 It demonstrates matrix-based Dynamic Programming and provides a powerful approach for optimizing shortest paths incrementally using intermediate vertices.
-
-## Related Topics
-
-- **[Dijkstra's Algorithm](../dijkstras-algorithm.md)**: Single-source shortest path for non-negative weighted graphs ($O((V + E) \log V)$).
-- **[Bellman-Ford Algorithm](../bellman-ford-algorithm/bellman-ford-algorithm.md)**: Single-source shortest path handling negative weight edges ($O(V \cdot E)$).
-- **[Disjoint Set Union (DSU)](../disjoint-set-union.md)**: Manages connected components and cycle detection ($O(\alpha(N))$).

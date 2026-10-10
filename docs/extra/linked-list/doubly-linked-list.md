@@ -13,16 +13,6 @@ A **Doubly LinkedList** is a variation of a linked list where the last node poin
 
 ![alt text](DoublyLL.png)
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="H8-IuKKiQeo"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="2.10 Implementation of Doubly Linked List - Data Structures"
-  lazyLoad={true}
-  webp
-/>
-
 
 ### Doubly LinkedList Operations
 
@@ -403,17 +393,16 @@ public class Main {
 
 ```
 
-### Complexity Cheat Sheet
+### Complexity
 
-| Operation | Best Case | Average Case | Worst Case | Space Complexity |
-| :--- | :--- | :--- | :--- | :--- |
-| **Insertion (Head / Tail with pointer)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Insertion (Given Node)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Deletion (Head / Tail with pointer)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Deletion (Given Node Pointer)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Search (By Value)** | $O(1)$ | $O(n)$ | $O(n)$ | $O(1)$ |
-| **Traversal (Forward / Backward)** | $O(n)$ | $O(n)$ | $O(n)$ | $O(1)$ |
-| **Overall Storage** | - | - | - | $O(n)$ |
+- **Time Complexity**:
+
+  - Insertion : $O(1)$
+  - Deletion: $O(1)$
+  - Search: $O(n)$	
+  - Traversal: $O(n)$
+
+- **Space Complexity**: $O(1)$
 
 
 ### Conclusion

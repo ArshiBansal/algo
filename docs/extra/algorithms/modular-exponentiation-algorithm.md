@@ -12,17 +12,6 @@ tags: [Modular Arithmetic, Exponentiation, Algorithms, Number Theory, Recursion]
 ## Overview
 **Modular Exponentiation** is an efficient algorithm for computing large powers modulo a number. This algorithm is widely used in cryptography and number theory, where dealing with large numbers is common, and directly calculating powers can lead to overflow. Instead of calculating `base^exp` first and then taking the modulo, **modular exponentiation** computes `(base^exp) % mod` efficiently using the **exponentiation by squaring** method, reducing the time complexity to logarithmic.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="_gYUlvcnjs0"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Modular Exponentiation (Part 1)"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ## Problem Description
 - **Input**: Three integers, `base`, `exp`, and `mod`, where:
   - `base` is the base number to be raised to the power.
@@ -89,12 +78,5 @@ The time complexity of the modular exponentiation algorithm is significantly red
 - **Number Theory**: Many problems in number theory, especially those related to prime numbers and modular arithmetic, rely on modular exponentiation.
 - **Efficient Computation**: This algorithm is used in any scenario where large powers need to be computed modulo a number without causing overflow or performance issues.
 
-## Related Topics
-
-- **[Trie](./trie.md)**: Tree data structure for efficient prefix-based string matching and autocomplete ($O(K)$).
-- **[Disjoint Set Union (DSU)](./disjoint-set-union.md)**: Dynamic connectivity and set tracking structure ($O(\alpha(N))$).
-- **[Segment Tree](./segment-tree.md)**: Range queries and dynamic updates on linear arrays ($O(\log N)$).
-
 ## Conclusion
 The Modular Exponentiation Algorithm provides an efficient way to compute large powers modulo a number. It leverages the technique of exponentiation by squaring to reduce the number of operations from exponential to logarithmic time. This algorithm is crucial in fields like cryptography and number theory, where operations with large numbers are common and need to be performed efficiently.
-

@@ -1,26 +1,15 @@
 ---
+
 id: manachers-algorithm
 sidebar_position: 15
 title: Manacher's Algorithm
 sidebar_label: Manacher's Algorithm
-description: "Complete guide to Manacher algorithm for finding longest palindromic substring."
-tags: [string algorithms, manacher algorithm, palindromes, dsa]
+
 ---
 
 ### Definition:
 
 Manacher's Algorithm is a linear-time algorithm developed by Glenn K. Manacher in 1975 for finding all palindromic substrings in a string. It efficiently solves the problem by utilizing previously computed palindrome lengths and symmetry properties, avoiding redundant comparisons through the use of an auxiliary array.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="V-sEwsca1ak"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Longest Palindromic Substring Manacher's Algorithm"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 
@@ -292,9 +281,3 @@ The algorithm's strength lies in its ability to handle both odd and even length 
 The implementation provides a comprehensive solution for palindrome-related problems, offering functions to find the longest palindromic substring, all palindromic substrings, and palindrome lengths at each position. Its guaranteed linear-time performance and ability to find all palindromes make it an essential tool in string processing applications where palindrome detection is required.
 
 The algorithm's practical applications extend beyond simple palindrome detection to areas such as bioinformatics, data compression, and pattern recognition, where its efficient processing of palindromic structures provides valuable insights into string patterns and symmetries.
-
-## Related Topics
-
-- **[Z Algorithm](./Z-Algorithm.md)**: Linear-time string prefix matching using Z-array ($O(N)$).
-- **[KMP Algorithm](./kmp-algorithm.md)**: Failure-function-based linear-time pattern matching.
-- **[Two Pointers & Sliding Window](../two-pointers-sliding-window.md)**: Expand-around-center palindrome technique related to Manacher's expansion.

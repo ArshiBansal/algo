@@ -2,16 +2,8 @@
 id: plus-one
 title: Plus One
 sidebar_label: Plus One
-description: >-
-  The "Plus One" dsa problem is a classic algorithm challenge that involves
-  manipulating an array of digits. The goal is to add one to a number
-  represented by an array of its digits.
-tags:
-  - dsa
-  - algorithms
-  - problem-solving
-companies:
-  - Microsoft
+description: The "Plus One" dsa problem is a classic algorithm challenge that involves manipulating an array of digits. The goal is to add one to a number represented by an array of its digits.
+tags: [dsa, algorithms, problem-solving]
 ---
 
 # Plus One
@@ -19,17 +11,6 @@ companies:
 ## Description
 You are given a large integer represented as an integer array ``digits``, where each ``digits[i]`` is the ``ith`` digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading ``0``'s.
 Increment the large integer by one and return the resulting array of digits.
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="jIaA8boiG1s"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Plus One - Leetcode 66 - Python"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Example 1:
 
@@ -69,32 +50,6 @@ Thus, the result should be [1,0].
 
 # Code in Java
 
-## Solutions
-
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
-```cpp
-class Solution {
-public:
-    vector<int> plusOne(vector<int>& digits) {
-        int n = digits.size();
-        for (int i = n - 1; i >= 0; i--) {
-            if (digits[i] < 9) {
-                digits[i]++;
-                return digits;
-            }
-            digits[i] = 0;
-        }
-        digits.insert(digits.begin(), 1);
-        return digits;
-    }
-};
-```
-
-  </TabItem>
-  <TabItem value="java" label="Java">
-
 ```java
 class Solution {
     public int[] plusOne(int[] digits) {
@@ -114,36 +69,16 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+## Time and Space Complexity
 
-```python
-class Solution:
-    def plusOne(self, digits: List[int]) -> List[int]:
-        for i in range(len(digits) - 1, -1, -1):
-            if digits[i] < 9:
-                digits[i] += 1
-                return digits
-            digits[i] = 0
-        return [1] + digits
-```
+### Time Complexity
+- **Best Case:** $O(1)$ - When the last digit is not 9 (no carry propagation needed).
+- **Average Case:** $O(1)$ - Most numbers will have some non-9 digits.
+- **Worst Case:** $O(n)$ - When all digits are 9, we need to traverse the entire array and create a new one.
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
+### Space Complexity
+- **Best and Average Case:** $O(1)$ - When no new array is needed.
+- **Worst Case:** $O(n)$ - When all digits are 9 and we need to create an array of size $n+1$.
 
-```javascript
-var plusOne = function(digits) {
-    for (let i = digits.length - 1; i >= 0; i--) {
-        if (digits[i] < 9) {
-            digits[i]++;
-            return digits;
-        }
-        digits[i] = 0;
-    }
-    digits.unshift(1);
-    return digits;
-};
-```
-
-  </TabItem>
-</Tabs>
+## Explanation
+The algorithm increments the number from right to left, handling carries. If a digit is not 9, we increment it and return immediately (constant time). However, if all digits are 9 (like 999 → 1000), we must traverse the entire array and create a new array. Despite the worst-case linear complexity, this algorithm is optimal because we must examine at least the non-9 digits, and the worst case (all 9s) is rare.

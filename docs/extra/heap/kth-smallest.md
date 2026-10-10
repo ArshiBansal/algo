@@ -20,17 +20,7 @@ Input: [3, 2, 1, 5, 6, 4], K = 2
 Output: 5
 ```
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="_9F2VgZcvdw"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Lecture 75: Heaps in C++ || Interview Questions || Part - 1"
-  lazyLoad={true}
-  webp
-/>
-
-## Approach:
+Approach:
 Using a Min Heap (Optimal Solution):
 Use a Min Heap to keep track of the top K largest elements.
 Iterate through the array, adding elements to the heap.

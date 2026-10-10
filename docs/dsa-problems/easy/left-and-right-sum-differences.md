@@ -1,18 +1,9 @@
 ---
 id: left-and-right-sum-differences
-title: Left and Right Sum Differences
+title: "Left and Right Sum Differences"
 sidebar_label: Left and Right Sum Differences
-description: >-
-  The Left and Right Sum Differences problem on LeetCode involves finding the
-  absolute difference between the sum of elements to the left and right of each
-  index in an array.
-tags:
-  - DSA
-  - leetcode
-  - array
-  - prefix-sum
-companies:
-  - Netflix
+description: "The Left and Right Sum Differences problem on LeetCode involves finding the absolute difference between the sum of elements to the left and right of each index in an array."
+tags: [DSA, leetcode, array, prefix-sum]
 ---
 
 ## Description:
@@ -39,16 +30,6 @@ Output: `[0]`
 **Explanation:** The array `leftSum` is `[0]` and the array `rightSum` is `[0]`.
 The array `answer` is `[|0 - 0|] = [0]`.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="zXk7CPqDGDc"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="2574. Left and Right Sum Differences - JAVA - Weekly Contest 334 (Detailed explanation + coding)"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -67,11 +48,7 @@ To avoid calculating the left and right sums from scratch for every element (whi
 
 #### Optimal Solutions:
 
-## Solutions
-
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -95,9 +72,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public int[] leftRightDifference(int[] nums) {
@@ -120,10 +95,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def leftRightDifference(self, nums: list[int]) -> list[int]:
         total_sum = sum(nums)
@@ -138,10 +111,8 @@ class Solution:
         return ans
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number[]} nums
  * @return {number[]}
@@ -160,6 +131,3 @@ const leftRightDifference = function(nums) {
     return ans;
 };
 ```
-
-  </TabItem>
-</Tabs>

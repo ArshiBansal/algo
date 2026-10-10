@@ -1,16 +1,9 @@
 ---
 id: removing-stars-from-string
-title: Removing Stars From a String
+title: "Removing Stars From a String"
 sidebar_label: Removing Stars From a String
-description: >-
-  This document explains the Removing Stars From a String problem, including its
-  description, approach, and implementation.
-tags:
-  - dsa
-  - algorithms
-  - problem-solving
-companies:
-  - Microsoft
+description: "This document explains the Removing Stars From a String problem, including its description, approach, and implementation."
+tags: [dsa, algorithms, problem-solving]
 ---
 
 # Removing Stars From a String
@@ -29,17 +22,6 @@ Return the string after all stars have been removed.
 - The input will be generated such that the operation is always possible.
 - It can be shown that the resulting string will always be unique.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="pRyFZIaKegA"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Removing Stars From a String - Leetcode 2390 - Python"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ## Approach
 
 To solve this problem, we can use a **stack** to keep track of the non-star characters. We iterate through the string, and for each character:
@@ -48,49 +30,7 @@ To solve this problem, we can use a **stack** to keep track of the non-star char
 
 Finally, the remaining elements in the stack represent the string after all stars and corresponding characters have been removed.
 
-## Solutions
-
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
-```cpp
-class Solution {
-public:
-    string removeStars(string s) {
-        string res = "";
-        for (char c : s) {
-            if (c == '*') {
-                if (!res.empty()) res.pop_back();
-            } else {
-                res.push_back(c);
-            }
-        }
-        return res;
-    }
-};
-```
-
-  </TabItem>
-  <TabItem value="java" label="Java">
-
-```java
-class Solution {
-    public String removeStars(String s) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (c == '*') {
-                sb.deleteCharAt(sb.length() - 1);
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
-    }
-}
-```
-
-  </TabItem>
-  <TabItem value="python" label="Python">
+## Python Implementation
 
 ```python
 class Solution:
@@ -106,23 +46,5 @@ class Solution:
         
         return ''.join(stack)
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-var removeStars = function(s) {
-    const stack = [];
-    for (const char of s) {
-        if (char === '*') {
-            stack.pop();
-        } else {
-            stack.push(char);
-        }
-    }
-    return stack.join('');
-};
-```
-
-  </TabItem>
-</Tabs>
+Time Complexity: O(n) <br />
+Space Complexity: O(n)

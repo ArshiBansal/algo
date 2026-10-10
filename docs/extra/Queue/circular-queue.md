@@ -13,17 +13,6 @@ A circular queue is a linear data structure that follows the First In First Out 
 
 ![alt text](Circular-queue.png)
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="dn01XST9-bI"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="check Whether a string is palindrome using Deque Data Structure Python"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ### Circular Queue Operations
 
 1. **Enqueue**: Add an element to the back of the queue.
@@ -370,16 +359,18 @@ int main() {
 }
 
 ```
-### Complexity Cheat Sheet
+### Complexity
 
-| Operation | Best Case | Average Case | Worst Case | Space Complexity |
-| :--- | :--- | :--- | :--- | :--- |
-| **Enqueue** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Dequeue** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Peek** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **isEmpty / isFull** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Size** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Overall Queue Storage** | - | - | - | $O(n)$ |
+- **Time Complexity**:
+
+  - Enqueue: $O(1)$
+  - Dequeue: $O(1)$
+  - Peek: $O(1)$
+  - isEmpty: $O(1)$
+  - isFull: $O(1)$
+  - Size: $O(1)$
+
+- **Space Complexity**: $O(n)$, where $n$ is the number of elements that can be stored in the circular queue.
 
 ### Example
 

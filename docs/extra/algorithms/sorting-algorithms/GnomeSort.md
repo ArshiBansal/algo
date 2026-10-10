@@ -1,27 +1,13 @@
 ---
 id: gnome-sort-algo  
-sidebar_position: 16
+sidebar_position: 16  
 title: Gnome Sort  
-sidebar_label: Gnome Sort
-description: "Complete guide to Gnome Sort, a simple comparison-based sorting algorithm that sorts by swapping adjacent out-of-order elements and moving backward on a swap."
-tags: [sorting algorithms, gnome sort, dsa, algorithms]
-
+sidebar_label: Gnome Sort  
 ---
 
 ### Definition:
 
 Gnome Sort is a simple comparison-based sorting algorithm that sorts an array by iterating through it and swapping adjacent elements if they are in the wrong order. If a swap occurs, the algorithm moves one position back; otherwise, it moves one position forward. The algorithm continues until the entire array is sorted.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="9cIjvXEeOhQ"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Gnome Sort Algorithm, Child of Insertion and Bubble sort in 3 minutes!"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

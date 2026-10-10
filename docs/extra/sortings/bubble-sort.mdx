@@ -5,25 +5,13 @@ sidebar_label: Bubble Sort
 description: "Learn about Bubble Sort, a simple comparison-based sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order."
 tags: [dsa, algorithms, sorting]
 ---
-import { AlgorithmVisualizer, PracticeProblems } from "@site/src/components";
-
+import BubbleSortVisualization from "@site/src/components/DSA/arrays/BubbleSortVisualization";
 
 <AdsComponent />
 
 Bubble Sort is one of the most fundamental and simplest sorting algorithms. It works by repeatedly stepping through the list to be sorted, comparing adjacent elements, and swapping them if they are in the wrong order. This process is repeated until the list is fully sorted.
 
 The algorithm gets its name because smaller or larger elements "bubble" to the top or bottom of the list (depending on the sorting order) with each iteration, similar to air bubbles rising in water.
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="o4bAoo_gFBU"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="7.3 Bubble Sort Algorithm| Data Structures Tutorials"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### How it Works:
 1. **Start at the beginning**: The algorithm begins at the first index of the array.
@@ -33,7 +21,7 @@ The algorithm gets its name because smaller or larger elements "bubble" to the t
 5. **Complete a pass**: Once it reaches the end of the array, one "pass" is complete. The largest element will have "bubbled" up to its correct position at the end of the array.
 6. **Repeat**: The entire process is repeated for the remaining unsorted portion of the array until no swaps are made during a full pass, meaning the array is sorted.
 
-<AlgorithmVisualizer algorithm="bubble-sort" />
+<BubbleSortVisualization />
 
 ### Time and Space Complexity:
 - **Best Case Time Complexity**: $O(n)$
@@ -154,27 +142,3 @@ int main() {
     return 0;
 }
 ```
-
-## Practice Problems
-
-<PracticeProblems problems={[
-  {
-    name: "Sort Colors (Dutch National Flag)",
-    platform: "LeetCode",
-    difficulty: "Medium",
-    link: "https://leetcode.com/problems/sort-colors/"
-  },
-  {
-    name: "Bubble Sort",
-    platform: "GeeksforGeeks",
-    difficulty: "Easy",
-    link: "https://www.geeksforgeeks.org/problems/bubble-sort/1"
-  },
-  {
-    name: "Sort an Array",
-    platform: "LeetCode",
-    difficulty: "Medium",
-    link: "https://leetcode.com/problems/sort-an-array/"
-  }
-]} />
-

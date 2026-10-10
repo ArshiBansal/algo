@@ -3,26 +3,13 @@
 id: cycle-sort-algo  
 sidebar_position: 12  
 title: Cycle Sort  
-sidebar_label: Cycle Sort
-description: "Complete guide to Cycle Sort, a comparison-based sorting algorithm that minimizes memory writes by placing elements in their correct position as part of a cycle."
-tags: [sorting algorithms, cycle sort, dsa, algorithms]
+sidebar_label: Cycle Sort  
 
 ---
 
 ### Definition:
 
 Cycle sort is a comparison-based, in-place sorting algorithm known for its optimal writes, making it one of the most efficient sorting algorithms in terms of the number of memory writes. It is designed to minimize the number of element movements, and each element is moved to its correct position as part of a cycle, hence the name.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="JfinxytTYFQ"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Cycle Sort - Amazon, Google, Microsoft Interview Questions"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

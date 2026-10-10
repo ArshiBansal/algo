@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Layout from "@theme/Layout";
-import QuizErrorBoundary from "../../components/Quiz/QuizErrorBoundary";
-import QuizSkeleton from "../../components/Quiz/QuizSkeleton";
-import { useQuizData } from "../../hooks/useQuizData";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaUserCircle,
@@ -36,7 +33,7 @@ interface HistoryAttempt {
   completedAt: string;
 }
 
-export const QUESTIONS: GraphQuestion[] = [
+const QUESTIONS: GraphQuestion[] = [
   {
     id: 1,
     difficulty: "Easy",
@@ -204,7 +201,7 @@ const GraphQuiz: React.FC = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [timeSpent, setTimeSpent] = useState(0);
-  const { attempts, isLoading, fetchAttempts, submitAttempt, setAttempts } = useQuizData({ quizId: "graph" });
+  const [attempts, setAttempts] = useState<HistoryAttempt[]>([]);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -233,7 +230,22 @@ const GraphQuiz: React.FC = () => {
     );
   }, [userAnswers]);
 
-    useEffect(() => {
+  const fetchAttempts = useCallback((uId: string) => {
+    const historyKey = `quiz_attempts_${uId}_graph`;
+    const savedAttempts = localStorage.getItem(historyKey);
+    if (savedAttempts) {
+      try {
+        setAttempts(JSON.parse(savedAttempts));
+      } catch (e) {
+        console.error("Error parsing history attempts:", e);
+        setAttempts([]);
+      }
+    } else {
+      setAttempts([]);
+    }
+  }, []);
+
+  useEffect(() => {
     if (userId) {
       fetchAttempts(userId);
     }
@@ -258,7 +270,24 @@ const GraphQuiz: React.FC = () => {
     handleRetry();
   };
 
-    const handleAnswer = (selected: string) => {
+  const submitAttempt = (finalAnswers: string[]) => {
+    if (!userId) return;
+    const newAttempt: HistoryAttempt = {
+      id: Math.random().toString(36).substring(2, 9),
+      score: score,
+      totalQuestions: QUESTIONS.length,
+      timeSpent: timeSpent,
+      completedAt: new Date().toISOString()
+    };
+    const historyKey = `quiz_attempts_${userId}_graph`;
+    const savedAttempts = localStorage.getItem(historyKey);
+    const existing = savedAttempts ? JSON.parse(savedAttempts) : [];
+    const updated = [newAttempt, ...existing].slice(0, 5);
+    localStorage.setItem(historyKey, JSON.stringify(updated));
+    setAttempts(updated);
+  };
+
+  const handleAnswer = (selected: string) => {
     setUserAnswers((prev) => {
       const updated = [...prev];
       updated[currentQuestion] = selected;
@@ -272,7 +301,7 @@ const GraphQuiz: React.FC = () => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResult(true);
-      submitAttempt(userId, score, QUESTIONS.length, timeSpent);
+      submitAttempt(userAnswers);
     }
   };
 
@@ -333,7 +362,6 @@ const GraphQuiz: React.FC = () => {
 
   return (
     <Layout title="Graph Quiz — Vertices, Edges & Traversals">
-      <QuizErrorBoundary>
       <div className="min-h-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans py-12 px-4">
         <div className="max-w-4xl mx-auto">
 
@@ -474,7 +502,7 @@ const GraphQuiz: React.FC = () => {
                             ? "Good effort! Review cycle detection, adjacency representations, and Dijkstra's algorithm."
                             : "Keep practicing! Focus on graph basics, BFS vs DFS differences, and adjacency list vs matrix."}
                     </p>
-                    <QuizResultActions onRetry={handleRetry} topic="Graph Algorithms" score={score} total={QUESTIONS.length} />
+                    <QuizResultActions onRetry={handleRetry} />
                   </div>
 
                   {/* Detailed Breakdown */}
@@ -557,7 +585,6 @@ const GraphQuiz: React.FC = () => {
           </div>
         </div>
       </div>
-          </QuizErrorBoundary>
     </Layout>
   );
 };

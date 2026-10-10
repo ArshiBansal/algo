@@ -27,16 +27,6 @@ WHERE condition
 LIMIT number;
 ```
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="Ytnz8BLoOjs"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="SQL Tutorial #22 - SQL LIMIT | SQL TOP | SQL FETCH FIRST Clause"
-  lazyLoad={true}
-  webp
-/>
-
 ### Key Points
 
 * The SELECT TOP clause is supported in SQL Server, while MySQL and PostgreSQL use the LIMIT clause instead.

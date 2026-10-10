@@ -18,16 +18,6 @@ The **waviness** of a number is defined as the total count of its peaks and vall
 
 **Objective:** Return the total sum of waviness for all numbers in the range `[num1, num2]`.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="rPbjKtn3vOg"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Total Waviness of Numbers in Range I | Simple | Leetcode 3751 | codestorywithMIK"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -43,11 +33,9 @@ Since we need to check the waviness for every number in the given range, we can 
 * **Time Complexity:** $O(N \cdot \log_{10}(\text{num2}))$ where $N$ is the number of elements in the range `[num1, num2]`. We iterate through $N$ numbers, and extracting digits takes logarithmic time.
 * **Space Complexity:** $O(\log_{10}(\text{num2}))$ because we use an array/list to temporarily store the digits of each number while processing it, taking minimal extra space.
 
-## Solutions
+#### Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -83,9 +71,7 @@ private:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public int totalWaviness(int num1, int num2) {
@@ -119,10 +105,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def totalWaviness(self, num1: int, num2: int) -> int:
         def get_waviness(x: int) -> int:
@@ -147,10 +131,8 @@ class Solution:
         return sum(get_waviness(x) for x in range(num1, num2 + 1))
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number} num1
  * @param {number} num2
@@ -187,6 +169,3 @@ const totalWaviness = function(num1, num2) {
     return totalSum;
 };
 ```
-
-  </TabItem>
-</Tabs>

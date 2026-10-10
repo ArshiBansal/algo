@@ -23,19 +23,7 @@ WHERE CustomerID = 1;
 
 In the example above, the `SET` clause specifies the column(s) to update, and the `WHERE` clause specifies which record(s) to modify.
 
----
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="4YAAgrm8_ZI"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="INSERT UPDATE, DELETE & ALTER Table in SQL With Example | SQL Tutorial in Hindi 4"
-  lazyLoad={true}
-  webp
-/>
-
-### Syntax
+---### Syntax
 
 ```sql
 UPDATE table_name

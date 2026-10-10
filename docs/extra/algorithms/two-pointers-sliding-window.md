@@ -11,17 +11,6 @@ tags:
 
 The **Sliding Window** technique is one of the most powerful patterns in DSA. It converts an O(n²) brute-force approach into an elegant O(n) solution for problems involving **contiguous subarrays or substrings**.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="9kdHxplyl5I"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="L1. Introduction to Sliding Window and 2 Pointers | Templates | Patterns"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## 🧠 Core Idea
@@ -411,14 +400,6 @@ Total: 9 operations ✅ Faster!
 | 7   | Permutation in String                          | Fixed         | 🟡 Medium  |
 | 8   | Minimum Window Substring                       | Variable      | 🔴 Hard    |
 | 9   | Sliding Window Maximum                         | Fixed + Deque | 🔴 Hard    |
-
----
-
-## 🔗 Related Topics
-
-- **[Monotonic Stack & Queue](./monotonic-stack-queue.md)**: Efficient technique for next greater element and sliding window maximum ($O(N)$).
-- **[Trie](./trie.md)**: Tree structure specialized for prefix lookups and string processing ($O(K)$).
-- **[Dijkstra's Algorithm](./dijkstras-algorithm.md)**: Shortest path algorithm for non-negative weighted graphs ($O((V+E) \log V)$).
 
 ---
 

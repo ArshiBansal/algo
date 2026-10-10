@@ -22,17 +22,6 @@ Stacks are widely used in various computing applications, including:
 
 ![alt text](Introduction_to_Stack.png)
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="bxRVz8zklWM"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="3.1 Stack in Data Structure | Introduction to Stack | Data Structures Tutorials"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ### Stack Operations
 
 A stack typically supports the following operations:
@@ -286,16 +275,18 @@ public class Stack {
 }
 ```
 
-### Complexity Cheat Sheet
+### Complexity
 
-| Operation | Best Case | Average Case | Worst Case | Space Complexity |
-| :--- | :--- | :--- | :--- | :--- |
-| **Push** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Pop** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Peek / Top** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **isEmpty / isFull** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Size** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
-| **Overall Storage** | - | - | - | $O(n)$ |
+- **Time Complexity**:
+
+  - Push: $O(1)$
+  - Pop: $O(1)$
+  - Peek: $O(1)$
+  - isEmpty: $O(1)$
+  - isFull: $O(1)$
+  - Size: $O(1)$
+
+- **Space Complexity**: $O(n)$, where $n$ is the number of elements that can be stored in the stack.
 
 ### Example
 

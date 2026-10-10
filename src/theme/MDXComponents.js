@@ -1,5 +1,6 @@
-﻿import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import AdsComponent from "@site/src/components/AdsComponent";
+// import BrowserWindow from "@site/src/components/BrowserWindow";
 import ArrayVisualizations from "@site/src/components/DSA/arrays/ArrayVisualizations";
 import BubbleSortVisualization from "@site/src/components/DSA/arrays/BubbleSortVisualization";
 import InsertionSortVisualization from "@site/src/components/DSA/arrays/InsertionSortVisualization";
@@ -12,6 +13,7 @@ import DijkstraVisuzalizations from "@site/src/components/DSA/graphs/DijkstraVis
 import FloydWarshallVisualizations from "@site/src/components/DSA/graphs/FloydWarshallVisualizations";
 import Highlight from "@site/src/components/Highlight";
 import MDXComponents from "@theme-original/MDXComponents";
+// import Image from "@theme/IdealImage";
 import TabItem from "@theme/TabItem";
 import Tabs from "@theme/Tabs";
 import { FaReact } from "react-icons/fa";
@@ -21,21 +23,13 @@ import Ads from "@site/src/components/AdsComponent/Ads";
 import EdgeCases from "@site/src/components/EdgeCases";
 import Link from "@docusaurus/Link";
 import RelatedTopics from '@site/src/components/RelatedTopics';
-import DocCardList from '@theme/DocCardList';
-import ComingSoon from '@site/src/components/ComingSoon';
-import CheatSheetExport from '@site/src/components/CheatSheetExport';
-import LanguageComparator from '@site/src/components/LanguageComparator';
-import RazorpayButton from '@site/src/components/RazorpayButton';
-import BruteForceOptimizedDiff from '@site/src/components/BruteForceOptimizedDiff';
- 
+
 export default {
   // Re-use the default mapping
   ...MDXComponents,
   // custom
   Tabs,
   TabItem,
-  LanguageComparator,
-  BruteForceOptimizedDiff,
   Highlight,
   ArrayVisualizations,
   BubbleSortVisualization,
@@ -48,15 +42,13 @@ export default {
   HeapSortVisualization,
   MergeSortVisualization,
   ShellSortVisualization,
+//   Image,
   LiteYouTubeEmbed,
-  DocCardList,
+//   LinearSearchVisualizer,
   AdsComponent,
   GiscusComponent,
   Ads,
   EdgeCases,
   Link,
-  RelatedTopics,
-  ComingSoon,
-  CheatSheetExport,
-  RazorpayButton
+  RelatedTopics
 };

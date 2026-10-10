@@ -2,26 +2,12 @@
 id: odd-even-sort-algo  
 sidebar_position: 19  
 title: Odd-Even Sort  
-sidebar_label: Odd-Even Sort
-description: "Complete guide to Odd-Even Sort, a parallel sorting algorithm that alternates between odd and even phases to gradually sort the array."
-tags: [sorting algorithms, odd even sort, parallel sorting, dsa]
-
+sidebar_label: Odd-Even Sort  
 ---
 
 ### Definition:
 
 Odd-Even Sort is a simple parallel sorting algorithm that works by repeatedly performing two phases: an odd phase and an even phase. It compares and swaps adjacent elements in two passes, which gradually sorts the array. It is mainly used in parallel computing environments due to its ability to be implemented efficiently across multiple processors.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="Sazh4Y-WlDk"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Odd Even Transposition Parallel Formulation || Bubble Sort and it's Variants || Explained in Hindi"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

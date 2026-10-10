@@ -17,17 +17,6 @@ tags: [generate-parentheses, backtracking, recursion, dsa]
 For n = 3, the output should be: ["((()))", "(()())", "(())()", "()(())", "()()()"]
 ```
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="s9fokUqJ76A"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Generate Parentheses - Stack - Leetcode 22"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ### C++ implementation
 
 ```cpp

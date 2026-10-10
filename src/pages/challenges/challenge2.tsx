@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@theme/Layout";
 
 const DataStructuresQuiz = () => {
@@ -187,26 +187,23 @@ const DataStructuresQuiz = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [timeLeft, setTimeLeft] = useState(1800); // 30 minutes in seconds
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [timerId, setTimerId] = useState(null);
   const [timeSpent, setTimeSpent] = useState(0); // To store the time spent on solving the quiz
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
 
   // Timer logic
   useEffect(() => {
-    if (timeLeft <= 0) {
-      handleFinishQuiz();
-      return;
+    if (timeLeft > 0) {
+      const id = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+      setTimerId(id);
+    } else {
+      handleFinishQuiz(); // Automatically finish the quiz when time runs out
     }
-    timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [timeLeft]);
 
+    return () => clearInterval(timerId); // Clean up timer on unmount
+  }, [timeLeft]);
 
   // Handle option selection
   const handleOptionSelect = (option: string) => {
@@ -214,7 +211,7 @@ const DataStructuresQuiz = () => {
 
     setSelectedOption(option);
     if (option === questions[currentQuestionIndex].answer) {
-      setCorrectAnswers(prev => prev + 1);
+      setCorrectAnswers(correctAnswers + 1);
     }
     const updatedAnswers = [...userAnswers];
     updatedAnswers[currentQuestionIndex] = option;
@@ -231,10 +228,8 @@ const DataStructuresQuiz = () => {
 
   // Function to finish the quiz
   const handleFinishQuiz = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    setTimeSpent(1800 - timeLeft); 
+    clearInterval(timerId); // Stop the timer when the quiz is finished
+    setTimeSpent(1800 - timeLeft); // Calculate time spent
     setShowResult(true);
   };
 
@@ -245,7 +240,7 @@ const DataStructuresQuiz = () => {
 
 
   // Format time as MM:SS
-  const formatTime = (seconds: number) => {
+  const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(

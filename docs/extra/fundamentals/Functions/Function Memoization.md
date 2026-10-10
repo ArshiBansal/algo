@@ -28,17 +28,6 @@ int fibonacci(int n) {
 
 ```
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="JXUOMsFBDXQ"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Code Optimisation via Memoization - Computerphile"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ## Example
 ### C++ Example
 ```c++
@@ -80,17 +69,6 @@ def fibonacci(n):
 
 
 ```
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="Qk0zUZW-U_M"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Recursion, the Fibonacci Sequence and Memoization || Python Tutorial || Learn Python Programming"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ## Example
 ### Python Example

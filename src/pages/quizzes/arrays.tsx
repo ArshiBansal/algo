@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Layout from "@theme/Layout";
-import Link from "@docusaurus/Link";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaUserCircle, 
@@ -14,8 +13,6 @@ import {
   FaChevronRight, 
   FaHistory 
 } from "react-icons/fa";
-import { saveQuizAttemptLocal } from "../../utils/safeStorage";
-import { getQuizAttempts } from "../../utils/progressStore";
 
 interface ArrayQuestion {
   id: number;
@@ -25,17 +22,16 @@ interface ArrayQuestion {
   options: string[];
   answer: string;
   explanation: string;
-  relatedDoc?: string;
 }
 
 interface LocalAttempt {
+  timestamp: number;
+  answers: string[];
   score: number;
   timeSpent: number;
-  completedAt: string;
-  missedQuestionIds?: number[];
 }
 
-export const QUESTIONS: ArrayQuestion[] = [
+const QUESTIONS: ArrayQuestion[] = [
   {
     id: 1,
     difficulty: "Medium",
@@ -43,8 +39,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     codeSnippet: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[2] = { 1, 2 };\n    cout << 0[arr] << ", " << 1[arr] << endl;\n    return 0;\n}`,
     options: ["A) 1, 2", "B) Syntax error", "C) Run time error", "D) None of the above"],
     answer: "A) 1, 2",
-    explanation: "In C++, internal array element accesses are compiled directly using pointer arithmetic: arr[i] evaluates to *(arr + i). Because mathematical addition is commutative, *(arr + i) is identical to *(i + arr), meaning i[arr] is syntactic sugar for arr[i].",
-    relatedDoc: "/docs/languages/cpp/cp-7"
+    explanation: "In C++, internal array element accesses are compiled directly using pointer arithmetic: arr[i] evaluates to *(arr + i). Because mathematical addition is commutative, *(arr + i) is identical to *(i + arr), meaning i[arr] is syntactic sugar for arr[i]."
   },
   {
     id: 2,
@@ -53,8 +48,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     codeSnippet: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[5] = { 1, 2, 3, 4, 5 };\n    cout << arr[5] << endl;\n    return 0;\n}`,
     options: ["A) 5", "B) 0", "C) Garbage value", "D) Out of bounds compilation error"],
     answer: "C) Garbage value",
-    explanation: "An array initialized with 5 elements maps indexes from 0 to 4. Accessing arr[5] goes past the allocated boundary, triggering undefined behavior by referencing unmanaged stack memory, resulting in a garbage value at runtime.",
-    relatedDoc: "/docs/languages/cpp/cp-7"
+    explanation: "An array initialized with 5 elements maps indexes from 0 to 4. Accessing arr[5] goes past the allocated boundary, triggering undefined behavior by referencing unmanaged stack memory, resulting in a garbage value at runtime."
   },
   {
     id: 3,
@@ -63,8 +57,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     codeSnippet: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[5] = { 1, 2, 3, 4, 5 };\n    cout << arr[4] << endl;\n    return 0;\n}`,
     options: ["A) 5", "B) 0", "C) 4", "D) None of the above"],
     answer: "A) 5",
-    explanation: "Arrays are zero-indexed. For an array of size 5, the terminal index position is size - 1, which is index 4. This references the fifth element, returning 5.",
-    relatedDoc: "/docs/programming-fundamentals/language-syntax/arrays"
+    explanation: "Arrays are zero-indexed. For an array of size 5, the terminal index position is size - 1, which is index 4. This references the fifth element, returning 5."
   },
   {
     id: 4,
@@ -73,8 +66,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     codeSnippet: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[5] = { 1, 2, 3, 4, 5 };\n    cout << arr[0] << endl;\n    return 0;\n}`,
     options: ["A) 1", "B) 0", "C) 5", "D) Undefined behavior"],
     answer: "A) 1",
-    explanation: "Index 0 targets the initial base block memory offset of our array, returning the first stored integer element: 1.",
-    relatedDoc: "/docs/programming-fundamentals/language-syntax/arrays"
+    explanation: "Index 0 targets the initial base block memory offset of our array, returning the first stored integer element: 1."
   },
   {
     id: 5,
@@ -82,8 +74,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     question: "What is the true asymptotic worst-case time complexity of accessing an individual element inside an array given its valid index?",
     options: ["A) O(1)", "B) O(n)", "C) O(log n)", "D) O(n^2)"],
     answer: "A) O(1)",
-    explanation: "Array memory blocks are contiguous. Calculating an item address requires only one multiplication and one addition operation: Base_Address + (Index * Element_Size). This constant-time calculation runs in O(1) complexity.",
-    relatedDoc: "/docs/basic-data-structures/array/arrays-in-dsa"
+    explanation: "Array memory blocks are contiguous. Calculating an item address requires only one multiplication and one addition operation: Base_Address + (Index * Element_Size). This constant-time calculation runs in O(1) complexity."
   },
   {
     id: 6,
@@ -96,8 +87,7 @@ export const QUESTIONS: ArrayQuestion[] = [
       "D) Elements scale dynamically across virtual page boundaries automatically"
     ],
     answer: "A) The elements of an array are stored in contiguous memory locations",
-    explanation: "By definition, native primitives group elements in unbroken, back-to-back sequential memory slots. This uniform, predictable arrangement enables fast O(1) random access operations.",
-    relatedDoc: "/docs/basic-data-structures/array/arrays-in-dsa"
+    explanation: "By definition, native primitives group elements in unbroken, back-to-back sequential memory slots. This uniform, predictable arrangement enables fast O(1) random access operations."
   },
   {
     id: 7,
@@ -105,8 +95,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     question: "In C++, if a primitive local array is declared as 'int arr[5];' within a local stack frame block, what will be the default values inside its elements?",
     options: ["A) 0", "B) 1", "C) Random value (Garbage)", "D) Compile-time allocation error"],
     answer: "C) Random value (Garbage)",
-    explanation: "Locally scoped automatic variables declared inside block functions are not zero-initialized by C++ runtime frameworks. They inherit whatever residual binary configurations existed previously in those stack memory registers, returning garbage values until explicitly written to.",
-    relatedDoc: "/docs/languages/cpp/cp-7"
+    explanation: "Locally scoped automatic variables declared inside block functions are not zero-initialized by C++ runtime frameworks. They inherit whatever residual binary configurations existed previously in those stack memory registers, returning garbage values until explicitly written to."
   },
   {
     id: 8,
@@ -115,8 +104,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     codeSnippet: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[5];\n    cout << arr[0] << endl;\n    return 0;\n}`,
     options: ["A) Always 0", "B) Always 1", "C) Random garbage value", "D) Segmentation faults"],
     answer: "C) Random garbage value",
-    explanation: "Because local stack-allocated arrays do not undergo default value cleaning loops, reading arr[0] fetches whatever unmanaged random garbage remains at that raw memory offset.",
-    relatedDoc: "/docs/languages/cpp/cp-7"
+    explanation: "Because local stack-allocated arrays do not undergo default value cleaning loops, reading arr[0] fetches whatever unmanaged random garbage remains at that raw memory offset."
   },
   {
     id: 9,
@@ -125,8 +113,7 @@ export const QUESTIONS: ArrayQuestion[] = [
     codeSnippet: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[5] = { 1, 2, 3, 4, 5 };\n    cout << arr << endl;\n    return 0;\n}`,
     options: ["A) Address of the first element", "B) 1", "C) 2", "D) Hexadecimal hash of total element counts"],
     answer: "A) Address of the first element",
-    explanation: "In C++, the identifier label of an array decays into a pointer reference targeting its zero-index base offset address (&arr[0]) when compiled inside streaming operators.",
-    relatedDoc: "/docs/languages/cpp/cp-7"
+    explanation: "In C++, the identifier label of an array decays into a pointer reference targeting its zero-index base offset address (&arr[0]) when compiled inside streaming operators."
   }
 ];
 
@@ -143,10 +130,12 @@ const ArrayQuiz: React.FC = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    const storedUser = localStorage.getItem("quiz_username");
+    const storedUser = localStorage.getItem("algo_quiz_username");
     if (storedUser) {
       setUsername(storedUser);
-      setLocalHistory(getQuizAttempts("arrays") as LocalAttempt[]);
+      const historyKey = `algo_array_history_${storedUser.toLowerCase()}`;
+      const savedHistory = localStorage.getItem(historyKey);
+      if (savedHistory) setLocalHistory(JSON.parse(savedHistory));
     }
   }, []);
 
@@ -166,18 +155,27 @@ const ArrayQuiz: React.FC = () => {
 
   const selectedOption = userAnswers[currentQuestion] || null;
 
+  const handleKeyDown = (e: React.KeyboardEvent, option: string) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleRegister(option);
+    }
+  };
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!usernameInput.trim()) return;
     const cleanName = usernameInput.trim();
-    localStorage.setItem("quiz_username", cleanName);
+    localStorage.setItem("algo_quiz_username", cleanName);
     setUsername(cleanName);
 
-    setLocalHistory(getQuizAttempts("arrays") as LocalAttempt[]);
+    const historyKey = `algo_array_history_${cleanName.toLowerCase()}`;
+    const savedHistory = localStorage.getItem(historyKey);
+    setLocalHistory(savedHistory ? JSON.parse(savedHistory) : []);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("quiz_username");
+    localStorage.removeItem("algo_quiz_username");
     setUsername(null);
     setUsernameInput("");
     setLocalHistory([]);
@@ -199,20 +197,18 @@ const ArrayQuiz: React.FC = () => {
     } else {
       setShowResult(true);
       if (username) {
-        const missedQuestionIds = QUESTIONS.reduce<number[]>((acc, question, idx) => {
-          if (userAnswers[idx] !== question.answer) acc.push(question.id);
-          return acc;
-        }, []);
-
         const newAttempt: LocalAttempt = {
+          timestamp: Date.now(),
+          answers: userAnswers,
           score: score,
-          timeSpent: timeSpent,
-          completedAt: new Date().toISOString(),
-          missedQuestionIds,
+          timeSpent: timeSpent
         };
         const updatedHistory = [newAttempt, ...localHistory].slice(0, 5);
         setLocalHistory(updatedHistory);
-        saveQuizAttemptLocal(username.toLowerCase(), "arrays", newAttempt);
+        localStorage.setItem(
+          "algo_array_history_" + username.toLowerCase(),
+          JSON.stringify(updatedHistory)
+        );
       }
     }
   };
@@ -242,7 +238,7 @@ const ArrayQuiz: React.FC = () => {
             className="bg-white dark:bg-slate-900 border border-solid border-slate-200 dark:border-slate-800/80 shadow-md rounded-2xl p-8 max-w-md w-full text-center relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent pointer-events-none" />
-            <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 border border-solid border-primary/20">
+            <div className="w-14 h-14 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 border border-solid border-blue-500/20">
               <FaAward />
             </div>
             <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight m-0 mb-2">Arrays Quiz Arena</h2>
@@ -319,7 +315,7 @@ const ArrayQuiz: React.FC = () => {
                       <span className="text-[10px] font-mono tracking-wider text-slate-400 uppercase font-black flex items-center gap-1 justify-end">
                         <FaClock /> Runtime Elapse
                       </span>
-                      <div className="text-base font-mono font-bold text-primary-dark dark:text-primary-light">
+                      <div className="text-base font-mono font-bold text-blue-600 dark:text-blue-400">
                         {formatTime(timeSpent)}
                       </div>
                     </div>
@@ -334,7 +330,7 @@ const ArrayQuiz: React.FC = () => {
                           idx === currentQuestion 
                             ? "bg-[var(--ifm-color-primary)]" 
                             : userAnswers[idx] 
-                              ? "bg-primary/40 dark:bg-primary-light/20" 
+                              ? "bg-blue-500/40 dark:bg-blue-400/20" 
                               : "bg-transparent"
                         }`}
                       />
@@ -480,14 +476,6 @@ const ArrayQuiz: React.FC = () => {
                             <strong className="text-slate-700 dark:text-slate-300 font-sans block text-[10px] font-bold uppercase tracking-wider mb-1">Compiler Explanatory Log:</strong>
                             {q.explanation}
                           </p>
-                          {!isCorrect && q.relatedDoc && (
-                            <p className="text-xs text-slate-500 dark:text-slate-400 m-0 leading-relaxed">
-                              <strong className="text-slate-700 dark:text-slate-300 font-sans block text-[10px] font-bold uppercase tracking-wider mb-1">Review in Docs:</strong>
-                              <Link to={q.relatedDoc} className="font-semibold text-[var(--ifm-color-primary)] hover:underline">
-                                Read the related documentation for this topic
-                              </Link>
-                            </p>
-                          )}
                         </div>
                       );
                     })}
@@ -507,7 +495,7 @@ const ArrayQuiz: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {localHistory.map((att, idx) => (
                     <div 
-                      key={att.completedAt || idx} 
+                      key={att.timestamp || idx} 
                       className="bg-slate-50 dark:bg-slate-950 border border-solid border-slate-200 dark:border-slate-800/60 rounded-xl p-4 flex justify-between items-center text-xs"
                     >
                       <div className="space-y-1">
@@ -515,7 +503,7 @@ const ArrayQuiz: React.FC = () => {
                           Execution Sequence #{localHistory.length - idx}
                         </div>
                         <div className="text-[10px] text-slate-400">
-                          {new Date(att.completedAt).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
+                          {new Date(att.timestamp).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
                         </div>
                       </div>
                       <div className="text-right space-y-1">

@@ -16,8 +16,6 @@ import {
 import QuestionProgress from "../../components/Quiz/QuestionProgress";
 import QuestionNavigator from "../../components/Quiz/QuestionNavigator";
 import QuizResultActions from "../../components/Quiz/QuizResultActions";
-import { saveQuizAttemptLocal } from "../../utils/safeStorage";
-import { getQuizAttempts } from "../../utils/progressStore";
 
 interface AVLQuestion {
   id: number;
@@ -29,12 +27,13 @@ interface AVLQuestion {
 }
 
 interface LocalQuizAttempt {
+  timestamp: number;
+  answers: string[];
   score: number;
   timeSpent: number;
-  completedAt: string;
 }
 
-export const QUESTIONS: AVLQuestion[] = [
+const QUESTIONS: AVLQuestion[] = [
   {
     id: 1,
     difficulty: "Easy",
@@ -150,10 +149,12 @@ const AVLTreeQuiz: React.FC = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    const storedUser = localStorage.getItem("quiz_username");
+    const storedUser = localStorage.getItem("algo_quiz_username");
     if (storedUser) {
       setUsername(storedUser);
-      setLocalHistory(getQuizAttempts("avl-trees") as LocalQuizAttempt[]);
+      const historyKey = `algo_avl_history_${storedUser.toLowerCase()}`;
+      const savedHistory = localStorage.getItem(historyKey);
+      if (savedHistory) setLocalHistory(JSON.parse(savedHistory));
     }
   }, []);
 
@@ -173,18 +174,27 @@ const AVLTreeQuiz: React.FC = () => {
 
   const selectedOption = userAnswers[currentQuestion] || null;
 
+  const handleKeyDown = (e: React.KeyboardEvent, option: string) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleRegister(option);
+    }
+  };
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!usernameInput.trim()) return;
     const cleanName = usernameInput.trim();
-    localStorage.setItem("quiz_username", cleanName);
+    localStorage.setItem("algo_quiz_username", cleanName);
     setUsername(cleanName);
 
-    setLocalHistory(getQuizAttempts("avl-trees") as LocalQuizAttempt[]);
+    const historyKey = `algo_avl_history_${cleanName.toLowerCase()}`;
+    const savedHistory = localStorage.getItem(historyKey);
+    setLocalHistory(savedHistory ? JSON.parse(savedHistory) : []);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("quiz_username");
+    localStorage.removeItem("algo_quiz_username");
     setUsername(null);
     setUsernameInput("");
     setLocalHistory([]);
@@ -207,13 +217,17 @@ const AVLTreeQuiz: React.FC = () => {
       setShowResult(true);
       if (username) {
         const newAttempt: LocalQuizAttempt = {
+          timestamp: Date.now(),
+          answers: userAnswers,
           score: score,
-          timeSpent: timeSpent,
-          completedAt: new Date().toISOString()
+          timeSpent: timeSpent
         };
         const updatedHistory = [newAttempt, ...localHistory].slice(0, 5);
         setLocalHistory(updatedHistory);
-        saveQuizAttemptLocal(username.toLowerCase(), "avl-trees", newAttempt);
+        localStorage.setItem(
+          "algo_avl_history_" + username.toLowerCase(),
+          JSON.stringify(updatedHistory)
+        );
       }
     }
   };
@@ -417,7 +431,7 @@ const AVLTreeQuiz: React.FC = () => {
                       {score === QUESTIONS.length ? "Perfect balance metrics verified! Rotations perfectly managed across every case configuration." : score >= 6 ? "Solid conceptual comprehension of AVL conditions. Your height bounds look secure." : "Imbalance detected in sub-nodes. Trace rotation strategies and re-verify calculation parameters."}
                     </p>
 
-                    <QuizResultActions onRetry={handleRetry} topic="AVL Tree" score={score} total={QUESTIONS.length} />
+                    <QuizResultActions onRetry={handleRetry} />
                   </div>
 
                   {/* Static Explanatory Logs */}
@@ -475,7 +489,7 @@ const AVLTreeQuiz: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {localHistory.map((att, idx) => (
                     <div 
-                      key={att.completedAt || idx} 
+                      key={att.timestamp || idx} 
                       className="bg-slate-50 dark:bg-slate-950 border border-solid border-slate-200 dark:border-slate-800/60 rounded-xl p-4 flex justify-between items-center text-xs"
                     >
                       <div className="space-y-1">
@@ -483,7 +497,7 @@ const AVLTreeQuiz: React.FC = () => {
                           Compilation Cycle #{localHistory.length - idx}
                         </div>
                         <div className="text-[10px] text-slate-400">
-                          {new Date(att.completedAt).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
+                          {new Date(att.timestamp).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
                         </div>
                       </div>
                       <div className="text-right space-y-1">

@@ -23,16 +23,6 @@ Moore's Voting Algorithm is an efficient algorithm to find the majority element 
 - **Constant Space Complexity**:  
   It only requires a few extra variables, resulting in $O(1)$ space complexity.
 
-### Video Explanation 
-
-<LiteYouTubeEmbed
-  id="nP_ns3uSh80"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Majority Element I | Brute-Better-Optimal | Moore's Voting Algorithm | Intuition | Brute to Optimal"
-  lazyLoad={true}
-  webp
-/>
-
 ### Time Complexity:
 
 - **Best Case: $O(N)$**  
@@ -125,10 +115,3 @@ int main() {
     return 0;
 }
 ```
-
-## Related Topics
-
-- **[Kadane's Algorithm](../kadane-algorithm/kadane-algo.md)**: Efficient $O(N)$ algorithm for maximum subarray sum.
-- **[Two Pointers & Sliding Window](../two-pointers-sliding-window.md)**: Techniques for subarray and window processing ($O(N)$).
-- **[Dijkstra's Algorithm](../dijkstras-algorithm.md)**: Shortest path algorithm for non-negative weighted graphs ($O((V+E) \log V)$).
-

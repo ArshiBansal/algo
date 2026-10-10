@@ -31,16 +31,6 @@ Output: `true`
 **Explanation:** `[1, 2, 3]` is the original sorted array.
 You can rotate the array by x = 0 positions (i.e. no rotation) to make `nums`.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="Z7_nMTHROZo"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Lecture21: Solving LeetCode/CodeStudio Questions [Arrays]"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -54,11 +44,9 @@ If the array is not sorted and rotated, there will be more than one drop. To che
 * **Time Complexity:** $O(n)$ where $n$ is the number of elements in the array. We iterate through the array exactly once.
 * **Space Complexity:** $O(1)$ because we only use a counter variable and length variable, taking constant extra space.
 
-## Solutions
+#### Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -77,9 +65,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public boolean check(int[] nums) {
@@ -97,10 +83,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def check(self, nums: list[int]) -> bool:
         count = 0
@@ -113,10 +97,8 @@ class Solution:
         return count <= 1
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number[]} nums
  * @return {boolean}
@@ -134,6 +116,3 @@ const check = function(nums) {
     return count <= 1;
 };
 ```
-
-  </TabItem>
-</Tabs>

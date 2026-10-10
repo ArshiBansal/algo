@@ -1,26 +1,15 @@
 ---
+
 id: longest-common-subsequence-algorithm
 sidebar_position: 16
 title: Longest Common Subsequence (LCS) Algorithm
 sidebar_label: LCS Algorithm
-description: "Overview and dynamic programming implementation of Longest Common Subsequence."
-tags: [string algorithms, lcs, dynamic programming, dsa]
+
 ---
 
 ### Definition:
 
 The Longest Common Subsequence (LCS) Algorithm finds the longest subsequence that is present in two sequences in the same relative order. A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. Unlike substrings, subsequences need not be contiguous.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="sSno9rV8Rhg"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="4.9 Longest Common Subsequence (LCS) - Recursion and Dynamic Programming"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 
@@ -339,9 +328,3 @@ The algorithm's strength lies in its ability to handle non-contiguous matches wh
 The practical applications of LCS extend beyond simple sequence matching to areas such as version control systems, DNA sequence analysis, and plagiarism detection. Its versatility and reliability make it a crucial tool in various fields where sequence comparison and analysis are essential.
 
 The ability to handle different requirements through various implementation options (basic, space-optimized, all-solutions) makes it adaptable to different use cases while maintaining its fundamental efficiency in finding the longest common subsequence between strings.
-
-## Related Topics
-
-- **[Levenshtein Distance](./levenshtein-distance-algorithm.md)**: Edit distance DP measuring insert/delete/replace cost between strings ($O(N \cdot M)$).
-- **[KMP Algorithm](./kmp-algorithm.md)**: Pattern matching using failure function; LCS used in diff tools.
-- **[Dynamic Programming](../../dynamic-programming/how-to-identify.md)**: LCS is a canonical 2D DP problem ($O(N \cdot M)$).

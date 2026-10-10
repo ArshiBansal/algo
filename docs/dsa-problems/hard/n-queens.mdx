@@ -1,15 +1,9 @@
 ---
 id: n-queens
-title: N-Queens
+title: "N-Queens"
 sidebar_label: N-Queens
-description: Solving the classic N-Queens puzzle using a backtracking approach.
-tags:
-  - DSA
-  - leetcode
-  - array
-  - backtracking
-companies:
-  - Meta
+description: "Solving the classic N-Queens puzzle using a backtracking approach."
+tags: [DSA, leetcode, array, backtracking]
 ---
 
 import NQueensVisualizer from '@site/src/components/Visualizing/n-queens-visualizer';
@@ -33,16 +27,6 @@ Output: `[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]`
 Input: `n = 1`
 Output: `[["Q"]]`
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="xFv_Hl4B83A"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="6.1 N Queens Problem using Backtracking"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -65,11 +49,9 @@ The most effective way to solve the N-Queens problem is using **Backtracking**. 
 * **Time Complexity:** $O(N!)$ where $N$ is the number of queens. For the first row we have $N$ choices, for the next roughly $N-1$, and so on, leading to a factorial time complexity.
 * **Space Complexity:** $O(N^2)$ for storing the board state and the output array, plus $O(N)$ for the recursion stack and the sets used to track attacks.
 
-## Solutions
+#### Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -102,9 +84,7 @@ private:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public List<List<String>> solveNQueens(int n) {
@@ -153,10 +133,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         col = set()
@@ -192,10 +170,8 @@ class Solution:
         return res
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number} n
  * @return {string[][]}
@@ -236,6 +212,3 @@ const solveNQueens = function(n) {
     return res;
 };
 ```
-
-  </TabItem>
-</Tabs>

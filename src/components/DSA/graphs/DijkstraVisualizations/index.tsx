@@ -11,7 +11,7 @@ const DijkstraVisualizations: React.FC = () => {
   const [priorityQueue, setPriorityQueue] = useState<Array<[number, number, number]>>([]);
   const [distances, setDistances] = useState<number[][]>([]);
   const [visited, setVisited] = useState<boolean[][]>([]);
-  const [previous, setPrevious] = useState<Array<Array<[number, number] | null>>>([]);
+  const [previous, setPrevious] = useState<Array<[number, number] | null>>([]);
   const [currentStep, setCurrentStep] = useState<[number, number] | null>(null);
 
   useEffect(() => {
@@ -42,23 +42,31 @@ const DijkstraVisualizations: React.FC = () => {
     setCurrentStep(null); // Reset the current step
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (priorityQueue.length === 0) {
       setIsRunning(false);
       return;
     }
 
-    // Sort queue based on distance (Min-Heap behavior)
+    // Always sort the queue to get the minimum distance node
     priorityQueue.sort((a, b) => a[0] - b[0]);
     const [currentDist, x, y] = priorityQueue.shift()!;
 
-    if (visited[x][y]) return;
+    // If this node has already been visited, skip it
+    if (visited[x][y]) {
+      nextStep();
+      return;
+    }
 
-    visited[x][y] = true;
-    setVisited([...visited]);
+    // Mark this node as visited
+    setVisited((prevVisited) => {
+      const newVisited = prevVisited.map((row) => [...row]);
+      newVisited[x][y] = true; 
+      return newVisited;
+    });
 
-    // Check all 4 direction neighbors (Up, Down, Left, Right)
-    const directions = [
+    // Update distances and previous paths
+    const directions: [number, number][] = [
       [-1, 0],
       [1, 0],
       [0, -1],
@@ -91,7 +99,7 @@ const DijkstraVisualizations: React.FC = () => {
     setPriorityQueue(priorityQueue);
 
     // Check if we reached the end node
-    if (endNode && startNode && x === endNode[0] && y === endNode[1]) {
+    if (x === endNode![0] && y === endNode![1]) {
       const path = reconstructPath(previous, startNode, endNode);
       setShortestPath(path);
       setIsRunning(false);
@@ -102,7 +110,7 @@ const DijkstraVisualizations: React.FC = () => {
   };
 
   const reconstructPath = (
-    previous: Array<Array<[number, number] | null>>,
+    previous: Array<[number, number] | null>,
     startNode: [number, number],
     endNode: [number, number]
   ) => {
@@ -167,7 +175,7 @@ const DijkstraVisualizations: React.FC = () => {
       <div className="grid">
         {/* Render Column Header */}
         <div className="grid grid-cols-11 gap-1">
-          <div className="w-10 h-10" /> {/* Empty corner cell */}
+          <div className="w-10 h-10"></div> {/* Empty corner cell */}
           {Array.from({ length: gridSize }, (_, colIndex) => (
             <div key={`col-${colIndex}`} className="w-10 h-10 flex items-center justify-center bg-gray-200 font-bold">
               {colIndex}

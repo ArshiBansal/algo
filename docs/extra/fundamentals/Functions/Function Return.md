@@ -21,16 +21,6 @@ return_type function_name(parameter1_type parameter1) {
 }
 ```
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="RFLFX1boGwo"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Functions & Function Prototypes in C++ | C++ Tutorials for Beginners #15"
-  lazyLoad={true}
-  webp
-/>
-
 ## Example
 ### C++ Example
 ```c++
@@ -54,16 +44,6 @@ def function_name(parameter1):
     return value
 
 ```
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="OvTH-7ESoRA"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Lecture 6 : Functions & Recursion in Python | Python Full Course"
-  lazyLoad={true}
-  webp
-/>
 
 ## Example
 ### Python Example

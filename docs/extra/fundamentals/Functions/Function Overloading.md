@@ -20,17 +20,6 @@ void display(string value);
 
 ```
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="8qZb09suSHY"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Function Overloading with Examples in C++ | C++ Tutorials for Beginners #19"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ## Example
 ### C++ Example
 ```c++
@@ -73,17 +62,6 @@ def display(value):
     print(value)
 
 ```
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="CcTzTuIsoFk"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="#60 Python Tutorial for Beginners | Method Overloading and Method Overriding"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ## Example
 ### Python Example

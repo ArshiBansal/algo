@@ -1,27 +1,15 @@
 ---
+
 id: pigeonhole-sort-algo  
 sidebar_position: 14  
 title: Pigeonhole Sort  
-sidebar_label: Pigeonhole Sort
-description: "Complete guide to Pigeonhole Sort, a linear time sorting algorithm that works by placing elements into pigeonholes based on their key values."
-tags: [sorting algorithms, pigeonhole sort, linear sorting, dsa]
+sidebar_label: Pigeonhole Sort  
 
 ---
 
 ### Definition:
 
 Pigeonhole Sort is a non-comparison sorting algorithm based on the pigeonhole principle. It sorts an array of n elements where the range of input values ( k ) is not significantly greater than n. The algorithm distributes the elements into "pigeonholes" (or buckets) according to their value and then collects them back into a sorted order.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="nVQz0kZNC64"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Pigeonhole Sort | GeeksforGeeks"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

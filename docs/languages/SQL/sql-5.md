@@ -17,16 +17,6 @@ SELECT \* FROM Products
 ORDER BY Price;
 ```
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="zgYqUP_PhQo"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Group By + Order By in MySQL | Beginner MySQL Series"
-  lazyLoad={true}
-  webp
-/>
-
 * * *
 
 ### Syntax

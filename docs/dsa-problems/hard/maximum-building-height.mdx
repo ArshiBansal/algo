@@ -39,16 +39,6 @@ Output: `5`
 With no restrictions, the heights can be [0, 1, 2, 3, 4, 5].
 The tallest building has a height of 5.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="ccWRO34TVZI"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Maximum Building Height | Detailed For Beginners | Dry Runs | Leetcode 1840 | codestorywithMIK"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -68,11 +58,9 @@ To optimize the approach and find the true maximum height, we can treat this as 
 * **Time Complexity:** `O(M log M)` where `M` is the number of restrictions. Sorting the restrictions dominates the time complexity. The forward and backward passes take linear time `O(M)`.
 * **Space Complexity:** `O(1)` or `O(M)` depending on the language and the sorting algorithm's internal space requirements. Modifying the array in-place keeps auxiliary space minimal.
 
-## Solutions
+#### Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -108,9 +96,7 @@ public:
 };
 ```
 
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 import java.util.Arrays;
 
@@ -153,10 +139,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def maxBuilding(self, n: int, restrictions: List[List[int]]) -> int:
         restrictions.append([1, 0])
@@ -186,10 +170,8 @@ class Solution:
         return max_height
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {number} n
  * @param {number[][]} restrictions
@@ -226,6 +208,3 @@ const maxBuilding = function(n, restrictions) {
     return maxHeight;
 };
 ```
-
-  </TabItem>
-</Tabs>

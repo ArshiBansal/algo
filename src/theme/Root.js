@@ -1,82 +1,41 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useLocation } from "@docusaurus/router";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Head from "@docusaurus/Head";
 import KeyboardShortcutsModal from "../components/KeyboardShortcutsModal";
-import KeyboardShortcutsButton from "../components/KeyboardShortcutsButton";
-import ChallengeSearchModal from "../components/ChallengeSearchModal";
-import ThemePickerModal from "../components/ThemePickerModal";
 import useKeyboardShortcuts from "../hooks/useKeyboardShortcuts";
+import BottomToTop from "../components/Scroller/BottomToTop/BottomToTop";
+import TopToBottom from "../components/Scroller/TopToBottom/TopToBottom";
 import PageProgressIndicator from "../components/PageProgressIndicator";
 import SidebarUpdater from '../components/ProgressTracker/SidebarUpdater';
 import { AuthProvider } from "../contexts/AuthContext";
-import { CursorProvider } from "../contexts/CursorContext";
-import CustomCursor from "../components/CustomCursor";
- 
+
 export default function Root({ children }) {
   const location = useLocation();
   const { siteConfig } = useDocusaurusContext();
   const isHomepage = location.pathname === siteConfig.baseUrl;
   const isDocsPage = location.pathname.includes("/docs/");
- 
-  // Client-side anti-clickjacking frame-busting protection
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.top !== window.self) {
-      try {
-        if (window.top.location.hostname !== window.self.location.hostname) {
-          window.top.location.href = window.self.location.href;
-        }
-      } catch (e) {
-        window.self.location.href = "about:blank";
-      }
-    }
-  }, []);
- 
-  const onOpenHelp  = useCallback(() => setShowKeyboardModal(true), []);
+
+  const onOpenHelp = useCallback(() => setShowKeyboardModal(true), []);
   const onCloseHelp = useCallback(() => setShowKeyboardModal(false), []);
   const [showKeyboardModal, setShowKeyboardModal] = useState(false);
- 
-  const onOpenSearch  = useCallback(() => setShowChallengeSearch(true), []);
-  const onCloseSearch = useCallback(() => setShowChallengeSearch(false), []);
-  const [showChallengeSearch, setShowChallengeSearch] = useState(false);
- 
-  const onOpenThemePicker  = useCallback(() => setShowThemePicker(true), []);
-  const onCloseThemePicker = useCallback(() => setShowThemePicker(false), []);
-  const [showThemePicker, setShowThemePicker] = useState(false);
- 
+
   useKeyboardShortcuts({
     onOpenHelp,
     onCloseHelp,
-    onOpenChallengeSearch: onOpenSearch,
-    onOpenThemePicker,
   });
- 
+
   return (
     <>
-      <Head>
-        <meta httpEquiv="X-Frame-Options" content="SAMEORIGIN" />
-        <meta httpEquiv="Content-Security-Policy" content="frame-ancestors 'self';" />
-      </Head>
       <AuthProvider>
-        <CursorProvider>
-          <CustomCursor />
-          <SidebarUpdater />
-          {isDocsPage && <PageProgressIndicator />}
-          {children}
-          <KeyboardShortcutsButton onClick={onOpenHelp} />
-          <KeyboardShortcutsModal
-            isOpen={showKeyboardModal}
-            onClose={onCloseHelp}
-          />
-          <ChallengeSearchModal
-            isOpen={showChallengeSearch}
-            onClose={onCloseSearch}
-          />
-          <ThemePickerModal
-            isOpen={showThemePicker}
-            onClose={onCloseThemePicker}
-          />
-        </CursorProvider>
+        <SidebarUpdater />
+        {isDocsPage && <PageProgressIndicator />}
+        {children}
+        <KeyboardShortcutsModal
+          isOpen={showKeyboardModal}
+          onClose={onCloseHelp}
+        />
+        {!isHomepage && <BottomToTop />}
+        {!isHomepage && <TopToBottom />}
       </AuthProvider>
     </>
   );

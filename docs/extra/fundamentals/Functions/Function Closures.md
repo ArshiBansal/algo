@@ -26,17 +26,6 @@ function outerFunction() {
 
 ```
 
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="qikxEIxsXco"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Closures in JS 🔥 | Namaste JavaScript Episode 10"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
-
 ## Example
 ### JavaScript Example
 ```JavaScript
@@ -71,17 +60,6 @@ def outer_function():
     return inner_function  # Returning the inner function
 
 ```
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="swU3c34d2NQ"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Programming Terms: Closures - How to Use Them and Why They Are Useful"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ## Example
 ### Python Example

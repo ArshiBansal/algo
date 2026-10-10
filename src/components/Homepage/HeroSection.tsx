@@ -7,34 +7,21 @@ const HeroSection = () => {
   const [stats, setStats] = useState({ stars: 100, forks: 300 });
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetch("https://api.github.com/repos/ajay-dhangar/algo", {
-      headers: {
-        Accept: "application/vnd.github.v3+json",
-      },
-      signal: controller.signal,
-    })
+    // Corrected target path pointing directly to the official GitHub Developer REST API endpoint
+    fetch("https://github.com/ajay-dhangar/algo")
       .then((res) => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        if (!res.ok) throw new Error("Network response was not OK");
         return res.json();
       })
       .then((data) => {
-        if (typeof data.stargazers_count === "number" && typeof data.forks_count === "number") {
+        if (data.stargazers_count !== undefined && data.forks_count !== undefined) {
           setStats({
             stars: data.stargazers_count,
             forks: data.forks_count,
           });
         }
       })
-      .catch((err) => {
-        if (err.name !== "AbortError") {
-          console.error("Error fetching live repository metrics:", err);
-        }
-      });
-
-    return () => {
-      controller.abort();
-    };
+      .catch((err) => console.error("Error fetching live repository metrics:", err));
   }, []);
 
   return (
@@ -102,7 +89,7 @@ const HeroSection = () => {
             to="/docs"
             className="group relative overflow-hidden flex items-center px-6 py-3 text-lg font-medium text-white rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-blue-500/50 hover:shadow-2xl active:scale-95"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 transition duration-300 group-hover:from-blue-800 group-hover:via-blue-700 group-hover:to-cyan-600" />
+            <span className="absolute inset-0 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 transition duration-300 group-hover:from-blue-800 group-hover:via-blue-700 group-hover:to-cyan-600"></span>
             <span className="relative z-10 flex items-center">
               Explore Algorithms
               <FaArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-2" />
@@ -113,7 +100,7 @@ const HeroSection = () => {
             to="https://github.com/ajay-dhangar/algo"
             className="group relative overflow-hidden flex items-center px-6 py-3 text-lg font-medium text-blue-600 dark:text-white border-2 border-blue-600 dark:border-white rounded-lg transition-all duration-300 ease-in-out hover:scale-105 hover:text-gray-200 hover:shadow-xl hover:shadow-gray-500/40 active:scale-95"
           >
-            <span className="absolute inset-0 bg-blue-600 dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+            <span className="absolute inset-0 bg-blue-600 dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
             <span className="relative z-10 flex items-center group-hover:text-white dark:group-hover:text-blue-600 transition-colors duration-300">
               View on GitHub
               <FaGithub className="ml-2 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
@@ -125,8 +112,8 @@ const HeroSection = () => {
 
       {/* Ambient Lighting Backdrops */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 -left-10 w-72 h-72 bg-blue-500 opacity-20 dark:opacity-30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-20 -right-10 w-72 h-72 bg-pink-500 opacity-20 dark:opacity-30 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -top-20 -left-10 w-72 h-72 bg-blue-500 opacity-20 dark:opacity-30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-20 -right-10 w-72 h-72 bg-pink-500 opacity-20 dark:opacity-30 rounded-full blur-3xl animate-pulse"></div>
       </div>
 
       {/* Smooth Navigation Scroll Button */}

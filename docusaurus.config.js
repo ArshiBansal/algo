@@ -38,44 +38,7 @@ const config = {
   projectName: "algo",
 
   onBrokenLinks: "throw",
-
-  // onBrokenLinksIgnorePatterns: [
-  //   /\/algo\/u\/.*/,
-  // ],
-
-  headTags: [
-    {
-      tagName: "meta",
-      attributes: {
-        name: "impact-site-verification",
-        content: "1e9bf198-a4f7-4132-b77d-46b34e45f6ad",
-      },
-    },
-    {
-      tagName: "script",
-      attributes: { id: "algo-accent-theme-init" },
-      innerHTML: `(function() {
-        try {
-          var theme = window.localStorage.getItem('algo-accent-theme');
-          if (theme === 'high-contrast' || theme === 'neon') {
-            document.documentElement.setAttribute('data-accent-theme', theme);
-          }
-        } catch (e) {}
-      })();`,
-    },
-    {
-      tagName: "script",
-      attributes: { id: "algo-code-theme-init" },
-      innerHTML: `(function() {
-        try {
-          var theme = window.localStorage.getItem('algo-code-theme');
-          if (theme === 'midnight' || theme === 'solarized') {
-            document.documentElement.setAttribute('data-code-theme', theme);
-          }
-        } catch (e) {}
-      })();`,
-    },
-  ],
+  // onBrokenMarkdownLinks: "throw",
 
   i18n: {
     defaultLocale: "en",
@@ -141,28 +104,19 @@ const config = {
         playgroundPosition: "bottom",
       },
 
-      // announcementBar: {
-      //   id: "star_us_announcement",
-      //   content:
-      //     '🌟 Loving the project? Support our open-source journey with a <b><a target="_blank" rel="noopener noreferrer" href="https://github.com/ajay-dhangar/algo">Star on GitHub</a></b>!',
-      //   textColor: "var(--announcement-text)",
-      //   isCloseable: true,
-      // },
+      announcementBar: {
+        id: "star_us_announcement",
+        content:
+          '🌟 Loving the project? Support our open-source journey with a <b><a target="_blank" rel="noopener noreferrer" href="https://github.com/ajay-dhangar/algo">Star on GitHub</a></b>!',
+        textColor: "var(--announcement-text)",
+        isCloseable: true,
+      },
       algolia: {
         appId: process.env.ALGOLIA_APP_ID || "T0I3F584D5",
         apiKey:
           process.env.ALGOLIA_API_KEY || "865d7bd9906f532b1d8cb5cc0f02b383",
         indexName: process.env.ALGOLIA_INDEX_NAME || "ajay-dhangario",
         contextualSearch: true,
-      },
-      customFields: {
-        algoliaAnalyticsAppId: process.env.ALGOLIA_APP_ID || "T0I3F584D5",
-        algoliaAnalyticsApiKey:
-          process.env.ALGOLIA_ANALYTICS_API_KEY ||
-          process.env.ALGOLIA_API_KEY ||
-          "865d7bd9906f532b1d8cb5cc0f02b383",
-        algoliaAnalyticsIndexName:
-          process.env.ALGOLIA_INDEX_NAME || "ajay-dhangario",
       },
 
       navbar: {
@@ -172,7 +126,6 @@ const config = {
           src: "logo/logo.png",
         },
         items: [
-          // ---------------- LEFT SIDE: Core Content & Learning ----------------
           {
             type: "docSidebar",
             sidebarId: "tutorialSidebar",
@@ -188,12 +141,24 @@ const config = {
               {
                 type: "html",
                 value:
-                  '<div style="padding: 0.45rem 0.75rem 0.25rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">System Preparation</div>',
+                  '<div style="padding: 0.45rem 0.75rem 0.25rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; tracking-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">System Preparation</div>',
               },
-              { to: "roadmap", label: "Verification Roadmap" },
-              { to: "dsa-interview", label: "Core Matrix Questions" },
-              { to: "applications", label: "Real-World Implementation" },
-              { to: "dsa-roadmap", label: "Contribution Tracker" },
+              {
+                to: "roadmap",
+                label: "Verification Roadmap",
+              },
+              {
+                to: "dsa-interview",
+                label: "Core Matrix Questions",
+              },
+              {
+                to: "applications",
+                label: "Real-World Implementation",
+              },
+              {
+                to: "dsa-roadmap",
+                label: "Contribution Tracker",
+              },
               {
                 type: "html",
                 value:
@@ -202,64 +167,53 @@ const config = {
               {
                 type: "html",
                 value:
-                  '<div style="padding: 0.25rem 0.75rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">Evaluation Pools</div>',
-              },
-              { to: "challenges", label: "Code Challenges" },
-              { to: "practice", label: "Practice Arena" },
-              { to: "quizzes", label: "Concept Quizzes" },
-              { to: "quiz-solutions", label: "Compiled Solutions" },
-            ],
-          },
-          {
-            type: "dropdown",
-            label: "Visualizers",
-            position: "left",
-            className: "navbar-visualizers-dropdown",
-            items: [
-              { to: "visualization", label: "Algorithm Visualizer" },
-              {
-                to: "big-o-benchmark",
-                label: "Big-O Runtime Benchmark Playground",
+                  '<div style="padding: 0.25rem 0.75rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; tracking-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">Evaluation Pools</div>',
               },
               {
-                to: "complexity-visualizer",
-                label: "Time Complexity Visualizer",
+                to: "challenges",
+                label: "Code Challenges",
               },
               {
-                to: "backtracking-visualizer",
-                label: "Backtracking & Grid Solver",
-              },
-              { to: "bitwise-visualizer", label: "Bitwise Operations" },
-              { to: "n-queens-visualizer", label: "N-Queens Visualizer" },
-              {
-                to: "largest-rectangle-visualizer",
-                label: "Largest Rectangle",
+                to: "practice",
+                label: "Practice Arena",
               },
               {
-                to: "maximal-rectangle-visualizer",
-                label: "Maximal Rectangle",
+                to: "quizzes",
+                label: "Concept Quizzes",
               },
               {
-                to: "maximum-building-height-visualizer",
-                label: "Max Building Height",
+                to: "quiz-solutions",
+                label: "Compiled Solutions",
               },
             ],
           },
           {
             type: "dropdown",
-            label: "Community & Ecosystem",
+            label: "Community Hub",
             position: "left",
             className: "navbar-community-dropdown",
             items: [
               {
                 type: "html",
                 value:
-                  '<div style="padding: 0.45rem 0.75rem 0.25rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">Telemetry & Systems</div>',
+                  '<div style="padding: 0.45rem 0.75rem 0.25rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; tracking-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">Telemetry & Systems</div>',
               },
-              { to: "contributors", label: "Contributors Wall" },
-              { to: "leaderboard", label: "Global Leaderboard" },
-              { to: "achievements", label: "Milestones & Badges" },
-              { to: "sponsors", label: "Become a Sponsor" },
+              {
+                to: "contributors",
+                label: "Contributors Wall",
+              },
+              {
+                to: "leaderboard",
+                label: "Global Leaderboard",
+              },
+              {
+                to: "achievements",
+                label: "Milestones & Badges",
+              },
+              {
+                to: "sponsors",
+                label: "Infrastructure Patrons",
+              },
               {
                 type: "html",
                 value:
@@ -268,52 +222,49 @@ const config = {
               {
                 type: "html",
                 value:
-                  '<div style="padding: 0.25rem 0.75rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">Ecosystem Labs</div>',
-              },
-              { to: "playground", label: "Code Playground" },
-              { to: "stories", label: "Success Stories" },
-              { to: "community", label: "Public Discussions" },
-              { to: "resources", label: "Extended Assets" },
-              { to: "favorites", label: "Favorites" },
-              { to: "faq", label: "FAQ" },
-              {
-                type: "html",
-                value:
-                  '<hr style="margin: 0.4rem 0; border: none; border-top: 1px solid var(--ifm-contents-border-color, #e2e8f0); opacity: 0.6;"/>',
+                  '<div style="padding: 0.25rem 0.75rem; font-family: var(--ifm-font-family-monospace); font-size: 10px; font-weight: 800; tracking-spacing: 0.05em; text-transform: uppercase; color: var(--ifm-color-primary);">Ecosystem Labs</div>',
               },
               {
-                to: "blog",
-                label: "Blog",
+                to: "playground",
+                label: "Code Playground",
               },
-              { to: "newsletter", label: "Algorithm Digest" },
+              {
+                to: "stories",
+                label: "Success Stories",
+              },
+              {
+                to: "community",
+                label: "Public Discussions",
+              },
+              {
+                to: "resources",
+                label: "Extended Assets",
+              },
             ],
           },
-
-          // ---------------- RIGHT SIDE: Secondary Content & Custom Pickers ----------------
-
+          {
+            to: "faq",
+            label: "FAQ",
+            position: "left",
+          },
+          {
+            to: "blog",
+            label: "Blogs",
+            position: "right",
+          },
           {
             type: "localeDropdown",
             position: "right",
           },
-          // {
-          //   type: "custom-themePicker",
-          //   position: "right",
-          // },
-          // {
-          //   type: "custom-codeThemePicker",
-          //   position: "right",
-          // },
-          // {
-          //   type: "custom-cursorSwitcher",
-          //   position: "right",
-          // },
           {
             type: "search",
             position: "right",
           },
           {
-            type: "custom-authButton",
+            label: "Sign Up",
+            href: "/register",
             position: "right",
+            className: "algo-signup algo-link",
           },
         ],
       },
@@ -423,7 +374,7 @@ const config = {
             "Inspiring journeys of triumph and growth in the world of algorithms. Discover how learners overcame challenges, achieved milestones, and transformed their skills through dedication and perseverance.",
           copyright: "Copyright (c) 2024 Algo, Inc.",
           language: undefined,
-          createFeedItems: (params) => {
+          createFeedItems: async (params) => {
             const { blogPosts, defaultCreateFeedItems, ...rest } = params;
             return defaultCreateFeedItems({
               blogPosts: blogPosts.filter((item, index) => index < 10),
@@ -434,116 +385,6 @@ const config = {
       },
     ],
 
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
-        trackingID: process.env.GTAG_TRACKING_ID || "G-N1R880BPS0",
-        anonymizeIP: true,
-      },
-    ],
-
-    [
-      "@docusaurus/plugin-google-tag-manager",
-      {
-        containerId: "GTM-NWMCVM3L",
-      },
-    ],
-
-    [
-      "@docusaurus/plugin-pwa",
-      {
-        debug: false,
-        offlineModeActivationStrategies: [
-          "always",
-          "appInstalled",
-          "standalone",
-          "queryString",
-        ],
-        // swRegister: false,
-        swCustom: require.resolve("./src/sw.js"),
-        pwaHead: [
-          {
-            tagName: "link",
-            rel: "icon",
-            href: "/algo/favicon_io/favicon.ico",
-          },
-          {
-            tagName: "link",
-            rel: "manifest",
-            href: "/algo/manifest.json",
-          },
-          {
-            tagName: "meta",
-            name: "theme-color",
-            content: "rgb(37, 194, 160)",
-          },
-          {
-            tagName: "meta",
-            name: "apple-mobile-web-app-capable",
-            content: "yes",
-          },
-          {
-            tagName: "meta",
-            name: "apple-mobile-web-app-status-bar-style",
-            content: "#000",
-          },
-          {
-            tagName: "link",
-            rel: "apple-touch-icon",
-            href: "/algo/favicon_io/apple-icon-180x180.png",
-          },
-          {
-            tagName: "link",
-            rel: "mask-icon",
-            href: "/algo/favicon_io/favicon-32x32.png",
-            color: "rgb(62, 204, 94)",
-          },
-          {
-            tagName: "meta",
-            name: "msapplication-TileImage",
-            content: "/algo/favicon_io/ms-icon-144x144.png",
-          },
-          {
-            tagName: "meta",
-            name: "msapplication-TileColor",
-            content: "#000",
-          },
-        ],
-      },
-    ],
-
-    [
-      "@docusaurus/plugin-ideal-image",
-      {
-        quality: 70,
-        max: 1030,
-        min: 640,
-        steps: 2,
-        disableInDev: false,
-      },
-    ],
-
-    function dynamicProfileRoutesPlugin() {
-      return {
-        name: "docusaurus-dynamic-profile-routes",
-        async contentLoaded({ actions }) {
-          const { addRoute } = actions;
-          // Main User Profile Route
-          addRoute({
-            path: '/algo/u/:username',
-            component: '@site/src/pages/u/[username]/index.tsx',
-            exact: true,
-          });
-
-          // User Profile Badge Route
-          addRoute({
-            path: '/algo/u/:username/badge',
-            component: '@site/src/pages/u/[username]/badge.tsx',
-            exact: true,
-          });
-        },
-      };
-    },
     [
       path.join(__dirname, "/plugins/my-plugin"),
       {

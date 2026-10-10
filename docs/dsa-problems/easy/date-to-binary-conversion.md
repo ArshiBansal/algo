@@ -1,16 +1,9 @@
 ---
 id: date-to-binary-conversion
-title: Date to Binary
-sidebar_label: Date to Binary
-description: >-
-  The Date to Binary Conversion problem on LeetCode typically involves
-  converting a given date into its binary representation.
-tags:
-  - DSA
-  - leetcode
-  - problem-solving
-companies:
-  - Apple
+title: "Date to Binary"
+sidebar_label: Date to Binary 
+description: "The Date to Binary Conversion problem on LeetCode typically involves converting a given date into its binary representation."
+tags: [DSA, leetcode, problem-solving]
 ---
 
 # Leetcode: Problem-3280
@@ -20,17 +13,6 @@ companies:
 You are given a string ``date`` representing a Gregorian calendar date in the ``yyyy-mm-dd`` format. 
 ``date`` can be written in its binary representation obtained by converting year, month, and day to their binary representations without any leading zeroes and writing them down in ``year-month-day`` format.
 Return the binary representation of ``date``.
-
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="NMTBmR_lQjc"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Very Easy Explanation || Convert Date to Binary || String Methods || Weekly Contest 414"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 **Example 1:**
 Input: date = "2080-02-29"
@@ -57,35 +39,7 @@ Output: "11101101100-1-1"
 
 **3. Output:** Provide the combined binary representation.
 
-## Solutions
-
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
-```cpp
-class Solution {
-public:
-    string convertDateToBinary(string date) {
-        int year = stoi(date.substr(0, 4));
-        int month = stoi(date.substr(5, 2));
-        int day = stoi(date.substr(8, 2));
-        
-        auto toBin = [](int val) {
-            string s = "";
-            while (val > 0) {
-                s = to_string(val % 2) + s;
-                val /= 2;
-            }
-            return s;
-        };
-        
-        return toBin(year) + "-" + toBin(month) + "-" + toBin(day);
-    }
-};
-```
-
-  </TabItem>
-  <TabItem value="java" label="Java">
+# Solution in Java
 
 ```java
 class Solution {
@@ -102,25 +56,3 @@ class Solution {
     }
 }
 ```
-
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
-class Solution:
-    def convertDateToBinary(self, date: str) -> str:
-        parts = date.split('-')
-        return '-'.join(bin(int(p))[2:] for p in parts)
-```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-var convertDateToBinary = function(date) {
-    return date.split('-').map(part => Number(part).toString(2)).join('-');
-};
-```
-
-  </TabItem>
-</Tabs>

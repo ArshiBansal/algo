@@ -22,17 +22,7 @@ module.exports = {
         sm: "0px",
         lg: "997px",
       },
-      colors: {
-        primary: {
-          DEFAULT: "var(--ifm-color-primary)",
-          dark: "var(--ifm-color-primary-dark)",
-          darker: "var(--ifm-color-primary-darker)",
-          darkest: "var(--ifm-color-primary-darkest)",
-          light: "var(--ifm-color-primary-light)",
-          lighter: "var(--ifm-color-primary-lighter)",
-          lightest: "var(--ifm-color-primary-lightest)",
-        }
-      },
+      colors: {},
     },
   },
   plugins: [],

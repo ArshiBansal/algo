@@ -5,9 +5,6 @@ import {
 } from "framer-motion";
 import Layout from "@theme/Layout";
 import axios from "axios";
-import { useMergedPRStats } from "../../utils/useMergedPRStats";
-import { computeAchievements, ContributorPRStats } from "../../utils/prAchievements";
-import { BadgeRow, ReadmeBadgeButton } from "../../components/ContributorBadges";
 import {
   FiCrosshair,
   FiTerminal,
@@ -321,20 +318,15 @@ interface ContributorCardProps {
   c: Contributor;
   maxContributions: number;
   rank: number;
-  prStats?: ContributorPRStats;
 }
 
-function ContributorCard({ c, maxContributions, rank, prStats }: ContributorCardProps) {
+function ContributorCard({ c, maxContributions, rank }: ContributorCardProps) {
   const tier = getTier(c.contributions);
   const pct = Math.max(
     6,
     Math.min(100, (c.contributions / maxContributions) * 100),
   );
   const [hovered, setHovered] = useState(false);
-  const achievements = useMemo(
-    () => computeAchievements(prStats?.prs ?? []),
-    [prStats],
-  );
 
   return (
     <motion.div
@@ -493,9 +485,6 @@ function ContributorCard({ c, maxContributions, rank, prStats }: ContributorCard
             )}
           </div>
         </div>
-
-        {/* Achievement badges, earned from merged-PR history */}
-        {achievements.length > 0 && <BadgeRow badges={achievements} />}
       </div>
 
       {/* Footer actions */}
@@ -513,31 +502,22 @@ function ContributorCard({ c, maxContributions, rank, prStats }: ContributorCard
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          {prStats && (
-            <ReadmeBadgeButton
-              username={c.login}
-              mergedPRCount={prStats.mergedPRCount}
-              badges={achievements}
-            />
-          )}
-          <a
-            href={c.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider no-underline hover:no-underline transition-all duration-200"
-            style={{
-              background: hovered ? tier.glow.replace("0.25", "0.2") : "var(--ifm-color-emphasis-100, #f1f5f9)",
-              border: `1px solid ${hovered ? tier.glow.replace("0.25", "0.6") : "var(--ifm-color-emphasis-300, #cbd5e1)"}`,
-              color: hovered ? "var(--ifm-heading-color, #ffffff)" : "var(--ifm-color-emphasis-600, #475569)",
-              boxShadow: hovered ? `0 0 12px ${tier.glowHover}` : "none",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <FiGithub className="w-3.5 h-3.5" />
-            VIEW PROFILE
-          </a>
-        </div>
+        <a
+          href={c.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider no-underline hover:no-underline transition-all duration-200"
+          style={{
+            background: hovered ? tier.glow.replace("0.25", "0.2") : "var(--ifm-color-emphasis-100, #f1f5f9)",
+            border: `1px solid ${hovered ? tier.glow.replace("0.25", "0.6") : "var(--ifm-color-emphasis-300, #cbd5e1)"}`,
+            color: hovered ? "var(--ifm-heading-color, #ffffff)" : "var(--ifm-color-emphasis-600, #475569)",
+            boxShadow: hovered ? `0 0 12px ${tier.glowHover}` : "none",
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <FiGithub className="w-3.5 h-3.5" />
+          VIEW PROFILE
+        </a>
       </div>
 
       <style>{`
@@ -577,7 +557,6 @@ const Contributors: React.FC = () => {
   const [sortBy, setSortBy] = useState<SortKey>("score");
   const [tierFilter, setTierFilter] = useState<TierFilter>("ALL");
   const [showFilters, setShowFilters] = useState(false);
-  const { statsByLogin: prStatsByLogin } = useMergedPRStats();
 
   useEffect(() => {
     let isMounted = true;
@@ -607,12 +586,7 @@ const Contributors: React.FC = () => {
   const stats = useMemo(() => {
     const totalContributors = contributors.length;
     const totalCommits = contributors.reduce((s, c) => s + c.contributions, 0);
-    // Real merged-PR count from GitHub Search API aggregation, not fabricated.
-    // Falls back to 0 if the hook hasn't loaded yet or the API failed.
-    const totalPRs = Object.values(prStatsByLogin).reduce(
-      (sum, s) => sum + s.mergedPRCount,
-      0
-    );
+    const estPRs = Math.round(totalCommits * 0.38);
     const activeCount = contributors.filter((c) => c.contributions >= 5).length;
     const activityScore =
       totalContributors > 0
@@ -626,11 +600,11 @@ const Contributors: React.FC = () => {
     return {
       totalContributors,
       totalCommits,
-      totalPRs,
+      estPRs,
       activeCount,
       activityScore,
     };
-  }, [contributors, prStatsByLogin]);
+  }, [contributors]);
 
   const maxContributions = useMemo(
     () =>
@@ -735,8 +709,8 @@ const Contributors: React.FC = () => {
               />
               <StatCard
                 icon={<FiGitPullRequest className="w-4 h-4" />}
-                label="Merged Pull Requests"
-                value={stats.totalPRs}
+                label="Est. Pull Requests"
+                value={stats.estPRs}
                 color="var(--ifm-color-success, #10b981)"
                 delay={0.26}
               />
@@ -993,7 +967,6 @@ const Contributors: React.FC = () => {
                     c={c}
                     maxContributions={maxContributions}
                     rank={i + 1}
-                    prStats={prStatsByLogin[c.login]}
                   />
                 ))}
               </AnimatePresence>

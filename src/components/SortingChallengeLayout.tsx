@@ -8,12 +8,6 @@ import {
 } from "react-icons/fa";
 import type { SortingChallenge } from "../data/sortingChallengesData";
 import Editor from "@monaco-editor/react";
-import useChallengeJudge from "../hooks/useChallengeJudge";
-import { canMarkChallengeSolved, type JudgeResult } from "../utils/challengeJudge";
-import ComplexityDeepDive from "./ComplexityDeepDive";
-import PseudocodeTab from "./PseudocodeTab";
-import RealWorldUsesTab from "./RealWorldUsesTab";
-import { markChallengeSolved } from "../utils/safeStorage";
 
 const DIFF_COLORS = {
   Easy: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
@@ -24,37 +18,31 @@ const DIFF_COLORS = {
 interface Props { challenge: SortingChallenge; }
 
 export default function SortingChallengeLayout({ challenge }: Props) {
-  const [activeLanguage, setActiveLanguage] = useState<string>("javascript");
-  const [codeMap, setCodeMap] = useState<Record<string, string>>({ javascript: challenge.starterCode });
-  const code = codeMap[activeLanguage] ?? challenge.starterCodes?.[activeLanguage] ?? "";
-  
-  const handleCodeChange = (val: string | undefined) => {
-    setCodeMap((prev) => ({ ...prev, [activeLanguage]: val ?? "" }));
-  };
+  const [code, setCode] = useState(challenge.starterCode);
   const [output, setOutput] = useState<string[]>([]);
-  const [judgeResults, setJudgeResults] = useState<JudgeResult[]>([]);
+  const [testResults, setTestResults] = useState<{ pass: boolean; msg: string }[]>([]);
   const [showHint, setShowHint] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [running, setRunning] = useState(false);
-  const [activeTab, setActiveTab] = useState<"problem" | "solution" | "pseudocode" | "real-world">("problem");
-  const { runJudge } = useChallengeJudge(challenge);
-  const canMarkSolved = canMarkChallengeSolved(judgeResults);
+  const [activeTab, setActiveTab] = useState<"problem" | "solution">("problem");
 
-  const runCode = useCallback(async () => {
+  const runCode = useCallback(() => {
     setRunning(true);
     setOutput([]);
-    setJudgeResults([]);
+    setTestResults([]);
+    const logs: string[] = [];
+    const origLog = console.log;
+    console.log = (...args) => { logs.push(args.map(String).join(" ")); };
     try {
-      const results = await runJudge(code, activeLanguage);
-      setJudgeResults(results);
-      const passed = results.filter((result) => result.pass).length;
-      setOutput([`${passed}/${results.length} hidden cases passed`, ...results.map((result) => `${result.pass ? "✅" : "❌"} ${result.description} (${result.runtimeMs}ms)`)]);
-    } catch (error) {
-      setOutput([`❌ ${error instanceof Error ? error.message : String(error)}`]);
-    } finally {
-      setRunning(false);
+      // eslint-disable-next-line no-new-func
+      new Function(code)();
+    } catch (e: any) {
+      logs.push("❌ Error: " + e.message);
     }
-  }, [activeLanguage, code, runJudge]);
+    console.log = origLog;
+    setOutput(logs);
+    setRunning(false);
+  }, [code]);
 
   return (
     <Layout title={challenge.title} description={challenge.description}>
@@ -71,18 +59,7 @@ export default function SortingChallengeLayout({ challenge }: Props) {
           <span className="text-slate-700 dark:text-slate-300 text-sm font-mono font-bold truncate">
             {challenge.title}
           </span>
-<button
-  onClick={() => {
-    if (!canMarkSolved) return;
-    markChallengeSolved(challenge.id, challenge.title);
-    alert("Marked as solved!");
-  }}
-  disabled={!canMarkSolved}
-  className={`ml-auto flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-mono font-bold transition-colors ${canMarkSolved ? "hover:bg-emerald-500/20 cursor-pointer" : "opacity-60 cursor-not-allowed"}`}
->
-  <FaCheck /> Mark as Solved ✅
-</button>
-          <span className={`px-3 py-1 rounded-full text-xs font-bold border ${DIFF_COLORS[challenge.difficulty]}`}>
+          <span className={`ml-auto px-3 py-1 rounded-full text-xs font-bold border ${DIFF_COLORS[challenge.difficulty]}`}>
             {challenge.difficulty}
           </span>
           <span className="flex items-center gap-1.5 text-xs font-mono text-slate-400">
@@ -94,23 +71,18 @@ export default function SortingChallengeLayout({ challenge }: Props) {
           {/* Left Panel: Problem / Solution */}
           <div className="w-full lg:w-[45%] overflow-y-auto border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             {/* Tabs */}
-            <div className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
-              {([
-                { key: "problem",    label: "Problem" },
-                { key: "solution",   label: "Solution" },
-                { key: "pseudocode", label: "Pseudocode" },
-                { key: "real-world", label: "🌐 Real-World" },
-              ] as const).map(({ key, label }) => (
+            <div className="flex border-b border-slate-200 dark:border-slate-800">
+              {(["problem", "solution"] as const).map((tab) => (
                 <button
-                  key={key}
-                  onClick={() => setActiveTab(key)}
-                  className={`shrink-0 px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                    activeTab === key
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-6 py-3 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                    activeTab === tab
                       ? "border-b-2 border-indigo-500 text-indigo-500"
                       : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
                   }`}
                 >
-                  {label}
+                  {tab}
                 </button>
               ))}
             </div>
@@ -166,12 +138,6 @@ export default function SortingChallengeLayout({ challenge }: Props) {
                     </div>
                   </div>
 
-                  <ComplexityDeepDive
-                    timeComplexity={challenge.timeComplexity}
-                    spaceComplexity={challenge.spaceComplexity}
-                    challengeTitle={challenge.title}
-                  />
-
                   {/* Hint */}
                   <div>
                     <button
@@ -201,10 +167,10 @@ export default function SortingChallengeLayout({ challenge }: Props) {
                     </div>
                   </div>
                 </>
-              ) : activeTab === "solution" ? (
-                <div className="space-y-4 flex flex-col h-full">
-                  <div className="flex items-center justify-between shrink-0">
-                    <h2 className="text-lg font-black text-slate-900 dark:text-white m-0">Solution</h2>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-black text-slate-900 dark:text-white">Solution</h2>
                     <button
                       onClick={() => setShowSolution((v) => !v)}
                       className="flex items-center gap-2 text-slate-500 hover:text-slate-700 dark:hover:text-white text-xs font-mono cursor-pointer"
@@ -213,47 +179,18 @@ export default function SortingChallengeLayout({ challenge }: Props) {
                     </button>
                   </div>
                   {showSolution ? (
-                    <div className="flex-1 flex flex-col overflow-hidden min-h-[500px]">
-                      <p className="text-sm text-slate-600 dark:text-slate-400 shrink-0">{challenge.hint}</p>
-                      <div className="flex-1 mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 flex flex-col">
-                        <div className="bg-slate-900 px-4 py-2 flex items-center justify-between border-b border-slate-800 shrink-0">
-                          <span className="text-xs font-mono text-slate-400">Your Code (Left) vs Solution (Right)</span>
-                        </div>
-                        <div className="flex-1 relative">
-                          <BrowserOnly fallback={<div className="p-4 text-slate-400 text-xs font-mono">Loading diff editor...</div>}>
-                            {() => {
-                              const { DiffEditor } = require("@monaco-editor/react");
-                              return (
-                                <DiffEditor
-                                  original={code || ""}
-                                  modified={challenge.solution}
-                                  language="javascript"
-                                  theme="vs-dark"
-                                  options={{
-                                    readOnly: true,
-                                    minimap: { enabled: false },
-                                    fontSize: 13,
-                                    renderSideBySide: true,
-                                    scrollBeyondLastLine: false,
-                                    automaticLayout: true,
-                                  }}
-                                />
-                              );
-                            }}
-                          </BrowserOnly>
-                        </div>
-                      </div>
-                    </div>
+                    <>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{challenge.hint}</p>
+                      <pre className="bg-slate-950 rounded-xl p-4 text-emerald-400 text-xs overflow-x-auto leading-relaxed whitespace-pre-wrap">
+                        {challenge.solution}
+                      </pre>
+                    </>
                   ) : (
-                    <div className="text-center py-16 text-slate-400 text-sm font-mono shrink-0">
+                    <div className="text-center py-16 text-slate-400 text-sm font-mono">
                       Click "Reveal" to see the solution after attempting the problem.
                     </div>
                   )}
                 </div>
-              ) : activeTab === "pseudocode" ? (
-                <PseudocodeTab solution={challenge.solution} customPseudocode={challenge.pseudocode} />
-              ) : (
-                <RealWorldUsesTab challengeId={challenge.id} challengeSlug={challenge.slug} challengeTitle={challenge.title} category="sorting" />
               )}
             </div>
           </div>
@@ -263,36 +200,21 @@ export default function SortingChallengeLayout({ challenge }: Props) {
             {/* Editor */}
             <div className="flex-1 overflow-hidden">
               <div className="bg-slate-900 px-4 py-2 flex items-center justify-between border-b border-slate-800">
-                <select
-                  value={activeLanguage}
-                  onChange={(e) => setActiveLanguage(e.target.value)}
-                  className="bg-slate-800 text-slate-300 text-xs font-mono rounded border border-slate-700 px-2 py-1 outline-none focus:border-slate-500 cursor-pointer"
+                <span className="text-xs font-mono text-slate-400">JavaScript</span>
+                <button
+                  onClick={runCode}
+                  disabled={running}
+                  className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 text-white rounded-lg text-xs font-mono font-bold transition-colors cursor-pointer"
                 >
-                  <option value="javascript">JavaScript</option>
-                  <option value="python">Python</option>
-                  <option value="cpp">C++</option>
-                </select>
-                <div className="flex items-center gap-2">
-                  {activeLanguage !== "javascript" && (
-                    <span className="text-slate-500 text-[10px] font-mono mr-2">
-                      (Run disabled for {activeLanguage})
-                    </span>
-                  )}
-                  <button
-                    onClick={runCode}
-                    disabled={running || activeLanguage !== "javascript"}
-                    className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded-lg text-xs font-mono font-bold transition-colors cursor-pointer"
-                  >
-                    <FaPlay /> {running ? "Running..." : "Run Code"}
-                  </button>
-                </div>
+                  <FaPlay /> {running ? "Running..." : "Run Code"}
+                </button>
               </div>
               <BrowserOnly
                 fallback={
                   <textarea
                     aria-label="Code Editor Fallback"
                     value={code}
-                    onChange={(e) => handleCodeChange(e.target.value)}
+                    onChange={(e) => setCode(e.target.value)}
                     className="w-full h-full bg-slate-950 text-slate-200 font-mono text-sm p-4 resize-none border-none outline-none"
                     spellCheck={false}
                   />
@@ -301,9 +223,9 @@ export default function SortingChallengeLayout({ challenge }: Props) {
                 {() => { return (
                     <Editor
                       height="100%"
-                      language={activeLanguage}
+                      defaultLanguage="javascript"
                       value={code}
-                      onChange={handleCodeChange}
+                      onChange={(val: string | undefined) => setCode(val ?? "")}
                       theme="vs-dark"
                       options={{
                         fontSize: 13,
@@ -324,12 +246,9 @@ export default function SortingChallengeLayout({ challenge }: Props) {
             <div className="h-48 bg-slate-950 border-t border-slate-800 flex flex-col">
               <div className="flex items-center gap-3 px-4 py-2 border-b border-slate-800">
                 <span className="text-xs font-mono font-bold text-slate-400 uppercase">Output</span>
-                {(output.length > 0 || (judgeResults ?? []).length > 0) && (
+                {output.length > 0 && (
                   <button
-                    onClick={() => {
-                      setOutput([]);
-                      setJudgeResults([]);
-                    }}
+                    onClick={() => setOutput([])}
                     className="text-xs text-slate-600 hover:text-slate-400 ml-auto cursor-pointer"
                   >
                     Clear
@@ -337,24 +256,7 @@ export default function SortingChallengeLayout({ challenge }: Props) {
                 )}
               </div>
               <div className="flex-1 overflow-y-auto p-4 font-mono text-sm">
-                {(judgeResults ?? []).length > 0 ? (
-                  <div className="space-y-2">
-                    {judgeResults.map((result, i) => (
-                      <div
-                        key={i}
-                        className={`rounded-lg border p-2 text-xs ${result.pass ? "border-emerald-700/40 bg-emerald-500/10 text-emerald-300" : "border-red-700/40 bg-red-500/10 text-red-300"}`}
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <span>#{i + 1} {result.description}</span>
-                          <span>{result.pass ? "PASS" : "FAIL"}</span>
-                        </div>
-                        <div className="mt-1 opacity-80">Output: {result.output || "—"}</div>
-                        <div className="opacity-80">Expected: {result.expected}</div>
-                        <div className="opacity-70">Runtime: {result.runtimeMs}ms</div>
-                      </div>
-                    ))}
-                  </div>
-                ) : output.length === 0 ? (
+                {output.length === 0 ? (
                   <span className="text-slate-600 text-xs">Click "Run Code" to see output here...</span>
                 ) : (
                   output.map((line, i) => (

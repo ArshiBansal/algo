@@ -15,7 +15,7 @@ const QuestionProgress: React.FC<Props> = ({
 
   return (
 
-    <div className="mb-6" aria-label="Quiz progress">
+    <div className="mb-6">
 
       <div className="
       flex
@@ -26,7 +26,7 @@ const QuestionProgress: React.FC<Props> = ({
       dark:text-gray-400
       ">
 
-        <span aria-live="polite">
+        <span>
           Question {currentQuestion + 1}
         </span>
 
@@ -37,11 +37,6 @@ const QuestionProgress: React.FC<Props> = ({
       </div>
 
       <div
-        role="progressbar"
-        aria-valuenow={currentQuestion + 1}
-        aria-valuemin={0}
-        aria-valuemax={totalQuestions}
-        aria-label={"Question " + (currentQuestion + 1) + " of " + totalQuestions}
       className="
       w-full
       h-3

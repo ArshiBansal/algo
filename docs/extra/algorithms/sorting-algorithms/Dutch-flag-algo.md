@@ -1,27 +1,14 @@
 ---
-id: sort-012-dutch-flag-algo
-sidebar_position: 14
+id: sort-012-dutch-flag  
+sidebar_position: 14  
 title: Sort 0s, 1s, and 2s using Dutch National Flag Algorithm  
-sidebar_label: Dutch Flag Algorithm
-description: "Complete guide to the Dutch National Flag Algorithm for sorting an array of 0s, 1s, and 2s in a single traversal using a three-pointer approach."
-tags: [sorting algorithms, dutch national flag, three pointer, dsa]
+sidebar_label: Dutch Flag Algorithm  
 
 ---
 
 ### Definition:
 
 The Dutch National Flag Algorithm is an efficient sorting algorithm that sorts an array containing only 0's, 1's, and 2's in linear time. This algorithm uses a three-pointer approach and operates in-place, making it optimal in terms of both time and space.
-
-### Video Explanation
-
-<LiteYouTubeEmbed
-  id="tp8JIuCXBaU"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Sort an array of 0's 1's & 2's | Intuition of Algo | C++ Java Python | Brute-Better-Optimal"
-  poster="maxresdefault"
-  lazyLoad={true}
-  webp
-/>
 
 ### Characteristics:
 

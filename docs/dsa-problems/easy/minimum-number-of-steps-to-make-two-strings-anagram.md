@@ -29,16 +29,6 @@ Input: `s = "anagram", t = "mangaar"`
 Output: `0`
 **Explanation:** "anagram" and "mangaar" are anagrams.
 
-## Video Explanation
-
-<LiteYouTubeEmbed
-  id="dDQTlfWvzqE"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Minimum Number of Steps to Make Two Strings Anagram | Simple | Intuitive | Google | Leetcode 1347"
-  lazyLoad={true}
-  webp
-/>
-
 ---
 
 ## Approaches:
@@ -52,11 +42,9 @@ Therefore, we only need to count how many characters in `s` are missing in `t`. 
 * **Time Complexity:** $O(n)$ where $n$ is the length of the string `s` (or `t`). We iterate through the strings once.
 * **Space Complexity:** $O(1)$ because we only use a fixed-size frequency array of 26 integers, taking constant extra space regardless of the input size.
 
-## Solutions
+#### Solutions:
 
-<Tabs groupId="programming-language">
-  <TabItem value="cpp" label="C++" default>
-
+**C++**
 ```cpp
 class Solution {
 public:
@@ -79,10 +67,7 @@ public:
     }
 };
 ```
-
-  </TabItem>
-  <TabItem value="java" label="Java">
-
+**Java**
 ```java
 class Solution {
     public int minSteps(String s, String t) {
@@ -105,10 +90,8 @@ class Solution {
 }
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
+**Python**
+```py
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
         count = [0] * 26
@@ -125,10 +108,8 @@ class Solution:
         return steps
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
+**JavaScript**
+```js
 /**
  * @param {string} s
  * @param {string} t
@@ -153,6 +134,3 @@ const minSteps = function(s, t) {
     return steps;
 };
 ```
-
-  </TabItem>
-</Tabs>

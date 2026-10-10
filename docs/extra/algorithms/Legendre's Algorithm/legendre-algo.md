@@ -2,8 +2,6 @@
 id: legendre-algo
 title: Finding Power of Factorial Divisor
 sidebar_label: "Legendre's Formula"
-description: "Legendre's Formula calculates the largest exponent x such that k^x divides n!, the factorial of a number, by summing the quotients of n divided by successive powers of k."
-tags: [algorithms, number theory, Legendre's formula, factorial, prime factorization]
 ---
 
 # Deep Dive into Finding the Power of a Factorial Divisor
@@ -28,17 +26,6 @@ This algorithm is especially valuable because calculating n! directly for large 
 
 ---
 
-## Video Explanation 
-
-<LiteYouTubeEmbed
-  id="sOf_G3gQvf8"
-  params="autoplay=1&autohide=1&showinfo=0&rel=0"
-  title="Legendre Formula Explained"
-  lazyLoad={true}
-  webp
-/>
-
----
 
 ## Understanding the Problem for Prime k 
 
