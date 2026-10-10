@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Layout from "@theme/Layout";
+import QuizErrorBoundary from "../../components/Quiz/QuizErrorBoundary";
+import QuizSkeleton from "../../components/Quiz/QuizSkeleton";
+import { useQuizData } from "../../hooks/useQuizData";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaUserCircle, 
@@ -34,7 +37,7 @@ interface DBAttempt {
   completedAt: string;
 }
 
-const QUESTIONS: BTreeQuestion[] = [
+export const QUESTIONS: BTreeQuestion[] = [
   {
     id: 1,
     difficulty: "Easy",
@@ -172,7 +175,7 @@ const BTreeQuiz: React.FC = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [timeSpent, setTimeSpent] = useState(0);
-  const [attempts, setAttempts] = useState<DBAttempt[]>([]);
+  const { attempts, isLoading, fetchAttempts, submitAttempt, setAttempts } = useQuizData({ quizId: "b-tree" });
   const [isMounted, setIsMounted] = useState(false);
   
   // Fallback anchor configuration for context boundaries
@@ -207,33 +210,11 @@ const BTreeQuiz: React.FC = () => {
     );
   }, [userAnswers]);
 
-  const fetchAttempts = useCallback((uId: string) => {
-    const historyKey = `quiz_attempts_${uId}_b-tree`;
-    const savedAttempts = localStorage.getItem(historyKey);
-    if (savedAttempts) {
-      try {
-        setAttempts(JSON.parse(savedAttempts));
-      } catch (e) {
-        console.error("Error parsing history attempts:", e);
-        setAttempts([]);
-      }
-    } else {
-      setAttempts([]);
-    }
-  }, []);
-
-  useEffect(() => {
+    useEffect(() => {
     if (userId) {
       fetchAttempts(userId);
     }
   }, [userId, fetchAttempts]);
-
-  const handleKeyDown = (e: React.KeyboardEvent, option: string) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleRegister(option);
-    }
-  };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
@@ -254,24 +235,7 @@ const BTreeQuiz: React.FC = () => {
     handleRetry();
   };
 
-  const submitAttempt = (finalAnswers: string[]) => {
-    if (!userId) return;
-    const newAttempt: DBAttempt = {
-      id: Math.random().toString(36).substring(2, 9),
-      score: score,
-      totalQuestions: QUESTIONS.length,
-      timeSpent: timeSpent,
-      completedAt: new Date().toISOString()
-    };
-    const historyKey = `quiz_attempts_${userId}_b-tree`;
-    const savedAttempts = localStorage.getItem(historyKey);
-    const existing = savedAttempts ? JSON.parse(savedAttempts) : [];
-    const updated = [newAttempt, ...existing].slice(0, 5);
-    localStorage.setItem(historyKey, JSON.stringify(updated));
-    setAttempts(updated);
-  };
-
-  const handleAnswer = (selected: string) => {
+    const handleAnswer = (selected: string) => {
     setUserAnswers((prev) => {
       const copy = [...prev];
       copy[currentQuestion] = selected;
@@ -286,7 +250,7 @@ const BTreeQuiz: React.FC = () => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResult(true);
-      submitAttempt(userAnswers);
+      submitAttempt(userId, score, QUESTIONS.length, timeSpent);
     }
   };
 
@@ -314,8 +278,8 @@ const BTreeQuiz: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white dark:bg-slate-900 border border-solid border-slate-200 dark:border-slate-800/80 shadow-md rounded-2xl p-8 max-w-md w-full text-center relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent pointer-events-none" />
-            <div className="w-14 h-14 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 border border-solid border-blue-500/20">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+            <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 border border-solid border-primary/20">
               <FaDatabase />
             </div>
             <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight m-0 mb-2">B-Tree Matrix Core</h2>
@@ -331,12 +295,12 @@ const BTreeQuiz: React.FC = () => {
                 value={usernameInput}
                 onChange={(e) => setUsernameInput(e.target.value)}
                 maxLength={24}
-                className="w-full px-4 py-3 rounded-xl border border-solid border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-blue-500 text-sm font-semibold transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-solid border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-primary text-sm font-semibold transition-all"
                 required
               />
               <button
                 type="submit"
-                className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl border-none transition-all cursor-pointer text-sm shadow-sm"
+                className="w-full py-3 bg-primary-dark hover:bg-primary text-white font-bold rounded-xl border-none transition-all cursor-pointer text-sm shadow-sm"
               >
                 Access Evaluation Stack
               </button>
@@ -349,6 +313,7 @@ const BTreeQuiz: React.FC = () => {
 
   return (
     <Layout title="B-Tree Node Evaluation Interface">
+      <QuizErrorBoundary>
       <div className="min-h-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans py-12 px-4">
         <div className="max-w-4xl mx-auto">
           
@@ -392,7 +357,7 @@ const BTreeQuiz: React.FC = () => {
                       <span className="text-[10px] font-mono tracking-wider text-slate-400 uppercase font-black flex items-center gap-1 justify-end">
                         <FaClock /> Engine Runtime
                       </span>
-                      <div className="text-base font-mono font-bold text-blue-600 dark:text-blue-400">
+                      <div className="text-base font-mono font-bold text-primary-dark dark:text-primary-light">
                         {formatDuration(timeSpent)}
                       </div>
                     </div>
@@ -438,7 +403,7 @@ const BTreeQuiz: React.FC = () => {
                           onClick={() => handleAnswer(option)} role="radio" aria-checked={isSelected}
                           className={`w-full text-left p-4 rounded-xl border border-solid transition-all text-xs md:text-sm font-semibold tracking-wide cursor-pointer flex items-center justify-between min-h-[54px] ${
                             isSelected
-                              ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+                              ? "bg-primary-dark border-primary-dark text-white shadow-sm"
                               : "bg-slate-50 dark:bg-slate-950 border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
                           }`}
                         >
@@ -480,7 +445,7 @@ const BTreeQuiz: React.FC = () => {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.04),transparent_50%)]" />
                     <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight m-0 mb-4">Tree Balancing Audit</h3>
                     
-                    <div className="inline-flex items-baseline gap-1 text-5xl font-black text-blue-600 dark:text-blue-500 font-mono">
+                    <div className="inline-flex items-baseline gap-1 text-5xl font-black text-primary-dark dark:text-primary font-mono">
                       {score}
                       <span className="text-xl text-slate-400 font-sans font-normal">/ {QUESTIONS.length}</span>
                     </div>
@@ -489,7 +454,7 @@ const BTreeQuiz: React.FC = () => {
                       {score === QUESTIONS.length ? "Invariants fully satisfied! All node capacity guidelines and structural divisions executed perfectly." : score >= 6 ? "Good evaluation trace! You have a solid grasp on disk-optimized tree metrics." : "Imbalance detected. Review minimum structural constraints, boundary degree calculations, and parent-promotion operations."}
                     </p>
 
-                    <QuizResultActions onRetry={handleRetry} />
+                    <QuizResultActions onRetry={handleRetry} topic="B-Tree" score={score} total={QUESTIONS.length} />
                   </div>
 
                   {/* Solutions list */}
@@ -563,7 +528,7 @@ const BTreeQuiz: React.FC = () => {
                           </div>
                         </div>
                         <div className="text-right space-y-1">
-                          <div className="font-mono font-black text-sm text-blue-600 dark:text-blue-400">
+                          <div className="font-mono font-black text-sm text-primary-dark dark:text-primary-light">
                             {att.score} <span className="text-[10px] text-slate-400 font-sans font-normal">/ {totalCount}</span>
                           </div>
                           <div className="text-[10px] text-slate-400 font-mono">
@@ -580,6 +545,7 @@ const BTreeQuiz: React.FC = () => {
           </div>
         </div>
       </div>
+          </QuizErrorBoundary>
     </Layout>
   );
 };

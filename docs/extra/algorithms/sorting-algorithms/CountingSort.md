@@ -1,15 +1,26 @@
 ---
-
 id: counting-sort-algo  
 sidebar_position: 8  
 title: Counting Sort  
-sidebar_label: Counting Sort  
-
+sidebar_label: Counting Sort
+description: "Comprehensive guide to Counting Sort algorithm implementation, complexity, and usage."
+tags: [sorting algorithms, counting sort, dsa, algorithms]
 ---
 
 ### Definition:
 
 Counting sort is a non-comparative sorting algorithm that sorts elements by counting the number of occurrences of each distinct element in the array. It works by determining the position of each element in the sorted output using a counting array.
+
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="mowMVn9wTnE"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L-3.10: Counting Sort | Easiest explanation with examples"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
 
 ### Characteristics:
 
@@ -104,3 +115,9 @@ int main() {
 
 Counting sort is a highly efficient algorithm for sorting integers within a limited range. It performs in linear time, O(n + k), making it faster than comparison-based algorithms like quicksort or mergesort in certain situations. However, the space complexity, O(n + k), means it requires significant extra memory, making it less suitable for large datasets with a wide range of input values. Counting sort is often used as a subroutine in more advanced algorithms like radix sort, and it works best when the range of input data is small relative to the dataset size.
 
+
+## Related Topics
+
+- **[Radix Sort](./RadixSort.md)**: Non-comparison integer sorting using Counting Sort as a subroutine ($O(d \cdot (N + K))$).
+- **[Bucket Sort](./BucketSort.md)**: Distribution sort that divides elements into buckets ($O(N + K)$ average).
+- **[Quick Sort](./QuickSort.md)**: Comparison-based sorting algorithm ($O(N \log N)$ average).

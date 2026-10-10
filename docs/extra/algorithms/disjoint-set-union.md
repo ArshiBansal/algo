@@ -24,6 +24,18 @@ tags:
 1. **Find**: Which set does this element belong to?
 2. **Union**: Merge two sets together.
 
+
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="wU6udHRIkcc"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="1.12 Disjoint Sets Data Structure - Weighted Union and Collapsing Find"
+  lazyLoad={true}
+  webp
+/>
+
+
 ---
 
 ## 🧠 Real-World Analogy
@@ -542,6 +554,14 @@ Problem: Check if nodes A and B are connected after Q union operations
 - **Image segmentation** — Group pixels belonging to the same region
 - **Social networks** — Friend circle / community detection
 - **Compiler optimization** — Pointer analysis / Alias analysis (e.g., Steensgaard's algorithm) to group aliased variables
+
+---
+
+## 🔗 Related Topics
+
+- **[Dijkstra's Algorithm](./dijkstras-algorithm.md)**: Shortest path algorithm for non-negative weighted graphs ($O((V+E) \log V)$).
+- **[Segment Tree](./segment-tree.md)**: Advanced tree structure for range queries and updates ($O(\log N)$).
+- **[Trie](./trie.md)**: Prefix tree for efficient string matching and autocomplete ($O(K)$).
 
 ---
 

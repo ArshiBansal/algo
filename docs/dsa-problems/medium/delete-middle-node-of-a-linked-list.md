@@ -1,9 +1,14 @@
 ---
 id: delete-middle-node-of-a-linked-list
-title: "Deleting middle node of linked list."
-sidebar_label: "Deleting middle node of linked list."
-description: " This document explains the 'Deleting the middle element of a linked list' problem, including its description, approach, and implementation."
-tags: [DSA,problem-solving,linked list]
+title: Deleting middle node of linked list.
+sidebar_label: Deleting middle node of linked list.
+description: ' This document explains the ''Deleting the middle element of a linked list'' problem, including its description, approach, and implementation.'
+tags:
+  - DSA
+  - problem-solving
+  - linked list
+companies:
+  - LinkedIn
 ---
 
 # Delete the Middle Node of a Linked List
@@ -11,6 +16,17 @@ tags: [DSA,problem-solving,linked list]
 ## Problem Description
 
 Given a singly linked list, the task is to delete the middle node. If the list has an even number of nodes, delete the second middle node. For example, given the linked list `1 -> 2 -> 3 -> 4 -> 5`, after deletion, it should become `1 -> 2 -> 4 -> 5`. If the list is `1 -> 2 -> 3 -> 4`, it should become `1 -> 2 -> 4`.
+
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="ePpV-_pfOeI"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L16. Delete the middle node of the LinkedList"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
 
 ## Approach
 
@@ -30,104 +46,12 @@ To delete the middle node of a linked list, we can use the following approach:
 
 ## Implementation
 
-## Java
-```java
-class Node {
-    int value;
-    Node next;
+## Solutions
 
-    Node(int val) {
-        this.value = val;
-        this.next = null;
-    }
-}
-
-class LinkedList {
-    Node head;
-
-    // Function to delete the middle node
-    public void deleteMiddle() {
-        if (head == null) return; // If the list is empty
-
-        // Step 1: Find the length of the list
-        int length = 0;
-        Node current = head;
-        while (current != null) {
-            length++;
-            current = current.next;
-        }
-
-        // Step 2: Determine the middle index
-        int middleIndex = length / 2;
-
-        // Step 3: Traverse to the node before the middle
-        current = head;
-        for (int i = 0; i < middleIndex - 1; i++) {
-            current = current.next;
-        }
-
-        // Step 4: Delete the middle node
-        if (current.next != null) {
-            current.next = current.next.next; // Bypass the middle node
-        } else {
-            // If the list has only one node
-            head = null;
-        }
-    }
-
-    // Function to add a new node at the end of the list
-    public void append(int value) {
-        Node newNode = new Node(value);
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-
-        Node current = head;
-        while (current.next != null) {
-            current = current.next;
-        }
-        current.next = newNode;
-    }
-
-    // Function to print the linked list
-    public void printList() {
-        Node current = head;
-        while (current != null) {
-            System.out.print(current.value + " -> ");
-            current = current.next;
-        }
-        System.out.println("null");
-    }
-}
-
-// Example usage
-public class Main {
-    public static void main(String[] args) {
-        LinkedList ll = new LinkedList();
-        ll.append(1);
-        ll.append(2);
-        ll.append(3);
-        ll.append(4);
-        ll.append(5);
-
-        System.out.print("Original Linked List: ");
-        ll.printList();
-
-        ll.deleteMiddle();
-
-        System.out.print("Linked List After Deleting Middle Node: ");
-        ll.printList();
-    }
-}
-
-
-```
-
-## C++
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
 
 ```cpp
-
 #include <iostream>
 
 class Node {
@@ -224,10 +148,104 @@ int main() {
 
     return 0;
 }
-
 ```
 
-## Python
+  </TabItem>
+  <TabItem value="java" label="Java">
+
+```java
+class Node {
+    int value;
+    Node next;
+
+    Node(int val) {
+        this.value = val;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    // Function to delete the middle node
+    public void deleteMiddle() {
+        if (head == null) return; // If the list is empty
+
+        // Step 1: Find the length of the list
+        int length = 0;
+        Node current = head;
+        while (current != null) {
+            length++;
+            current = current.next;
+        }
+
+        // Step 2: Determine the middle index
+        int middleIndex = length / 2;
+
+        // Step 3: Traverse to the node before the middle
+        current = head;
+        for (int i = 0; i < middleIndex - 1; i++) {
+            current = current.next;
+        }
+
+        // Step 4: Delete the middle node
+        if (current.next != null) {
+            current.next = current.next.next; // Bypass the middle node
+        } else {
+            // If the list has only one node
+            head = null;
+        }
+    }
+
+    // Function to add a new node at the end of the list
+    public void append(int value) {
+        Node newNode = new Node(value);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
+
+    // Function to print the linked list
+    public void printList() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.value + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+}
+
+// Example usage
+public class Main {
+    public static void main(String[] args) {
+        LinkedList ll = new LinkedList();
+        ll.append(1);
+        ll.append(2);
+        ll.append(3);
+        ll.append(4);
+        ll.append(5);
+
+        System.out.print("Original Linked List: ");
+        ll.printList();
+
+        ll.deleteMiddle();
+
+        System.out.print("Linked List After Deleting Middle Node: ");
+        ll.printList();
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
 
 ```python
 class Node:
@@ -297,3 +315,25 @@ if __name__ == "__main__":
     print("Linked List After Deleting Middle Node: ")
     ll.print_list()
 ```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+var deleteMiddle = function(head) {
+    if (!head || !head.next) return null;
+    let slow = head;
+    let fast = head;
+    let prev = null;
+    while (fast && fast.next) {
+        prev = slow;
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    prev.next = slow.next;
+    return head;
+};
+```
+
+  </TabItem>
+</Tabs>

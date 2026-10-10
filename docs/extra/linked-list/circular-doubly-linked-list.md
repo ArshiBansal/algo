@@ -19,6 +19,15 @@ A **Circular Doubly Linked List** is a variation of a doubly linked list in whic
 
 ![alt text](CircularDoubly.png)
 
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="eBCTtS_sptM"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="2.19 Implementation of Doubly Circular Linked List| Creation and Display | Data Structures"
+  lazyLoad={true}
+  webp
+/>
 
 ### Circular Doubly Linked List Operations
 
@@ -502,15 +511,16 @@ class CircularDoublyLinkedList {
 }
 ```
 
-### Complexity
+### Complexity Cheat Sheet
 
-- **Time Complexity**:
-
-  - Insertion : $O(1)$
-  - Deletion: $O(1)$
-  - Traversal: $O(n)$
-
-- **Space Complexity**: $O(1)$
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Insertion (Beginning / End)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Insertion (After Node)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Deletion (Given Node)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Search (By Value)** | $O(1)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Traversal (Forward / Backward)** | $O(n)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Overall Storage** | - | - | - | $O(n)$ |
 
 
 ### Conclusion

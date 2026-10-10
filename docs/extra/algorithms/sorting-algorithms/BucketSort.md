@@ -1,15 +1,26 @@
 ---
-
 id: bucket-sort-algo  
 sidebar_position: 9  
 title: Bucket Sort  
-sidebar_label: Bucket Sort  
-
+sidebar_label: Bucket Sort
+description: "Comprehensive guide to Bucket Sort algorithm implementation and time complexity."
+tags: [sorting algorithms, bucket sort, dsa, algorithms]
 ---
 
 ### Definition:
 
 Bucket sort is a comparison-based sorting algorithm that works by distributing elements into several "buckets" or ranges. Each bucket is sorted individually, either using another sorting algorithm or recursively applying bucket sort. Finally, the sorted buckets are concatenated to produce the final sorted array.
+
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="E9OccfF9mpI"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L-3.11: Bucket Sort | Easiest explanation with examples | Time Complexity analysis with Pseudocode"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
 
 ### Characteristics:
 
@@ -93,3 +104,9 @@ int main() {
 ### Summary:
 
 Bucket sort is an efficient algorithm for sorting data that is uniformly distributed over a range. By dividing the data into smaller buckets and sorting them individually, bucket sort can achieve linear time complexity in the best and average cases. However, if the data is not evenly distributed, its worst-case time complexity can degrade to O(n²). Bucket sort is often used in conjunction with other algorithms and performs well when the number of buckets is proportional to the input size. Its primary trade-off is its need for additional space.
+
+## Related Topics
+
+- **[Counting Sort](./CountingSort.md)**: Non-comparison integer sorting algorithm ($O(N + K)$).
+- **[Radix Sort](./RadixSort.md)**: Digit-by-digit distribution sort ($O(d \cdot (N + K))$).
+- **[Insertion Sort](./InsertionSort.md)**: Commonly used to sort individual bucket contents in Bucket Sort.

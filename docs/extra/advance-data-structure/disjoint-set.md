@@ -14,6 +14,17 @@ The **Disjoint Set Union (DSU)**, also known as **Union-Find**, is an efficient 
 - **Find**: Determine the root or representative of the set containing a specific element.
 - **Union**: Merge two sets into a single set.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="wU6udHRIkcc"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="1.12 Disjoint Sets Data Structure - Weighted Union and Collapsing Find"
+  lazyLoad={true}
+  webp
+/>
+
+
 ## Purpose
 
 The Union-Find data structure is widely used in algorithms that require grouping elements and checking for connectivity, such as:
@@ -160,6 +171,18 @@ function union(a, b):
         if rank[a] == rank[b]:
             rank[a] += 1
 ```
+
+### Complexity Cheat Sheet
+
+| Operation | Without Optimizations | With Path Compression + Union by Rank | Space Complexity |
+| :--- | :--- | :--- | :--- |
+| **Make Set** | $O(1)$ | $O(1)$ | $O(n)$ |
+| **Find** | $O(n)$ | $O(\alpha(n))$ amortized | $O(1)$ |
+| **Union** | $O(n)$ | $O(\alpha(n))$ amortized | $O(1)$ |
+| **Overall Storage** | - | - | $O(n)$ |
+
+> Here $\alpha(n)$ is the inverse Ackermann function, which grows so slowly that it is effectively constant ($\leq 4$) for all practical input sizes.
+
 ### Conclusion
 The Disjoint Set Union (Union-Find) is an essential data structure for efficiently managing disjoint sets and performing union and find operations. 
 Its applications in network connectivity and graph algorithms make it a fundamental topic in data structures and algorithms.

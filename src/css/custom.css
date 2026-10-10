@@ -9,13 +9,14 @@
 }
 
 :root {
-  --ifm-color-primary: #2563eb;
-  --ifm-color-primary-dark: #1d4ed8;
-  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #1d4ed8;
   --ifm-color-primary-darkest: #1e3a8a;
   --ifm-color-primary-light: #60a5fa;
   --ifm-color-primary-lighter: #93c5fd;
-  --ifm-color-primary-lightest: #bfdbfe;  
+  --ifm-color-primary-lightest: #bfdbfe; 
+  --ifm-color-table-light: #bfdbfe69; 
   --ifm-code-font-size: 90%;
   --docusaurus-highlighted-code-line-bg: rgba(59, 130, 246, 0.1);
   --ifm-background-color: #f8fafc;
@@ -55,7 +56,8 @@
   --ifm-color-primary-darkest: #713f12;
   --ifm-color-primary-light: #fde047;
   --ifm-color-primary-lighter: #fef08a;
-  --ifm-color-primary-lightest: #fef9c3;  
+  --ifm-color-primary-lightest: #fef9c3;
+  --ifm-color-table-light: #45494b93; 
   --ifm-background-color: #040414;
   --docusaurus-highlighted-code-line-bg: rgba(234, 179, 8, 0.15);
   
@@ -140,7 +142,6 @@
   color: var(--ifm-color-primary);
 }
 
-
 .close {
   display: flex;
   align-items: center;
@@ -208,8 +209,8 @@ a:hover {
       rgb(255, 169, 8) 0%,
       rgb(246, 41, 41) 40%,
       rgb(152, 0, 255) 100%);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
@@ -245,22 +246,6 @@ html[data-theme='dark'] header.doc-header-banner {
   background-color: #000;
 }
 
-.ktt10-btn {
-  position: absolute;
-  bottom: 0;
-  left: 0.5rem;
-  background-color: #3b82f6;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.ktt10-flt {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  z-index: 1000;
-}
 
 button {
   cursor: pointer;
@@ -428,17 +413,11 @@ button {
 }
 
 .algo-signup {
-  --ifm-link-hover-color: #ffffff;
-  --ifm-navbar-link-hover-color: #ffffff;
-  color: #ffffff !important;
-  background-color: var(--ifm-color-primary-dark) !important;
-}
-
-[data-theme="dark"] .algo-signup {
-  --ifm-link-hover-color: #000000;
-  --ifm-navbar-link-hover-color: #000000;
-  color: #000000 !important;
-  background-color: var(--ifm-color-primary) !important;
+  --ifm-link-hover-color: #fff;
+  --ifm-navbar-link-hover-color: #fff;
+  background-color: var(--ifm-color-primary-darker);
+  color: #fff !important;
+  border-radius: 4px;
 }
 
 .algo-signup svg {
@@ -446,7 +425,15 @@ button {
 }
 
 .algo-signup:hover {
-  background-color: var(--ifm-color-primary-darker);
+  background-color: var(--ifm-color-primary-darkest);
+}
+
+/* Fix contrast ratio for KaTeX elements in tables */
+td .katex {
+  color: #000;
+}
+html[data-theme='dark'] td .katex {
+  color: #fff;
 }
 
 .algo-login {
@@ -456,6 +443,41 @@ button {
 .navbar-sidebar .algo-link {
   padding: 0.75rem;
   margin-top: 1rem;
+}
+
+/* Prevent navbar items from wrapping on desktop */
+.navbar__item,
+.navbar__link {
+  white-space: nowrap;
+}
+
+/* Adjust navbar spacing on medium desktop screens to prevent overflow/overlap */
+@media screen and (min-width: 997px) and (max-width: 1280px) {
+  .navbar__item {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.85rem;
+  }
+  
+  .navbar__link--active {
+    padding: 0.4rem 0.8rem !important;
+  }
+  
+  .algo-link {
+    margin: 0 0.25rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .navbar__brand {
+    margin-right: 0.5rem !important;
+  }
+  
+  .navbar__search-input {
+    width: 120px !important;
+  }
+  
+  .navbar__search-input:focus {
+    width: 150px !important;
+  }
 }
 
 /* ==========================================================================
@@ -597,17 +619,557 @@ button {
   }
 }
 
-/* Accessibility Focus States (WCAG 2.1 AA) */
-:focus-visible {
-  outline: 2px solid var(--ifm-color-primary) !important;
-  outline-offset: 2px !important;
-  border-radius: 2px;
-}
-
 /* -------------------------------------------------------------------------- */
 /* 5. PAGE SETUP CONFIGURATION                                                */
 /* -------------------------------------------------------------------------- */
 @page {
   size: letter; /* Options: A4, letter */
   margin: 1.5cm;
+}
+
+/* .tableOfContents_bqdL .thin-scrollbar .theme-doc-toc-desktop */
+/* .table-of-contents .table-of-contents__left-border */
+/* .table-of-contents_link */
+
+/* Container wrapper setup */
+.theme-doc-toc-desktop {
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 2rem);
+  border-radius: 12px;
+  padding: 1px;
+  overflow: hidden;
+  scrollbar-width: none;
+}
+
+.theme-doc-toc-desktop::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 40%,
+    #3b82f6 70%,
+    #06b6d4 85%,
+    transparent 100%
+  );
+  animation: spin 4s linear infinite;
+  z-index: 0;
+}
+
+[data-theme='dark'] .theme-doc-toc-desktop::before,
+html.dark .theme-doc-toc-desktop::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 40%,
+    #3b82f6 60%,
+    #a855f7 80%,
+    transparent 100%
+  );
+}
+
+.theme-doc-toc-desktop .table-of-contents {
+  position: relative;
+  z-index: 1;
+  background: var(--ifm-background-color, #fff);
+  padding: 16px;
+  border-radius: 11px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  max-height: inherit;
+  overflow-y: auto;
+}
+
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── DocInlineQuiz ──────────────────────────────────────────────── */
+.doc-inline-quiz-section {
+  margin: 2.5rem 0 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ifm-card-background-color);
+  box-shadow: var(--ifm-global-shadow-sm);
+}
+
+.doc-inline-quiz-header {
+  padding: 1.25rem 1.5rem 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.06) 0%,
+    rgba(139, 92, 246, 0.06) 100%
+  );
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+[data-theme="dark"] .doc-inline-quiz-header {
+  background: linear-gradient(
+    135deg,
+    rgba(234, 179, 8, 0.08) 0%,
+    rgba(139, 92, 246, 0.08) 100%
+  );
+}
+
+.doc-inline-quiz-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 99px;
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--ifm-color-primary);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  margin-bottom: 0.5rem;
+}
+
+[data-theme="dark"] .doc-inline-quiz-badge {
+  background: rgba(234, 179, 8, 0.15);
+  border-color: rgba(234, 179, 8, 0.25);
+}
+
+.doc-inline-quiz-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ifm-heading-color);
+}
+
+.doc-inline-quiz-subtitle {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.doc-inline-quiz-list {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.doc-inline-quiz-item {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.doc-inline-quiz-number {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  margin-top: 0.2rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+[data-theme="dark"] .doc-inline-quiz-number {
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.22);
+}
+
+.doc-inline-quiz-card {
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-inline-quiz-question {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+  margin: 0 0 0.65rem;
+  line-height: 1.5;
+}
+
+.doc-inline-quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.doc-inline-quiz-option {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 0.45rem 0.85rem;
+  border-radius: 7px;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+.doc-inline-quiz-option:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.35);
+  transform: translateX(2px);
+}
+
+[data-theme="dark"] .doc-inline-quiz-option:hover:not(:disabled) {
+  background: rgba(234, 179, 8, 0.1);
+  border-color: rgba(234, 179, 8, 0.35);
+}
+
+.doc-inline-quiz-option:disabled {
+  cursor: default;
+}
+
+.doc-inline-quiz-option.correct {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #166534;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .doc-inline-quiz-option.correct {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
+
+.doc-inline-quiz-option.wrong {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #991b1b;
+}
+
+[data-theme="dark"] .doc-inline-quiz-option.wrong {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+
+.doc-inline-quiz-explanation {
+  margin-top: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  border-left: 3px solid var(--ifm-color-primary);
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--ifm-color-emphasis-700);
+}
+
+[data-theme="dark"] .doc-inline-quiz-explanation {
+  border-left-color: var(--ifm-color-primary);
+  background: rgba(234, 179, 8, 0.06);
+  color: var(--ifm-color-emphasis-600);
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   Accent Themes
+   Opt-in color palettes layered on top of light/dark via the
+   [data-accent-theme] attribute on <html>, set by src/components/ThemePicker
+   and persisted to localStorage (see src/utils/accentTheme.ts). These rules
+   are intentionally placed last so they win the cascade over the plain
+   [data-theme="light"/"dark"] blocks above for any variable they redefine.
+   ========================================================================== */
+
+/* --- High Contrast: WCAG-AAA-oriented palette for low-vision users --- */
+:root[data-accent-theme="high-contrast"] {
+  --ifm-color-primary: #ffff00;
+  --ifm-color-primary-dark: #e6e600;
+  --ifm-color-primary-darker: #cccc00;
+  --ifm-color-primary-darkest: #999900;
+  --ifm-color-primary-light: #ffff33;
+  --ifm-color-primary-lighter: #ffff66;
+  --ifm-color-primary-lightest: #ffffb3;
+
+  --ifm-background-color: #000000;
+  --ifm-background-surface-color: #000000;
+  --ifm-font-color-base: #ffffff;
+  --ifm-heading-color: #ffffff;
+  --ifm-card-background-color: #000000;
+
+  --ifm-color-emphasis-100: #000000;
+  --ifm-color-emphasis-200: #1a1a1a;
+  --ifm-color-emphasis-300: #333333;
+  --ifm-color-emphasis-400: #666666;
+  --ifm-color-emphasis-500: #999999;
+  --ifm-color-emphasis-600: #e6e6e6;
+  --ifm-color-emphasis-700: #ffffff;
+
+  --ifm-toc-border-color: #ffffff;
+  --ifm-color-content: #ffffff;
+  --ifm-link-color: #ffff00;
+  --ifm-code-background: #1a1a1a;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 0, 0.25);
+}
+
+:root[data-accent-theme="high-contrast"] a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+:root[data-accent-theme="high-contrast"] * {
+  border-color: #ffffff !important;
+}
+
+:root[data-accent-theme="high-contrast"] button,
+:root[data-accent-theme="high-contrast"] .button {
+  outline: 2px solid transparent;
+}
+
+:root[data-accent-theme="high-contrast"] *:focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}
+
+/* --- Neon: cyberpunk cyan/purple accent, matching the leaderboard's aesthetic --- */
+:root[data-accent-theme="neon"] {
+  --ifm-color-primary: #22d3ee;
+  --ifm-color-primary-dark: #06b6d4;
+  --ifm-color-primary-darker: #0891b2;
+  --ifm-color-primary-darkest: #0e7490;
+  --ifm-color-primary-light: #67e8f9;
+  --ifm-color-primary-lighter: #a5f3fc;
+  --ifm-color-primary-lightest: #cffafe;
+
+  --ifm-background-color: #05050f;
+  --ifm-background-surface-color: #0a0a1a;
+  --ifm-font-color-base: #e2e8ff;
+  --ifm-heading-color: #f5f3ff;
+  --ifm-card-background-color: rgba(15, 15, 35, 0.85);
+
+  --ifm-color-emphasis-100: #0a0a1a;
+  --ifm-color-emphasis-200: #14142b;
+  --ifm-color-emphasis-300: #23234a;
+  --ifm-color-emphasis-400: #4c4c8a;
+  --ifm-color-emphasis-500: #8484c9;
+  --ifm-color-emphasis-600: #b3b3e6;
+  --ifm-color-emphasis-700: #e2e2ff;
+
+  --ifm-toc-border-color: #23234a;
+  --ifm-link-color: #22d3ee;
+  --docusaurus-highlighted-code-line-bg: rgba(168, 85, 247, 0.15);
+
+  --accent-neon-gradient: linear-gradient(90deg, #22d3ee, #a855f7);
+}
+
+:root[data-accent-theme="neon"] h1,
+:root[data-accent-theme="neon"] h2,
+:root[data-accent-theme="neon"] h3 {
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.35);
+}
+
+:root[data-accent-theme="neon"] a:hover {
+  text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+
+:root[data-accent-theme="neon"] code {
+  color: #f0abfc;
+}
+
+/* ====================================================================
+   Code Block Themes
+   Opt-in syntax color palettes scoped to CodeBlock elements via the
+   [data-code-theme] attribute on <html>, set by src/components/CodeThemePicker
+   and persisted to localStorage (see src/utils/codeTheme.ts).
+   ==================================================================== */
+
+:root[data-code-theme="midnight"] .theme-code-block {
+  --prism-background-color: #0b1220;
+  --prism-color: #e2e8f0;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .prism-code {
+  background-color: var(--prism-background-color) !important;
+  color: var(--prism-color) !important;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .token.comment,
+:root[data-code-theme="midnight"] .theme-code-block .token.prolog,
+:root[data-code-theme="midnight"] .theme-code-block .token.doctype,
+:root[data-code-theme="midnight"] .theme-code-block .token.cdata,
+:root[data-code-theme="midnight"] .theme-code-block .token.punctuation {
+  color: #6b7b95 !important;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .token.keyword,
+:root[data-code-theme="midnight"] .theme-code-block .token.property,
+:root[data-code-theme="midnight"] .theme-code-block .token.selector,
+:root[data-code-theme="midnight"] .theme-code-block .token.tag,
+:root[data-code-theme="midnight"] .theme-code-block .token.operator {
+  color: #7c3aed !important;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .token.function,
+:root[data-code-theme="midnight"] .theme-code-block .token.class-name,
+:root[data-code-theme="midnight"] .theme-code-block .token.constant,
+:root[data-code-theme="midnight"] .theme-code-block .token.variable {
+  color: #38bdf8 !important;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .token.string,
+:root[data-code-theme="midnight"] .theme-code-block .token.char,
+:root[data-code-theme="midnight"] .theme-code-block .token.attr-value,
+:root[data-code-theme="midnight"] .theme-code-block .token.regex {
+  color: #22d3ee !important;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .token.number,
+:root[data-code-theme="midnight"] .theme-code-block .token.deleted,
+:root[data-code-theme="midnight"] .theme-code-block .token.builtin {
+  color: #f59e0b !important;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block {
+  --prism-background-color: #fdf6e3;
+  --prism-color: #586e75;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block .prism-code {
+  background-color: var(--prism-background-color) !important;
+  color: var(--prism-color) !important;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block .token.comment,
+:root[data-code-theme="solarized"] .theme-code-block .token.prolog,
+:root[data-code-theme="solarized"] .theme-code-block .token.doctype,
+:root[data-code-theme="solarized"] .theme-code-block .token.cdata,
+:root[data-code-theme="solarized"] .theme-code-block .token.punctuation {
+  color: #93a1a1 !important;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block .token.keyword,
+:root[data-code-theme="solarized"] .theme-code-block .token.property,
+:root[data-code-theme="solarized"] .theme-code-block .token.selector,
+:root[data-code-theme="solarized"] .theme-code-block .token.tag,
+:root[data-code-theme="solarized"] .theme-code-block .token.operator {
+  color: #859900 !important;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block .token.function,
+:root[data-code-theme="solarized"] .theme-code-block .token.class-name,
+:root[data-code-theme="solarized"] .theme-code-block .token.constant,
+:root[data-code-theme="solarized"] .theme-code-block .token.variable {
+  color: #268bd2 !important;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block .token.string,
+:root[data-code-theme="solarized"] .theme-code-block .token.char,
+:root[data-code-theme="solarized"] .theme-code-block .token.attr-value,
+:root[data-code-theme="solarized"] .theme-code-block .token.regex {
+  color: #2aa198 !important;
+}
+
+:root[data-code-theme="solarized"] .theme-code-block .token.number,
+:root[data-code-theme="solarized"] .theme-code-block .token.deleted,
+:root[data-code-theme="solarized"] .theme-code-block .token.builtin {
+  color: #b58900 !important;
+}
+
+:root[data-code-theme="midnight"] .theme-code-block .codeBlockContainer,
+:root[data-code-theme="solarized"] .theme-code-block .codeBlockContainer {
+  background: var(--prism-background-color) !important;
+}
+
+/* ==========================================================
+   Difficulty Badge
+   ========================================================== */
+
+.difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  margin-top: 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-badge.easy {
+  background-color: #16a34a;
+}
+
+.difficulty-badge.medium {
+  background-color: #f59e0b;
+}
+
+.difficulty-badge.hard {
+  background-color: #dc2626;
+}
+
+[data-theme='dark'] .difficulty-badge.easy {
+  background-color: #22c55e;
+}
+
+[data-theme='dark'] .difficulty-badge.medium {
+  background-color: #fbbf24;
+}
+
+[data-theme='dark'] .difficulty-badge.hard {
+  background-color: #ef4444;
+}
+
+.bookmark-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--ifm-color-primary);
+  transition: 0.2s;
+}
+
+.bookmark-btn:hover {
+  transform: scale(1.15);
+}
+
+.bookmark-active {
+  color: #f59e0b;
+}
+
+/* Dynamic Table of Contents Scroll Highlight Styles */
+.table-of-contents__link {
+  transition: color 0.2s ease-in-out, font-weight 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  border-left: 2px solid transparent;
+  padding-left: 0.5rem;
+}
+
+.table-of-contents__link:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.table-of-contents__link--active,
+.table-of-contents__link.active {
+  color: var(--ifm-color-primary) !important;
+  font-weight: 600 !important;
+  border-left-color: var(--ifm-color-primary) !important;
+  background-color: var(--ifm-color-info-contrast-background);
+  border-radius: 0 4px 4px 0;
+}
+
+[data-theme="dark"] .table-of-contents__link--active,
+[data-theme="dark"] .table-of-contents__link.active {
+  color: var(--ifm-color-primary) !important;
+  border-left-color: var(--ifm-color-primary) !important;
+  background-color: rgba(234, 179, 8, 0.12) !important;
 }

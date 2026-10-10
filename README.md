@@ -4,11 +4,11 @@
 
 ---
 
-## 🌟 Support the Project
+## Support the Project
 
 If you find this repository helpful for your learning or development, please consider giving it a **Star**! It helps increase the project's visibility and invites more amazing developers to collaborate.
 
-**[![Click here to leave a star!](https://img.shields.io/github/stars/ajay-dhangar/algo?style=flat&logo=github)](https://github.com/ajay-dhangar/algo)**
+[![Click here to leave a star!](https://img.shields.io/github/stars/ajay-dhangar/algo?style=flat&logo=github)](https://github.com/ajay-dhangar/algo) [![DeepSource](https://app.deepsource.com/gh/ajay-dhangar/algo.svg/?label=active+issues&show_trend=true&token=EM-qW16KCzmfUTl67qxSKb5k)](https://app.deepsource.com/gh/ajay-dhangar/algo/) [![DeepSource](https://app.deepsource.com/gh/ajay-dhangar/algo.svg/?label=resolved+issues&show_trend=true&token=EM-qW16KCzmfUTl67qxSKb5k)](https://app.deepsource.com/gh/ajay-dhangar/algo/)
 
 ---
 
@@ -20,7 +20,7 @@ If you find this repository helpful for your learning or development, please con
 
 ---
 
-## 🚀 Introduction
+## Introduction
 
 Welcome to **Algo**, an open-source educational platform built with Docusaurus (React + MDX). We provide developers with comprehensive algorithmic solutions and resources. Whether you're a beginner or an expert, you can contribute, learn, and help us build the world's top educational documentation.
 
@@ -54,7 +54,7 @@ Welcome to **Algo**, an open-source educational platform built with Docusaurus (
 
 ---
 
-## 📅 Algo Events
+## Algo Events
 
 We are actively participating in the following open-source events:
 
@@ -112,16 +112,6 @@ This command starts your local development environment and automatically pops up
 
 This compiles optimized static content directly inside the `/build` directory, perfectly ready to be deployed to static hosting providers.
 
-## Deployment
-
-Production builds require an explicit API base URL. Set `ALGO_API_URL` in your hosting environment before running `npm run build` or deploying:
-
-```env
-ALGO_API_URL=https://api.example.com
-```
-
-If neither `ALGO_API_URL` nor `DOCUSAURUS_API_BASE_URL` is set in production, the build fails with a clear configuration error instead of silently emitting relative API requests.
-
 ### Using SSH:
 
 ```bash
@@ -140,8 +130,15 @@ If you are using GitHub Pages for hosting, this command is a convenient way to b
 
 We love welcoming contributions from developers at all levels! To keep our codebase clean and responsive, our project maintenance team follows a strict quality standard.
 
+### Claim the Issue Automatically
+
+You don't need to wait for a maintainer to assign you! Once you find an issue you want to work on:
+* Comment **`.take`** or **`!assign`** on the issue.
+* Our automated bot will assign the issue to you instantly.
+* *Note: Please only claim one issue at a time to keep it fair for everyone.*
+
 ### Strict Inactivity Rule (7-Day Limit)
-> ⚠️ **Important Policy:** Once you are assigned an issue or open a Pull Request, you must provide active updates or submit changes within **max 7 days**. If an issue or PR is left with **no response or zero activity for over 7 days**, it will be automatically **closed** by the project repository owners or maintainers to open up opportunities for other waiting contributors.
+> **Important Policy:** Once you are assigned an issue or open a Pull Request, you must provide active updates or submit changes within **max 7 days**. If an issue or PR is left with **no response or zero activity for over 7 days**, it will be automatically **closed** by the project repository owners or maintainers to open up opportunities for other waiting contributors.
 
 ### Maintainer Commitments
 
@@ -149,8 +146,7 @@ We love welcoming contributions from developers at all levels! To keep our codeb
 * **Continuous Integration:** Automated checks and formatting test suites must pass 100% cleanly before merging.
 * **Prerequisites:** Please read our detailed [CONTRIBUTING.md](./CONTRIBUTING.md) guide thoroughly before requesting an assignment.
 
-
-## Contributors ✨
+## Contributors
 
 Heartfelt thanks to these absolute legends who have contributed code and documentation to the **Algo** project ❤️:
 
@@ -171,8 +167,8 @@ To manually invoke Gemini Code Assist, you can use the following commands in the
 |`/gemini`| Manually invokes Gemini Code Assist in comments |
 |`/gemini help` | Overview of the available commands |
 
-
-## 📈 Repository Analytics
+<!--
+## Repository Analytics
 
 <table width="100%">
   <tr>
@@ -192,6 +188,14 @@ To manually invoke Gemini Code Assist, you can use the following commands in the
     </td>
   </tr>
 </table>
+
+-->
+
+## 💖 Sponsor & Support
+
+Building and maintaining Algo as a free, open-source platform takes time and effort. If Algo has helped you learn Data Structures & Algorithms, land a job, or contribute to open source, consider supporting us to help keep the project growing!
+
+[![Donate via Razorpay](https://img.shields.io/badge/Razorpay-02042B?style=for-the-badge&logo=razorpay&logoColor=3395FF)](https://rzp.io/rzp/algo-sponsors)
 
 ## Resources for Guidance
 

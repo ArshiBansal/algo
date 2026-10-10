@@ -20,6 +20,16 @@ Output: `6`
 **Explanation:**
 The optimal subarray is the entire array `[1, 2, 3, 4]`. Its value is `4 - 1 = 3`. We choose this subarray `k = 2` times, yielding a total value of `3 * 2 = 6`.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="V9162iPEJFc"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Maximum Total Subarray Value I | Simple Observation | Leetcode 3689 | codestorywithMIK"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -37,9 +47,10 @@ Since we can choose the exact same subarray multiple times, the optimal strategy
 * **Time Complexity:** $O(n)$ where $n$ is the length of the `nums` array. We only need a single pass through the array to find the minimum and maximum values.
 * **Space Complexity:** $O(1)$ because we are only using a few extra variables for the bounds, taking constant extra space.
 
-#### Solutions:
+## Solutions
 
-**C++**
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
 
 ```cpp
 class Solution {
@@ -58,7 +69,8 @@ public:
 };
 ```
 
-**Java**
+  </TabItem>
+  <TabItem value="java" label="Java">
 
 ```java
 class Solution {
@@ -76,18 +88,20 @@ class Solution {
 }
 ```
 
-**Python**
+  </TabItem>
+  <TabItem value="python" label="Python">
 
-```py
+```python
 class Solution:
     def maxTotalValue(self, nums: List[int], k: int) -> int:
         # Python automatically handles arbitrarily large integers
         return (max(nums) - min(nums)) * k
 ```
 
-**JavaScript**
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
 
-```js
+```javascript
 /**
  * @param {number[]} nums
  * @param {number} k
@@ -105,3 +119,6 @@ var maxTotalValue = function(nums, k) {
     return (max_val - min_val) * k;
 };
 ```
+
+  </TabItem>
+</Tabs>

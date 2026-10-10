@@ -12,6 +12,17 @@ A **double-ended queue (Deque)** is a linear data structure similar to a queue b
 
 ![alt text](doubleendedqueue.png)
 
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="pqg0SOPRlJ4"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="4.7 DEQUE in Data Structure | Introduction to DEQue - Double Ended Queue"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ### Double-Ended Queue Operations
 
 1. **InsertFront**: Add an element to the front of the deque.
@@ -349,20 +360,15 @@ public class Deque {
 }
 ```
 
-### Complexity
+### Complexity Cheat Sheet
 
-- **Time Complexity**:
-
-  - InsertFront: $O(1)$
-  - InsertRear: $O(1)$
-  - DeleteFront: $O(1)$
-  - DeleteRear: $O(1)$
-  - PeekFront: $O(1)$
-  - PeekRear: $O(1)$
-  - isEmpty: $O(1)$
-  - isFull: $O(1)$
-
-- **Space Complexity**: $O(n)$, where $n$ is the number of elements that can be stored in the deque.
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Insert Front / Rear** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Delete Front / Rear** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Peek Front / Rear** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **isEmpty / isFull** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Overall Deque Storage** | - | - | - | $O(n)$ |
 
 ### Example
 

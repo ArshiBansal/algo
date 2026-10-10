@@ -3,6 +3,7 @@ id: collision-handling-in-hashing
 sidebar_position: 5
 title: Collision Handling in Hashing
 sidebar_label: Collision Handling in Hashing
+description: "Collision handling in hashing refers to the techniques used to resolve key collisions when two or more keys map to the same hash table index, such as chaining and open addressing."
 tags: [hashing, data structures]
 ---
 
@@ -10,6 +11,17 @@ tags: [hashing, data structures]
 
 ## Overview
 In hashing, collision handling refers to the methods used to resolve the issue when two keys hash to the same index in a hash table. Collisions are inevitable in hash tables due to the limited number of available slots compared to the potentially infinite number of input keys.
+
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="KEs5UyBJ39g"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Hashing | Maps | Time Complexity | Collisions | Division Rule of Hashing | Strivers A2Z DSA Course"
+  lazyLoad={true}
+  webp
+/>
+
 
 ## Methods of Collision Handling
 

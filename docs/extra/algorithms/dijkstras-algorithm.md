@@ -14,6 +14,19 @@ This project contains a C++ implementation of Dijkstra’s Algorithm to find the
 
 ---
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="V6H1qAeB-l4"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="G-32. Dijkstra's Algorithm - Using Priority Queue - C++ and Java - Part 1"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
+---
+
 ## Problem Definition
 
 **Dijkstra's Algorithm** solves the single-source shortest path problem for graphs with non-negative edge weights. It efficiently finds the shortest path from a starting node to all other nodes in the graph.
@@ -169,9 +182,16 @@ It does not handle negative weight cycles, as Dijkstra's Algorithm is not suitab
 * Social Network Analysis
 
 
+## Related Topics
+
+- **[Bellman-Ford Algorithm](./bellman-ford-algorithm)**: Solves single-source shortest path problem on graphs with negative edge weights ($O(V \cdot E)$).
+- **[Disjoint Set Union (DSU)](./disjoint-set-union.md)**: Fundamental data structure used in Minimum Spanning Tree algorithms like Kruskal's.
+- **[Segment Tree](./segment-tree.md)**: Advanced tree data structure for range queries and point updates ($O(\log N)$).
+
 ## Conclusion
 
 Dijkstra's Algorithm is a fundamental algorithm in computer science for finding the shortest paths in a weighted graph. Its efficiency and effectiveness make it applicable in various real-world scenarios where optimization is required.
+
 
 
 

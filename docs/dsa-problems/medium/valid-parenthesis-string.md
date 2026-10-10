@@ -1,9 +1,16 @@
 ---
 id: valid-parenthesis-string
-title: "Valid Parenthesis String"
+title: Valid Parenthesis String
 sidebar_label: Valid Parenthesis String
-description: "Solving the Valid Parenthesis String problem using an optimal Greedy approach."
-tags: [DSA, leetcode, string, greedy, dynamic-programming]
+description: Solving the Valid Parenthesis String problem using an optimal Greedy approach.
+tags:
+  - DSA
+  - leetcode
+  - string
+  - greedy
+  - dynamic-programming
+companies:
+  - Microsoft
 ---
 
 ## Description:
@@ -33,6 +40,16 @@ Input: `s = "(*))"`
 Output: `true`
 **Explanation:** The `'*'` can be treated as a left parenthesis `'('`.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="cHT6sG_hUZI"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L11. Valid Parenthesis String | Multiple Approaches"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -60,9 +77,11 @@ We maintain two variables:
 
 ---
 
-## Solutions:
+## Solutions
 
-### C++
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
 ```cpp
 class Solution {
 public:
@@ -94,7 +113,9 @@ public:
 };
 ```
 
-### Java
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public boolean checkValidString(String s) {
@@ -126,8 +147,10 @@ class Solution {
 }
 ```
 
-### Python
-```py
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
 class Solution:
     def checkValidString(self, s: str) -> bool:
         min_open = 0
@@ -155,8 +178,10 @@ class Solution:
         return min_open == 0
 ```
 
-### JavaScript
-```js
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
 /**
  * @param {string} s
  * @return {boolean}
@@ -189,3 +214,6 @@ var checkValidString = function(s) {
     return minOpen === 0;
 };
 ```
+
+  </TabItem>
+</Tabs>
