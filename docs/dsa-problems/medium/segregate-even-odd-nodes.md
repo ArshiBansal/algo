@@ -14,6 +14,17 @@ tags: [linked list]
 
 In a linked list, the goal is to rearrange the nodes such that all even-valued nodes appear before all odd-valued nodes. The relative order of the even and odd nodes should remain the same as in the original list. For example, given the linked list `1 -> 2 -> 3 -> 4 -> 5`, the output should be `2 -> 4 -> 1 -> 3 -> 5`.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="qf6qp7GzD5Q"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L6. Odd Even Linked List | Multiple Approaches"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ## Approach
 
 To segregate even and odd nodes, we can use the following approach:
@@ -36,75 +47,10 @@ To segregate even and odd nodes, we can use the following approach:
 
 ## Implementation
 
-## Java
+## Solutions
 
-```java
-class Node {
-    int value;
-    Node next;
-
-    Node(int val) {
-        this.value = val;
-        this.next = null;
-    }
-}
-
-class LinkedList {
-    Node head;
-
-    // Function to segregate even and odd nodes
-    public Node segregateEvenOdd() {
-        if (head == null) return null;
-
-        Node evenHead = null, oddHead = null;
-        Node evenTail = null, oddTail = null;
-
-        Node current = head;
-
-        while (current != null) {
-            if (current.value % 2 == 0) {
-                // Append to even list
-                if (evenHead == null) {
-                    evenHead = current;
-                    evenTail = evenHead;
-                } else {
-                    evenTail.next = current;
-                    evenTail = evenTail.next;
-                }
-            } else {
-                // Append to odd list
-                if (oddHead == null) {
-                    oddHead = current;
-                    oddTail = oddHead;
-                } else {
-                    oddTail.next = current;
-                    oddTail = oddTail.next;
-                }
-            }
-            current = current.next;
-        }
-
-        // Combine even and odd lists
-        if (evenTail != null) {
-            evenTail.next = oddHead;
-        }
-        
-        if (oddTail != null) {
-            oddTail.next = null; // End the odd list
-        }
-
-        return evenHead != null ? evenHead : oddHead; // Return the head of the combined list
-    }
-
-    // Function to add a new node at the end of the list
-    public void a
-
-
-
-
-
-```
-## C++
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
 
 ```cpp
 #include <iostream>
@@ -214,10 +160,75 @@ int main() {
 
     return 0;
 }
-
 ```
 
-## Python
+  </TabItem>
+  <TabItem value="java" label="Java">
+
+```java
+class Node {
+    int value;
+    Node next;
+
+    Node(int val) {
+        this.value = val;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    // Function to segregate even and odd nodes
+    public Node segregateEvenOdd() {
+        if (head == null) return null;
+
+        Node evenHead = null, oddHead = null;
+        Node evenTail = null, oddTail = null;
+
+        Node current = head;
+
+        while (current != null) {
+            if (current.value % 2 == 0) {
+                // Append to even list
+                if (evenHead == null) {
+                    evenHead = current;
+                    evenTail = evenHead;
+                } else {
+                    evenTail.next = current;
+                    evenTail = evenTail.next;
+                }
+            } else {
+                // Append to odd list
+                if (oddHead == null) {
+                    oddHead = current;
+                    oddTail = oddHead;
+                } else {
+                    oddTail.next = current;
+                    oddTail = oddTail.next;
+                }
+            }
+            current = current.next;
+        }
+
+        // Combine even and odd lists
+        if (evenTail != null) {
+            evenTail.next = oddHead;
+        }
+        
+        if (oddTail != null) {
+            oddTail.next = null; // End the odd list
+        }
+
+        return evenHead != null ? evenHead : oddHead; // Return the head of the combined list
+    }
+
+    // Function to add a new node at the end of the list
+    public void a
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
 
 ```python
 class Node:
@@ -259,3 +270,42 @@ class LinkedList:
         if even_tail:
             eve
 ```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+var divide = function(N, head) {
+    let evenHead = null, evenTail = null;
+    let oddHead = null, oddTail = null;
+    let curr = head;
+    while (curr !== null) {
+        let val = curr.val;
+        if (val % 2 === 0) {
+            if (evenHead === null) {
+                evenHead = curr;
+                evenTail = curr;
+            } else {
+                evenTail.next = curr;
+                evenTail = evenTail.next;
+            }
+        } else {
+            if (oddHead === null) {
+                oddHead = curr;
+                oddTail = curr;
+            } else {
+                oddTail.next = curr;
+                oddTail = oddTail.next;
+            }
+        }
+        curr = curr.next;
+    }
+    if (evenHead === null) return oddHead;
+    if (oddTail !== null) oddTail.next = null;
+    evenTail.next = oddHead;
+    return evenHead;
+};
+```
+
+  </TabItem>
+</Tabs>

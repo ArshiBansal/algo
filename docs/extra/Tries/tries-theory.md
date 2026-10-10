@@ -15,6 +15,17 @@ A **Trie** (also called a **Prefix Tree**) is a special type of tree used to sto
 
 The key idea of a Trie is to use the **prefixes** of words to share common parts and reduce memory usage. Each node in a Trie represents a single character, and the paths from the root to a leaf represent words.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="zIjfhVPRZCg"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Data Structures: Tries"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ## Key Concepts
 
 1. **Root**: The Trie starts from the root node, which is an empty node or a node with no character.
@@ -136,3 +147,15 @@ int main() {
     return 0;
 }
 ```
+
+## Complexity Cheat Sheet
+
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Insertion** | $O(k)$ | $O(k)$ | $O(k)$ | $O(k)$ |
+| **Search** | $O(k)$ | $O(k)$ | $O(k)$ | $O(1)$ |
+| **Prefix Search** | $O(p)$ | $O(p)$ | $O(p)$ | $O(1)$ |
+| **Deletion** | $O(k)$ | $O(k)$ | $O(k)$ | $O(k)$ |
+| **Overall Trie Storage** | - | - | - | $O(N \times k)$ |
+
+> Here $k$ is the length of the key/word, $p$ is the prefix length, and $N$ is the number of keys stored.

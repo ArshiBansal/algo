@@ -1,9 +1,18 @@
 ---
 id: maximum-points-you-can-obtain-from-cards
-title: "Maximum Points You Can Obtain from Cards"
+title: Maximum Points You Can Obtain from Cards
 sidebar_label: Maximum Points You Can Obtain from Cards
-description: "The Maximum Points You Can Obtain from Cards problem on LeetCode involves finding the maximum score by taking exactly k cards from either the beginning or the end of an array."
-tags: [DSA, leetcode, sliding-window, array]
+description: >-
+  The Maximum Points You Can Obtain from Cards problem on LeetCode involves
+  finding the maximum score by taking exactly k cards from either the beginning
+  or the end of an array.
+tags:
+  - DSA
+  - leetcode
+  - sliding-window
+  - array
+companies:
+  - Netflix
 ---
 
 ## Description:
@@ -31,6 +40,16 @@ Input: `cardPoints = [9,7,7,9,7,7,9]`, `k = 7`
 Output: `55`
 **Explanation:** You have to take all the cards. Your score is the sum of points of all cards.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="pBWCOCS636U"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="L2. Maximum Points You Can Obtain from Cards | 2 Pointers and Sliding Window Playlist"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -47,7 +66,11 @@ Instead of trying to figure out which side to pick from step-by-step (which can 
 
 #### Sliding Window Solutions:
 
-**C++**
+## Solutions
+
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
 ```cpp
 class Solution {
 public:
@@ -75,7 +98,9 @@ public:
 };
 ```
 
-**Java**
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public int maxScore(int[] cardPoints, int k) {
@@ -102,8 +127,10 @@ class Solution {
 }
 ```
 
-**Python**
-```py
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
 class Solution:
     def maxScore(self, cardPoints: list[int], k: int) -> int:
         n = len(cardPoints)
@@ -123,8 +150,10 @@ class Solution:
         return max_sum
 ```
 
-**JavaScript**
-```js
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
 /**
  * @param {number[]} cardPoints
  * @param {number} k
@@ -152,3 +181,6 @@ var maxScore = function(cardPoints, k) {
     return maxSum;
 };
 ```
+
+  </TabItem>
+</Tabs>

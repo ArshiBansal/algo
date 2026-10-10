@@ -13,6 +13,17 @@ Unlike traditional binary search trees, B-Trees are characterized by the large n
 
 B-Trees maintain balance by ensuring that each node has a minimum number of keys, so the tree is always balanced. This balance guarantees that the time complexity for operations such as insertion, deletion, and searching is always **O(log n)**, regardless of the initial shape of the tree.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="aZjYr87r1b8"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="10.2 B Trees and B+ Trees. How they are useful in Databases"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ## Time Complexity of B-Tree: 
 
 | Sr. No. | Algorithm | Time Complexity |
@@ -413,6 +424,18 @@ if __name__ == "__main__":
 
 ```
 
+
+## Complexity Cheat Sheet
+
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Search** | $O(1)$ | $O(\log_t n)$ | $O(\log_t n)$ | $O(1)$ |
+| **Insertion** | $O(\log_t n)$ | $O(\log_t n)$ | $O(\log_t n)$ | $O(\log_t n)$ |
+| **Deletion** | $O(\log_t n)$ | $O(\log_t n)$ | $O(\log_t n)$ | $O(\log_t n)$ |
+| **Traversal** | $O(n)$ | $O(n)$ | $O(n)$ | $O(n)$ |
+| **Overall Tree Storage** | - | - | - | $O(n)$ |
+
+> Here $t$ is the minimum degree of the B-Tree.
 
 ## Applications of B-Trees
 

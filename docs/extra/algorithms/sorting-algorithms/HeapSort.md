@@ -11,6 +11,17 @@ tags: [heap sort, algorithms, sorting algorithms]
 
 Heap sort is a **comparison-based** sorting algorithm that uses a binary heap data structure to efficiently find the largest or smallest element, depending on the heap type. It is an **in-place** and **non-stable** sorting algorithm that operates by first building a max heap and then extracting elements from it.
 
+### Video Explanation
+
+<LiteYouTubeEmbed
+  id="HqPJF2L5h9U"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="2.6.3 Heap - Heap Sort - Heapify - Priority Queues"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ### Characteristics:
 
 - **Binary Heap**:
@@ -110,3 +121,17 @@ int main() {
 ### Summary:
 
 Heap sort is an efficient, in-place sorting algorithm that works by building a max heap from the input array and then repeatedly extracting the largest element. Its consistent time complexity of O(n log n) makes it useful for many applications, although its non-stability and in-place nature make it less ideal for sorting data that requires maintaining the relative order of equal elements.
+
+## Common Interview Questions
+
+- **Merge k Sorted Lists (LeetCode 23)**: Merge $k$ sorted linked lists into one sorted list using a min-heap. [Problem Link](https://leetcode.com/problems/merge-k-sorted-lists/)
+- **Find Median from Data Stream (LeetCode 295)**: Maintain the median of a streaming dataset using two heaps (min-heap and max-heap). [Problem Link](https://leetcode.com/problems/find-median-from-data-stream/)
+- **Top K Frequent Elements (LeetCode 347)**: Find the $k$ most frequent elements in an array using a min-heap. [Problem Link](https://leetcode.com/problems/top-k-frequent-elements/)
+- **Kth Largest Element in an Array (LeetCode 215)**: Find the $k$-th largest element in an unsorted array using a heap in $O(n \log k)$ time. [Problem Link](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+
+
+## Related Topics
+
+- **[Quick Sort](./QuickSort.md)**: Cache-friendly in-place sort ($O(N \log N)$ average, $O(N^2)$ worst).
+- **[Merge Sort](./MergeSort.mdx)**: Stable $O(N \log N)$ sort — better for linked lists and external sort.
+- **[Heap Basics](../../heap/heap-basics.md)**: Priority queue / min-heap structure underlying Heap Sort.

@@ -7,11 +7,25 @@ description: "An array is a collection of items stored at contiguous memory loca
 tags: [dsa, data-structures, arrays, array, array-data-structure, array-in-dsa, array-in-data-structure, array-in-algorithm, array-in-dsa-example, array-in-dsa-explanation, array-in-dsa-conclusion, array-in-dsa-importance, array-in-dsa-syntax, array-in-dsa-declaration, array-in-dsa-access, array-in-dsa-update, array-in-dsa-length, array-in-dsa-iterate, array-in-dsa-max-min, array-in-dsa-program, array-in-dsa-code, array-in-dsa-js, array-in-dsa-java, array-in-dsa-python, array-in-dsa-c, array-in-dsa-cpp, array-in-dsa-ts]
 ---
 
+
 An array is a collection of items stored at contiguous memory locations. It is a data structure that stores a fixed-size sequential collection of elements of the same type. An array is used to store a collection of data, but it is often more useful to think of an array as a collection of variables of the same type.
+
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="55l-aZ7_F24"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Definition of Array"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 
 ## Visualizations of Arrays in Data Structures and Algorithms (DSA)
 
 <ArrayVisualizations />
+
 
 ## Why are Arrays important?
 
@@ -537,6 +551,18 @@ The maximum and minimum elements in an array can be found by iterating through t
 - The space complexity of finding the maximum and minimum elements in an array is O(1).
 :::
 
+
+## Complexity Cheat Sheet
+
+| Operation | Best Case | Average Case | Worst Case | Space Complexity |
+| :--- | :--- | :--- | :--- | :--- |
+| **Access (by index)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Search (Unsorted)** | $O(1)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Search (Sorted)** | $O(1)$ | $O(\log n)$ | $O(\log n)$ | $O(1)$ |
+| **Insertion (End)** | $O(1)$ | $O(1)$ | $O(n)$ | $O(1)$ |
+| **Insertion (Start/Middle)** | $O(n)$ | $O(n)$ | $O(n)$ | $O(1)$ |
+| **Deletion (End)** | $O(1)$ | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Deletion (Start/Middle)** | $O(n)$ | $O(n)$ | $O(n)$ | $O(1)$ |
 
 ## Conclusion
 

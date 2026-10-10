@@ -15,6 +15,17 @@ A mountain is called stable if the mountain just before it (if it exists) has a 
 
 Return an array containing the indices of all stable mountains in any order.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="1ky1usXAW-U"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Leetcode | 3285. Find Indices of Stable Mountains | Easy | Java Solution"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ### Example 1:
 
 **Input:** height = [1,2,3,4,5], threshold = 2
@@ -48,6 +59,29 @@ Mountain 4 is stable because height[3] == 4 is greater than threshold == 2.
 
 # Code in Java
 
+## Solutions
+
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
+```cpp
+class Solution {
+public:
+    vector<int> stableMountains(vector<int>& height, int threshold) {
+        vector<int> result;
+        for (int i = 1; i < height.size(); i++) {
+            if (height[i - 1] > threshold) {
+                result.push_back(i);
+            }
+        }
+        return result;
+    }
+};
+```
+
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public List<Integer> stableMountains(int[] height, int threshold) {
@@ -62,4 +96,29 @@ class Solution {
 }
 ```
 
- 
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+class Solution:
+    def stableMountains(self, height: List[int], threshold: int) -> List[int]:
+        return [i for i in range(1, len(height)) if height[i - 1] > threshold]
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+var stableMountains = function(height, threshold) {
+    const result = [];
+    for (let i = 1; i < height.length; i++) {
+        if (height[i - 1] > threshold) {
+            result.push(i);
+        }
+    }
+    return result;
+};
+```
+
+  </TabItem>
+</Tabs>

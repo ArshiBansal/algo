@@ -13,6 +13,8 @@ import {
   FaChevronRight, 
   FaHistory 
 } from "react-icons/fa";
+import { saveQuizAttemptLocal } from "../../utils/safeStorage";
+import { getQuizAttempts } from "../../utils/progressStore";
 
 interface Question {
   id: number;
@@ -25,13 +27,12 @@ interface Question {
 }
 
 interface LocalAttempt {
-  timestamp: number;
-  answers: string[];
   score: number;
   timeSpent: number;
+  completedAt: string;
 }
 
-const QUESTIONS: Question[] = [
+export const QUESTIONS: Question[] = [
   {
     id: 1,
     difficulty: "Easy",
@@ -157,12 +158,10 @@ const StackQuiz: React.FC = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    const storedUser = localStorage.getItem("algo_quiz_username");
+    const storedUser = localStorage.getItem("quiz_username");
     if (storedUser) {
       setUsername(storedUser);
-      const historyKey = `algo_quiz_history_${storedUser.toLowerCase()}`;
-      const savedHistory = localStorage.getItem(historyKey);
-      if (savedHistory) setLocalHistory(JSON.parse(savedHistory));
+      setLocalHistory(getQuizAttempts("stacks") as LocalAttempt[]);
     }
   }, []);
 
@@ -184,27 +183,18 @@ const StackQuiz: React.FC = () => {
 
   const selectedOption = userAnswers[currentQuestion] || null;
 
-  const handleKeyDown = (e: React.KeyboardEvent, option: string) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleRegister(option);
-    }
-  };
-
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     if (!usernameInput.trim()) return;
     const cleanName = usernameInput.trim();
-    localStorage.setItem("algo_quiz_username", cleanName);
+    localStorage.setItem("quiz_username", cleanName);
     setUsername(cleanName);
 
-    const historyKey = `algo_quiz_history_${cleanName.toLowerCase()}`;
-    const savedHistory = localStorage.getItem(historyKey);
-    setLocalHistory(savedHistory ? JSON.parse(savedHistory) : []);
+    setLocalHistory(getQuizAttempts("stacks") as LocalAttempt[]);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("algo_quiz_username");
+    localStorage.removeItem("quiz_username");
     setUsername(null);
     setUsernameInput("");
     setLocalHistory([]);
@@ -228,17 +218,13 @@ const StackQuiz: React.FC = () => {
       // Persist results locally
       if (username) {
         const newAttempt: LocalAttempt = {
-          timestamp: Date.now(),
-          answers: userAnswers,
           score: score,
-          timeSpent: timeSpent
+          timeSpent: timeSpent,
+          completedAt: new Date().toISOString()
         };
         const updatedHistory = [newAttempt, ...localHistory].slice(0, 5);
         setLocalHistory(updatedHistory);
-        localStorage.setItem(
-          "algo_quiz_history_" + username.toLowerCase(),
-          JSON.stringify(updatedHistory)
-        );
+        saveQuizAttemptLocal(username.toLowerCase(), "stacks", newAttempt);
       }
     }
   };
@@ -525,7 +511,7 @@ const StackQuiz: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {localHistory.map((att, idx) => (
                     <div 
-                      key={att.timestamp || idx} 
+                      key={att.completedAt || idx} 
                       className="bg-slate-50 dark:bg-slate-950 border border-solid border-slate-200 dark:border-slate-800/60 rounded-xl p-4 flex justify-between items-center text-xs"
                     >
                       <div className="space-y-1">
@@ -533,7 +519,7 @@ const StackQuiz: React.FC = () => {
                           Compilation Cycle #{localHistory.length - idx}
                         </div>
                         <div className="text-[10px] text-slate-400">
-                          {new Date(att.timestamp).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
+                          {new Date(att.completedAt).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}
                         </div>
                       </div>
                       <div className="text-right space-y-1">

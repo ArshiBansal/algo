@@ -20,6 +20,17 @@ tags:
 
 Monotonic Stack and Monotonic Queue are powerful patterns used to solve problems involving **next/previous greater or smaller elements** and **sliding window extremes** in O(n) time — problems that would otherwise take O(n²) with brute force.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="Dq_ObZwTY_Q"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Monotonic Stack Data Structure Explained"
+  poster="maxresdefault"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## 🧠 What is a Monotonic Stack?
@@ -542,6 +553,14 @@ Each element is pushed once and popped once → max 12 operations
 | 6   | Largest Rectangle in Histogram     | Monotonic Stack | 🔴 Hard    |
 | 7   | Sliding Window Maximum             | Monotonic Deque | 🔴 Hard    |
 | 8   | Shortest Subarray with Sum ≥ K     | Monotonic Deque | 🔴 Hard    |
+
+---
+
+## 🔗 Related Topics
+
+- **[Two Pointers & Sliding Window](./two-pointers-sliding-window.md)**: Efficient subarray and window processing techniques ($O(N)$).
+- **[Segment Tree](./segment-tree.md)**: Dynamic range queries and point/range updates ($O(\log N)$).
+- **[Disjoint Set Union (DSU)](./disjoint-set-union.md)**: Dynamic graph connectivity and component tracking ($O(\alpha(N))$).
 
 ---
 

@@ -31,6 +31,16 @@ Output: `false`
 - The planet collides with the asteroid of mass 4: 9 + 4 = 13.
 - The planet collides with the asteroid of mass 23. It is destroyed as 13 < 23.
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="BRulRQnf6XY"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Destroying Asteroids | Simple Approach | Dry Run | Leetcode 2126 | codestorywithMIK"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approaches:
@@ -44,9 +54,11 @@ We can solve this efficiently by sorting the array in ascending order and iterat
 * **Time Complexity:** $O(N \log N)$ where $N$ is the number of asteroids. The dominating factor is the sorting step. The subsequent linear scan takes $O(N)$ time.
 * **Space Complexity:** $O(1)$ or $O(N)$ depending on the language's internal sorting algorithm. Excluding the space used by the sorting algorithm, our space complexity is strictly $O(1)$.
 
-#### Solutions:
+## Solutions
 
-**C++**
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
+
 ```cpp
 class Solution {
 public:
@@ -68,7 +80,9 @@ public:
 };
 ```
 
-**Java**
+  </TabItem>
+  <TabItem value="java" label="Java">
+
 ```java
 class Solution {
     public boolean asteroidsDestroyed(int mass, int[] asteroids) {
@@ -89,8 +103,10 @@ class Solution {
 }
 ```
 
-**Python**
-```py
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
 class Solution:
     def asteroidsDestroyed(self, mass: int, asteroids: List[int]) -> bool:
         asteroids.sort()
@@ -104,8 +120,10 @@ class Solution:
         return True
 ```
 
-**JavaScript**
-```js
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
 /**
  * @param {number} mass
  * @param {number[]} asteroids
@@ -127,3 +145,6 @@ const asteroidsDestroyed = function(mass, asteroids) {
     return true;
 };
 ```
+
+  </TabItem>
+</Tabs>

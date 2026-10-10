@@ -36,6 +36,16 @@ Return the final string `result` after processing all characters in `s`.
   2. `'*'` -> Remove last: `""`
   3. `'#'` -> Duplicate: `""`
 
+## Video Explanation
+
+<LiteYouTubeEmbed
+  id="SDE8xan15Nw"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="Process String with Special Operations I | Simple Simulation | Leetcode 3612 | codestorywithMIK"
+  lazyLoad={true}
+  webp
+/>
+
 ---
 
 ## Approach: Simulation
@@ -64,7 +74,8 @@ Using a list or character array is typically more efficient for these operations
 
 ## Solutions
 
-### C++
+<Tabs groupId="programming-language">
+  <TabItem value="cpp" label="C++" default>
 
 ```cpp
 #include <string>
@@ -94,7 +105,8 @@ public:
 };
 ```
 
-### Java
+  </TabItem>
+  <TabItem value="java" label="Java">
 
 ```java
 class Solution {
@@ -118,9 +130,10 @@ class Solution {
 }
 ```
 
-### Python
+  </TabItem>
+  <TabItem value="python" label="Python">
 
-```py
+```python
 class Solution:
     def processStr(self, s: str) -> str:
         ans = []
@@ -137,9 +150,10 @@ class Solution:
         return "".join(ans)
 ```
 
-### JavaScript
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
 
-```js
+```javascript
 /**
  * @param {string} s
  * @return {string}
@@ -162,3 +176,6 @@ var processStr = function(s) {
     return ans.join("");
 };
 ```
+
+  </TabItem>
+</Tabs>

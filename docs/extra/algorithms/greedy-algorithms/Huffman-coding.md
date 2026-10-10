@@ -12,6 +12,17 @@ tags: [dsa, algorithms, greedy algorithms, compression]
 
 Huffman Coding is a lossless data compression algorithm used to compress data in an optimal way by assigning shorter codes to more frequent characters and longer codes to less frequent ones. It works by constructing a binary tree where the most frequent characters have the shortest binary representations, leading to optimal compression. 
 
+### Video Explanation 
+
+<LiteYouTubeEmbed
+  id="co4_ahEDCho"
+  params="autoplay=1&autohide=1&showinfo=0&rel=0"
+  title="3.4 Huffman Coding - Greedy Method"
+  lazyLoad={true}
+  webp
+/>
+
+
 ### Characteristics:
 
 - **Greedy Approach**:  
@@ -137,3 +148,9 @@ int main() {
 ### Summary:
 
 Huffman Coding is a widely used greedy algorithm that provides optimal data compression by assigning variable-length codes to characters based on their frequencies. The algorithm constructs a binary tree to represent the characters, ensuring that the most frequent characters have the shortest codes. It is used in file compression formats such as ZIP and in transmission protocols. The algorithm runs in $O(N \log N)$ time, making it efficient for practical use cases in data compression and communication systems.
+
+## Related Topics
+
+- **[Fractional Knapsack](./fractional-knapsack.md)**: Value-to-weight ratio greedy optimization problem ($O(N \log N)$).
+- **[Heap Basics](../../heap/heap-basics.md)**: Min-heap / priority queue data structure used to extract minimum frequency nodes.
+- **[Trie Data Structure](../trie.md)**: Binary tree prefix encoding structure ($O(L)$ lookup).

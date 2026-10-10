@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Layout from "@theme/Layout";
 import { TOPICS } from "../../data/practiceProblems";
 import type { Difficulty, Problem, TopicData } from "../../data/practiceProblems";
+import { getSolvedProblems, setProblemSolved, onProgressUpdate } from "../../utils/progressStore";
+import DailyChallengeWidget from "../../components/DailyChallengeWidget";
 
 const LEETCODE_BASE = "https://leetcode.com/problems/";
 
@@ -13,6 +15,30 @@ const DIFFICULTY_CONFIG: Record<Difficulty, { color: string; bg: string; border:
 };
 
 const DIFFICULTIES: Difficulty[] = ["Easy", "Medium", "Hard"];
+const COMPLEXITY_OPTIONS = ["All", "O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n^2)", "O(2^n)", "Other"] as const;
+
+const COMPLEXITY_VALUES = COMPLEXITY_OPTIONS.filter((o) => o !== "All") as readonly string[];
+
+/**
+ * Normalizes a raw complexity string into one of the filter buckets.
+ * Unknown or unparseable values are mapped to "Other".
+ */
+const normalizeComplexity = (value?: string) => {
+  if (!value) return "Other";
+  const match = value.match(/O\([^)]*\)/);
+  if (!match) return "Other";
+  const normalized = match[0];
+  return COMPLEXITY_VALUES.includes(normalized) ? normalized : "Other";
+};
+
+/**
+ * Resolves the filterable metadata (time/space complexity, category) for a problem.
+ */
+const getProblemMeta = (problem: Problem, topicName: string) => ({
+  timeComplexity: normalizeComplexity(problem.timeComplexity),
+  spaceComplexity: normalizeComplexity(problem.spaceComplexity),
+  category: problem.category || topicName,
+});
 
 function problemKey(topic: string, problem: Problem) {
   return `${topic}|${problem.id}|${problem.slug}`;
@@ -201,6 +227,9 @@ const ProblemRow: React.FC<{
   const done = solved.has(key);
   const url  = `${LEETCODE_BASE}${problem.slug}/`;
   const cfg  = DIFFICULTY_CONFIG[difficulty];
+  const meta = useMemo(() => getProblemMeta(problem, topic), [problem, topic]);
+  const timeValue = meta.timeComplexity === "Other" ? "—" : meta.timeComplexity;
+  const spaceValue = meta.spaceComplexity === "Other" ? "—" : meta.spaceComplexity;
 
   return (
     <div className="flex items-center gap-3 py-1.5 px-2 rounded-xl hover:bg-[var(--ifm-color-emphasis-100)] transition-colors group">
@@ -223,11 +252,21 @@ const ProblemRow: React.FC<{
         href={url} target="_blank" rel="noopener noreferrer"
         className={`flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-1 min-w-0 no-underline text-inherit transition-opacity ${done ? "opacity-40" : "opacity-100"}`}
       >
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-          <span className="text-xs font-mono text-[var(--ifm-color-emphasis-400)] shrink-0">#{problem.id}</span>
-          <span className={`text-[14px] font-medium text-[var(--ifm-color-emphasis-800)] truncate ${done ? "line-through" : ""}`}>
-            {problem.title}
-          </span>
+        <div className="flex flex-col gap-1 flex-1 min-w-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-xs font-mono text-[var(--ifm-color-emphasis-400)] shrink-0">#{problem.id}</span>
+            <span className={`text-[14px] font-medium text-[var(--ifm-color-emphasis-800)] truncate ${done ? "line-through" : ""}`}>
+              {problem.title}
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--ifm-color-emphasis-100)] text-[var(--ifm-color-emphasis-600)]">
+              Time: {timeValue}
+            </span>
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--ifm-color-emphasis-100)] text-[var(--ifm-color-emphasis-600)]">
+              Space: {spaceValue}
+            </span>
+          </div>
         </div>
         
         <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
@@ -348,33 +387,69 @@ const TopicCard: React.FC<{
 const Practice: React.FC = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Difficulty | "All">("All");
+  const [timeComplexityFilter, setTimeComplexityFilter] = useState<(typeof COMPLEXITY_OPTIONS)[number]>("All");
+  const [spaceComplexityFilter, setSpaceComplexityFilter] = useState<(typeof COMPLEXITY_OPTIONS)[number]>("All");
+  const [typeFilter, setTypeFilter] = useState("All");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [solved, setSolved] = useState<Set<string>>(new Set());
 
-  // Mount logic to safely bootstrap standard LocalStorage states in dynamic SSR
+  // Mount logic: hydrate from unified progress store
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("leetcode_solved");
-      if (saved) setSolved(new Set(JSON.parse(saved)));
-    } catch (e) {
-      console.error("Failed parsing problem registry context state data:", e);
-    }
+    setSolved(getSolvedProblems());
+    const unsub = onProgressUpdate(() => setSolved(getSolvedProblems()));
+    return unsub;
   }, []);
 
   const toggleSolved = (key: string) => {
+    const isNowSolved = !solved.has(key);
+    setProblemSolved(key, isNowSolved);
     setSolved((prev) => {
       const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
-      localStorage.setItem("leetcode_solved", JSON.stringify([...next]));
+      isNowSolved ? next.add(key) : next.delete(key);
       return next;
     });
   };
 
+  const topicOptions = useMemo(() => ["All", ...Object.keys(TOPICS)], []);
+
   const filteredTopics = useMemo(() => {
-    return Object.entries(TOPICS).filter(([name]) =>
-      name.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [search]);
+    const searchTerm = search.trim().toLowerCase();
+
+    return Object.entries(TOPICS)
+      .map(([name, data]) => {
+        const problemsByDifficulty: Record<Difficulty, Problem[]> = {
+          Easy: [],
+          Medium: [],
+          Hard: [],
+        };
+
+        for (const difficulty of DIFFICULTIES) {
+          problemsByDifficulty[difficulty] = (data.problems[difficulty] || []).filter((problem) => {
+            const meta = getProblemMeta(problem, name);
+            const matchesDifficulty = filter === "All" || difficulty === filter;
+            const matchesTime = timeComplexityFilter === "All" || meta.timeComplexity === timeComplexityFilter;
+            const matchesSpace = spaceComplexityFilter === "All" || meta.spaceComplexity === spaceComplexityFilter;
+            const matchesType = typeFilter === "All" || meta.category === typeFilter;
+            const matchesSearch =
+              searchTerm === "" ||
+              [name, problem.title, problem.slug, meta.category, meta.timeComplexity, meta.spaceComplexity].some((value) =>
+                value.toLowerCase().includes(searchTerm)
+              );
+
+            return matchesDifficulty && matchesTime && matchesSpace && matchesType && matchesSearch;
+          });
+        }
+
+        const hasProblems = DIFFICULTIES.some((difficulty) => problemsByDifficulty[difficulty].length > 0);
+
+        if (!hasProblems) {
+          return null;
+        }
+
+        return [name, { ...data, problems: problemsByDifficulty }] as const;
+      })
+      .filter((entry): entry is readonly [string, TopicData] => Boolean(entry));
+  }, [search, filter, timeComplexityFilter, spaceComplexityFilter, typeFilter]);
 
   return (
     <Layout title="Practice Platform" description="Track and master curated algorithmic dynamic processing paradigms by structural taxonomy.">
@@ -429,51 +504,119 @@ const Practice: React.FC = () => {
             </button>
           </div>
 
+          <div className="mb-6">
+            <DailyChallengeWidget />
+          </div>
+
           {/* Filtering Controls Infrastructure Area */}
-          <div className="flex flex-col md:flex-row gap-3.5 mb-6 items-stretch md:items-center justify-between">
-            {/* Realtime Regex Engine Filter Box Input */}
-            <div className="relative flex-1">
-              <svg
-                width="16" height="16" viewBox="0 0 15 15" fill="none" aria-hidden="true"
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ifm-color-emphasis-400)] pointer-events-none"
+          <div className="flex flex-col gap-3.5 mb-6">
+            <div className="flex flex-col md:flex-row gap-3.5 items-stretch md:items-center justify-between">
+              <div className="relative flex-1">
+                <svg
+                  width="16" height="16" viewBox="0 0 15 15" fill="none" aria-hidden="true"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ifm-color-emphasis-400)] pointer-events-none"
+                >
+                  <path d="M10 6.5C10 8.43 8.43 10 6.5 10C4.57 10 3 8.43 3 6.5C3 4.57 4.57 3 6.5 3C8.43 3 10 4.57 10 6.5ZM9.3 10.01C8.57 10.63 7.58 11 6.5 11C4.01 11 2 8.99 2 6.5C2 4.01 4.01 2 6.5 2C8.99 2 11 4.01 11 6.5C11 7.58 10.63 8.57 10.01 9.3L13.35 12.65C13.55 12.84 13.55 13.16 13.35 13.35C13.16 13.55 12.84 13.55 12.65 13.35L9.3 10.01Z" fill="currentColor"/>
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search by topic, title, or complexity..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full py-2.5 pl-10 pr-4 border border-solid border-[var(--ifm-color-emphasis-300)] rounded-xl text-sm bg-[var(--ifm-background-color)] text-[var(--ifm-color-emphasis-900)] outline-none transition-all focus:border-[var(--ifm-color-primary)] focus:ring-2 focus:ring-[var(--ifm-color-primary)]/20 shadow-sm"
+                />
+              </div>
+
+              <button
+                onClick={() => {
+                  setSearch("");
+                  setFilter("All");
+                  setTimeComplexityFilter("All");
+                  setSpaceComplexityFilter("All");
+                  setTypeFilter("All");
+                }}
+                className="px-4 py-2 rounded-full text-xs font-bold tracking-wide border border-solid border-[var(--ifm-color-emphasis-300)] bg-[var(--ifm-background-color)] text-[var(--ifm-color-emphasis-600)] hover:border-[var(--ifm-color-primary)] hover:text-[var(--ifm-color-primary)] transition-all whitespace-nowrap min-h-[36px]"
               >
-                <path d="M10 6.5C10 8.43 8.43 10 6.5 10C4.57 10 3 8.43 3 6.5C3 4.57 4.57 3 6.5 3C8.43 3 10 4.57 10 6.5ZM9.3 10.01C8.57 10.63 7.58 11 6.5 11C4.01 11 2 8.99 2 6.5C2 4.01 4.01 2 6.5 2C8.99 2 11 4.01 11 6.5C11 7.58 10.63 8.57 10.01 9.3L13.35 12.65C13.55 12.84 13.55 13.16 13.35 13.35C13.16 13.55 12.84 13.55 12.65 13.35L9.3 10.01Z" fill="currentColor"/>
-              </svg>
-              <input
-                type="text"
-                placeholder="Search topics (e.g., Arrays, Dynamic Programming)..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full py-2.5 pl-10 pr-4 border border-solid border-[var(--ifm-color-emphasis-300)] rounded-xl text-sm bg-[var(--ifm-background-color)] text-[var(--ifm-color-emphasis-900)] outline-none transition-all focus:border-[var(--ifm-color-primary)] focus:ring-2 focus:ring-[var(--ifm-color-primary)]/20 shadow-sm"
-              />
+                Clear Filters
+              </button>
             </div>
 
-            {/* Horizontal Filter Control Pills */}
-            <div className="overflow-x-auto pb-1 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none">
-              <div className="flex gap-1.5" role="group" aria-label="Filter cards by difficulty index metrics">
-                {(["All", "Easy", "Medium", "Hard"] as const).map((d) => {
-                  const isActive = filter === d;
-                  const activePillClasses: Record<string, string> = {
-                    All:    "bg-[var(--ifm-color-primary)] border-[var(--ifm-color-primary)] text-white shadow-sm",
-                    Easy:   "bg-emerald-600 border-emerald-600 text-white shadow-sm",
-                    Medium: "bg-amber-600 border-amber-600 text-white shadow-sm",
-                    Hard:   "bg-rose-600 border-rose-600 text-white shadow-sm",
-                  };
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+              <div className="rounded-xl border border-solid border-[var(--ifm-color-emphasis-200)] bg-[var(--ifm-background-color)] p-3 shadow-sm">
+                <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--ifm-color-emphasis-500)]">Difficulty</div>
+                <div className="flex flex-wrap gap-1.5 mt-2" role="group" aria-label="Filter cards by difficulty index metrics">
+                  {(["All", "Easy", "Medium", "Hard"] as const).map((d) => {
+                    const isActive = filter === d;
+                    const activePillClasses: Record<string, string> = {
+                      All:    "bg-[var(--ifm-color-primary)] border-[var(--ifm-color-primary)] text-white shadow-sm",
+                      Easy:   "bg-emerald-600 border-emerald-600 text-white shadow-sm",
+                      Medium: "bg-amber-600 border-amber-600 text-white shadow-sm",
+                      Hard:   "bg-rose-600 border-rose-600 text-white shadow-sm",
+                    };
 
-                  return (
-                    <button
-                      key={d}
-                      onClick={() => setFilter(d)}
-                      className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide cursor-pointer border border-solid transition-all whitespace-nowrap min-h-[36px] ${
-                        isActive
-                          ? activePillClasses[d]
-                          : "border-[var(--ifm-color-emphasis-300)] bg-[var(--ifm-background-color)] text-[var(--ifm-color-emphasis-600)] hover:border-[var(--ifm-color-primary)] hover:text-[var(--ifm-color-primary)]"
-                      }`}
-                    >
-                      {d}
-                    </button>
-                  );
-                })}
+                    return (
+                      <button
+                        key={d}
+                        onClick={() => setFilter(d)}
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide cursor-pointer border border-solid transition-all whitespace-nowrap min-h-[32px] ${
+                          isActive
+                            ? activePillClasses[d]
+                            : "border-[var(--ifm-color-emphasis-300)] bg-[var(--ifm-background-color)] text-[var(--ifm-color-emphasis-600)] hover:border-[var(--ifm-color-primary)] hover:text-[var(--ifm-color-primary)]"
+                        }`}
+                      >
+                        {d}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-solid border-[var(--ifm-color-emphasis-200)] bg-[var(--ifm-background-color)] p-3 shadow-sm">
+                <label className="text-[11px] font-bold uppercase tracking-wide text-[var(--ifm-color-emphasis-500)]" htmlFor="time-complexity-filter">
+                  Time Complexity
+                </label>
+                <select
+                  id="time-complexity-filter"
+                  value={timeComplexityFilter}
+                  onChange={(e) => setTimeComplexityFilter(e.target.value as (typeof COMPLEXITY_OPTIONS)[number])}
+                  className="w-full mt-2 rounded-lg border border-solid border-[var(--ifm-color-emphasis-300)] bg-[var(--ifm-background-color)] px-3 py-2 text-sm text-[var(--ifm-color-emphasis-800)] outline-none focus:border-[var(--ifm-color-primary)]"
+                >
+                  {COMPLEXITY_OPTIONS.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="rounded-xl border border-solid border-[var(--ifm-color-emphasis-200)] bg-[var(--ifm-background-color)] p-3 shadow-sm">
+                <label className="text-[11px] font-bold uppercase tracking-wide text-[var(--ifm-color-emphasis-500)]" htmlFor="space-complexity-filter">
+                  Space Complexity
+                </label>
+                <select
+                  id="space-complexity-filter"
+                  value={spaceComplexityFilter}
+                  onChange={(e) => setSpaceComplexityFilter(e.target.value as (typeof COMPLEXITY_OPTIONS)[number])}
+                  className="w-full mt-2 rounded-lg border border-solid border-[var(--ifm-color-emphasis-300)] bg-[var(--ifm-background-color)] px-3 py-2 text-sm text-[var(--ifm-color-emphasis-800)] outline-none focus:border-[var(--ifm-color-primary)]"
+                >
+                  {COMPLEXITY_OPTIONS.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="rounded-xl border border-solid border-[var(--ifm-color-emphasis-200)] bg-[var(--ifm-background-color)] p-3 shadow-sm">
+                <label className="text-[11px] font-bold uppercase tracking-wide text-[var(--ifm-color-emphasis-500)]" htmlFor="type-filter">
+                  Problem Type
+                </label>
+                <select
+                  id="type-filter"
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                  className="w-full mt-2 rounded-lg border border-solid border-[var(--ifm-color-emphasis-300)] bg-[var(--ifm-background-color)] px-3 py-2 text-sm text-[var(--ifm-color-emphasis-800)] outline-none focus:border-[var(--ifm-color-primary)]"
+                >
+                  {topicOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
@@ -489,28 +632,16 @@ const Practice: React.FC = () => {
                 </p>
               </div>
             ) : (
-              filteredTopics
-                .filter(([_, data]) => filter === "All" || (data.problems[filter as Difficulty] && data.problems[filter as Difficulty].length > 0))
-                .map(([name, data], i) => {
-                  const filteredData = filter === "All" ? data : {
-                    ...data,
-                    problems: {
-                      Easy:   filter === "Easy"   ? data.problems.Easy   : [],
-                      Medium: filter === "Medium" ? data.problems.Medium : [],
-                      Hard:   filter === "Hard"   ? data.problems.Hard   : [],
-                    },
-                  };
-                  return (
-                    <TopicCard
-                      key={name}
-                      name={name}
-                      data={filteredData}
-                      index={i}
-                      solved={solved}
-                      onToggle={toggleSolved}
-                    />
-                  );
-                })
+              filteredTopics.map(([name, data], i) => (
+                <TopicCard
+                  key={name}
+                  name={name}
+                  data={data}
+                  index={i}
+                  solved={solved}
+                  onToggle={toggleSolved}
+                />
+              ))
             )}
           </div>
         </main>
